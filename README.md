@@ -4,7 +4,7 @@ This project contains developing code to be integrated into the Convergence Juke
 
 * For the most part this code should be working.
 * I'm currently merging convergencegui.py and convergenceplayer.py into one file.
-* The merged file is named convergencejukebox2
+* The merged file is named convergencejukebox2.py
 
 Some notes:
 
