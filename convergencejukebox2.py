@@ -78,6 +78,13 @@ output_list = []  # List is used to output information related to Jukebox functi
 song_list = []  # List is used to build final list of all songs including ID3 information and file location.
 file_time_old = "Wed Dec 30 22:56:15 2015"
 file_time_check = ""
+credit_amount = 0
+adder = 0
+last_pressed =""
+cursor_position = 0
+screen_number = 0
+song_selection_number = ""
+x = 0
 
 # song_list info locations: songTitle = song_list[x][0], songArtist = song_list[x][1], songAlbum = song_list[x][2]
 # song_year = song_list[x][3], songDurationSeconds = song_list[x][4], songGenre = song_list[x][5],
@@ -88,7 +95,15 @@ file_time_check = ""
 if sys.platform == 'win32':
     winmm = windll.winmm  # required by playMP3
 
+#####current_directory(player) and full_path(GUI) appear the be the same thing and need to be merged.#####START
 current_directory = os.getcwd() # Gets current directory.
+print current_directory
+if current_directory == "/home/pi": # Changes home directory on Raspberry Pi
+    os.chdir("/home/pi/python/jukebox")
+    current_directory = os.getcwd()
+full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
+print full_path
+#####current_directory(player) and full_path(GUI) appear the be the same thing and need to be merged.#####END
 
 if current_directory == "/home/pi": # Changes home directory on Raspberry Pi
     os.chdir("/home/pi/python/jukebox")
