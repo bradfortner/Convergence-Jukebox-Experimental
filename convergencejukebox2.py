@@ -34,7 +34,7 @@ import sys  # Used for testing new code. Required to add sys.exit().
 import re  # Used in searching Genre substrings. Specifically word-boundaries of regular expressions.
 import subprocess
 from subprocess import call
-from subprocess import Popen, PIPE #  requred for mpg321 mp3 player for Rasberry Pi version
+from subprocess import Popen, PIPE #  requred for mpg321 mp3 player for Rasberry Pi version.
 from Tkinter import *  # Used as message to alert users to place MP3's in music folder
 import tkMessageBox
 import Tkinter
