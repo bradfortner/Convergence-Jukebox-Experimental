@@ -48,8 +48,27 @@ from hsaudiotag import auto  # Used to work with MP3 ID3 data https://pypi.pytho
 from ctypes import *  # Used by playmp3.py windows based mp3 player http://bit.ly/1MgaGCh
 import getpass  # Used to get user name http://stackoverflow.com/questions/4325416/how-do-i-get-the-username-in-python
 
-
-
+computer_account_user_name = getpass.getuser()
+genre_file_changed = ""
+random_change_list = ""
+selectedArtists = []  # Used to select multiple artists in random play routine
+artistSelectRoutine = 0  # Used to break Artist
+artistSortRequired = "No"
+genreYearSort = "No"
+artistSortRequiredByYear = "No"
+counter = 0
+if sys.platform == 'win32':
+    winmm = windll.winmm  # required by playMP3
+play_list = []  # Holds song numbers for paid selections.
+build_list = []  # List temporarily holds ID3 data during song processing. Data later written to song_list then cleared.
+remove_list = []  # Python List used to remove songs from random_list
+random_list = []
+flag_fourteen = ""
+flag_fourteen_change = ""
+output_list = []  # List is used to output information related to Jukebox functions. Contains information on songs
+song_list = []  # List is used to build final list of all songs including ID3 information and file location.
+file_time_old = "Wed Dec 30 22:56:15 2015"
+file_time_check = ""
 
 def get_available_resolutions_win():  # Checks to see if device is 720p compatable for default display.
 
@@ -194,7 +213,6 @@ def get_available_resolutions_win():  # Checks to see if device is 720p compatab
             mainloop()
             sys.exit()
 
-
 def set_720_resolution():
 
     class ScreenRes(object):  # http://bit.ly/1R6CXjF
@@ -323,120 +341,6 @@ def set_720_resolution():
         # ScreenRes.set(1920, 1080)
         # ScreenRes.set() # Set defaults
 
-# Below is the display mandated by the various software licences used in Convergence Jukebox.
-if sys.platform.startswith('linux'):
-    print "Welcome to the Linux version of Convergence Jukebox"
-
-if sys.platform == 'win32':
-    print "Welcome to the Windows version of Convergence Jukebox"
-
-print "Your Jukebox Is Being Configured"
-print "This Could Take A Few Minutes"
-print
-print "Convergence Jukebox is Python based codes that emulates a Jukebox and plays mp3 media."
-print "Copyright (C) 2012 by Brad Fortner"
-print "This program is free software you can redistribute it and/or modify it under the terms"
-print "of the GNU General Public License as published by the Free Software Foundation;"
-print "either version 3 of the License, or (at your option) any later version."
-print "This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied"
-print "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details."
-print "You should have received a copy of the GNU General Public License along with this program."
-print "If not, see http://www.gnu.org/licenses."
-print "The authour, information on, executable downloads and source code can be obtained via www.convergencejukebox.com"
-
-print "Convergence Jukebox employs the PyRSS2Gen Python Library."
-print "PyRSS2Gen is copyright (c) by Andrew Dalke Scientific, AB (previously"
-print "Dalke Scientific Software, LLC) and is released under the BSD license."
-print "Info on PyRSS2Gen at http://www.dalkescientific.com/Python/PyRSS2Gen.html"
-
-time.sleep(2) # Changed from a value of 15
-
-full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
-
-artist_list = []
-
-if sys.platform == 'win32':
-    print "Welcome to the Windows version of Convergence Jukebox"
-    user32 = ctypes.windll.user32  # Measure screen resolution. http://bit.ly/1JPUtkd
-    screen_size = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-    #get_available_resolutions_()
-    if str(screen_size) != "(1280, 720)":
-        set_720_resolution()
-
-if sys.platform.startswith('linux'):
-    root = tk.Tk()
-    root.geometry("128000000x72000000")
-    tk.Label(text="Checking Your Screen Resolution Maimum Size").pack()
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    root.destroy()
-    root.mainloop()
-    if screen_width >= 1280 and screen_height >= 720:
-        print "This Screen Is 720P compatable"
-    else:
-        print "I'm not 720p compatable"
-        master = Tk()
-        screen_message = "Program Stopped. This computer is not 1280 by 720 (720p) compatable." \
-                         " 720p is the default resolution for Convergence Jukebox. This means Convergence Jukebox" \
-                         " will not run on this computer. Consult www.convergencejukebox.com if you want more" \
-                         " details and a potential fix to the problem."
-        msg = Message(master, text=screen_message)
-        msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
-        msg.pack()
-        mainloop()
-        sys.exit()
-
-if sys.platform == 'win32':
-    if os.path.exists(str(os.path.dirname(full_path)) + "\music"):
-        print "music directory exists at " + str(os.path.dirname(full_path)) + "\music. Nothing to do here."
-    else:
-        print "music directory does not exist."
-        os.makedirs(str(os.path.dirname(full_path)) + "\music")
-        master = Tk()
-        screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
-                         + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
-        msg = Message(master, text=screen_message)
-        msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
-        msg.pack()
-        mainloop()
-        sys.exit()
-
-    mp3_counter = len(glob.glob1(str(os.path.dirname(full_path)) + "\music", "*.mp3"))  # Counts number of MP3 files
-
-if sys.platform.startswith('linux'):
-    if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
-        print "music directory exists at " + str(os.path.dirname(full_path)) + "Adding underscores to MP3 Files."
-        current_path = os.getcwd()
-        print current_path
-        path = str(current_path) + "/music"
-        os.chdir(path)  # sets path for mpg321
-        [os.rename(f, f.replace(' ', '_')) for f in os.listdir('.') if not f.startswith('.')]
-    else:
-        print "music directory does not exist."
-        os.makedirs(str(os.path.dirname(full_path)) + "/music")
-        master = Tk()
-        screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
-                         + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
-        msg = Message(master, text=screen_message)
-        msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
-        msg.pack()
-        mainloop()
-        sys.exit()
-
-mp3_counter = len(glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Counts number of MP3 files
-current_file_count = int(mp3_counter)  # provides int output for later comparison
-
-if int(mp3_counter) < 50:
-    master = Tk()
-    screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
-                     + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
-    msg = Message(master, text=screen_message)
-    msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
-    msg.pack()
-    mainloop()
-print"Leaving Jukebox"
-convergenceplayer()
-
 def convergenceplayer():
     # Convergence Jukebox is Python based codes that emulates a Jukebox and plays mp3 media.
     # Copyright (C) 2012 by Brad Fortner
@@ -464,27 +368,7 @@ def convergenceplayer():
     print "Your Jukebox Is Being Configured"
     print "This Could Take A Few Minutes"
 
-    computer_account_user_name = getpass.getuser()
-    genre_file_changed = ""
-    random_change_list = ""
-    selectedArtists = []  # Used to select multiple artists in random play routine
-    artistSelectRoutine = 0  # Used to break Artist
-    artistSortRequired = "No"
-    genreYearSort = "No"
-    artistSortRequiredByYear = "No"
-    counter = 0
-    if sys.platform == 'win32':
-        winmm = windll.winmm  # required by playMP3
-    play_list = []  # Holds song numbers for paid selections.
-    build_list = []  # List temporarily holds ID3 data during song processing. Data later written to song_list then cleared.
-    remove_list = []  # Python List used to remove songs from random_list
-    random_list = []
-    flag_fourteen = ""
-    flag_fourteen_change = ""
-    output_list = []  # List is used to output information related to Jukebox functions. Contains information on songs
-    song_list = []  # List is used to build final list of all songs including ID3 information and file location.
-    file_time_old = "Wed Dec 30 22:56:15 2015"
-    file_time_check = ""
+
     # song_list info locations: songTitle = song_list[x][0], songArtist = song_list[x][1], songAlbum = song_list[x][2]
     # song_year = song_list[x][3], songDurationSeconds = song_list[x][4], songGenre = song_list[x][5],
     # songDurationTime = song_list[x][6], songComment = song_list[x][7]
@@ -1674,3 +1558,118 @@ def convergenceplayer():
         random_mode_playback()
         if random_change_list == "yes":
             random_list = []
+
+
+# Below is the display mandated by the various software licences used in Convergence Jukebox.
+if sys.platform.startswith('linux'):
+    print "Welcome to the Linux version of Convergence Jukebox"
+
+if sys.platform == 'win32':
+    print "Welcome to the Windows version of Convergence Jukebox"
+
+print "Your Jukebox Is Being Configured"
+print "This Could Take A Few Minutes"
+print
+print "Convergence Jukebox is Python based codes that emulates a Jukebox and plays mp3 media."
+print "Copyright (C) 2012 by Brad Fortner"
+print "This program is free software you can redistribute it and/or modify it under the terms"
+print "of the GNU General Public License as published by the Free Software Foundation;"
+print "either version 3 of the License, or (at your option) any later version."
+print "This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied"
+print "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details."
+print "You should have received a copy of the GNU General Public License along with this program."
+print "If not, see http://www.gnu.org/licenses."
+print "The authour, information on, executable downloads and source code can be obtained via www.convergencejukebox.com"
+
+print "Convergence Jukebox employs the PyRSS2Gen Python Library."
+print "PyRSS2Gen is copyright (c) by Andrew Dalke Scientific, AB (previously"
+print "Dalke Scientific Software, LLC) and is released under the BSD license."
+print "Info on PyRSS2Gen at http://www.dalkescientific.com/Python/PyRSS2Gen.html"
+
+time.sleep(2) # Was set to 15 before merge
+
+full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
+
+artist_list = []
+
+if sys.platform == 'win32':
+    print "Welcome to the Windows version of Convergence Jukebox"
+    user32 = ctypes.windll.user32  # Measure screen resolution. http://bit.ly/1JPUtkd
+    screen_size = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+    #get_available_resolutions_()
+    if str(screen_size) != "(1280, 720)":
+        set_720_resolution()
+
+if sys.platform.startswith('linux'):
+    root = tk.Tk()
+    root.geometry("128000000x72000000")
+    tk.Label(text="Checking Your Screen Resolution Maimum Size").pack()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    root.destroy()
+    root.mainloop()
+    if screen_width >= 1280 and screen_height >= 720:
+        print "This Screen Is 720P compatable"
+    else:
+        print "I'm not 720p compatable"
+        master = Tk()
+        screen_message = "Program Stopped. This computer is not 1280 by 720 (720p) compatable." \
+                         " 720p is the default resolution for Convergence Jukebox. This means Convergence Jukebox" \
+                         " will not run on this computer. Consult www.convergencejukebox.com if you want more" \
+                         " details and a potential fix to the problem."
+        msg = Message(master, text=screen_message)
+        msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
+        msg.pack()
+        mainloop()
+        sys.exit()
+
+if sys.platform == 'win32':
+    if os.path.exists(str(os.path.dirname(full_path)) + "\music"):
+        print "music directory exists at " + str(os.path.dirname(full_path)) + "\music. Nothing to do here."
+    else:
+        print "music directory does not exist."
+        os.makedirs(str(os.path.dirname(full_path)) + "\music")
+        master = Tk()
+        screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
+                         + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
+        msg = Message(master, text=screen_message)
+        msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
+        msg.pack()
+        mainloop()
+        sys.exit()
+
+    mp3_counter = len(glob.glob1(str(os.path.dirname(full_path)) + "\music", "*.mp3"))  # Counts number of MP3 files
+
+if sys.platform.startswith('linux'):
+    if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
+        print "music directory exists at " + str(os.path.dirname(full_path)) + "Adding underscores to MP3 Files."
+        current_path = os.getcwd()
+        print current_path
+        path = str(current_path) + "/music"
+        os.chdir(path)  # sets path for mpg321
+        [os.rename(f, f.replace(' ', '_')) for f in os.listdir('.') if not f.startswith('.')]
+    else:
+        print "music directory does not exist."
+        os.makedirs(str(os.path.dirname(full_path)) + "/music")
+        master = Tk()
+        screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
+                         + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
+        msg = Message(master, text=screen_message)
+        msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
+        msg.pack()
+        mainloop()
+        sys.exit()
+
+mp3_counter = len(glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Counts number of MP3 files
+current_file_count = int(mp3_counter)  # provides int output for later comparison
+
+if int(mp3_counter) < 50:
+    master = Tk()
+    screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
+                     + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
+    msg = Message(master, text=screen_message)
+    msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
+    msg.pack()
+    mainloop()
+print"Leaving Jukebox"
+convergenceplayer()
