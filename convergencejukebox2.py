@@ -26,10 +26,10 @@ import subprocess
 from subprocess import call
 from subprocess import Popen, PIPE #  requred for mpg321 mp3 player for Rasberry Pi version
 import sys  # Used to check and switch resolutions for convergence jukebox.
-from Tkinter import *  # Used as message to alert users to place MP3's in music folder
+'''from Tkinter import *  # Used as message to alert users to place MP3's in music folder
 import tkMessageBox
 import Tkinter
-import Tkinter as tk
+import Tkinter as tk'''
 
 computer_account_user_name = getpass.getuser()  # Used to write various log and RSS files to local directories.
 if sys.platform == 'win32':
@@ -131,11 +131,9 @@ class MyFinalApp(App):
         final_gui = JukeboxScreen()
         Clock.schedule_interval(MyFinalApp.file_reader, 5)
         Window.bind(on_key_down=self.key_action)
-        brad_love()
-        self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),
-                                        width=500)
-        self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,
-                                          size_hint=(None, None), width=800, halign="center", valign="middle")
+        #brad_love()
+        self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),width=500)
+        self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,size_hint=(None, None), width=800, halign="center", valign="middle")
         if len(display_info[0]) > 25:
             self.song_playing_name.font_size = 25
         elif len(display_info[0]) > 18:
