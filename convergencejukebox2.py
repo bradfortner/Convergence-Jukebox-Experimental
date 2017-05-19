@@ -27,11 +27,28 @@
 import os
 from Tkinter import *
 import glob
-import sys
-import time
 import ctypes
 import Tkinter as tk
-import convergenceplayer
+#import convergenceplayer
+import sys  # Used for testing new code. Required to add sys.exit() and Used to check and switch resolutions.
+import re  # Used in searching Genre substrings. Specifically word-boundaries of regular expressions.
+import subprocess
+from subprocess import call
+from subprocess import Popen, PIPE  # requred for mpg321 mp3 player for Rasberry Pi version
+from Tkinter import *  # Used as message to alert users to place MP3's in music folder
+import tkMessageBox
+import Tkinter
+from operator import itemgetter
+import os.path, time
+import datetime  # Used to convert song duration in seconds to minutes/seconds.
+import random
+import time  # Used in time_date_stamp. http://bit.ly/1MKPl5x and http://bit.ly/1HRKTMJ
+import pickle  # Used to save and reload python lists
+from hsaudiotag import auto  # Used to work with MP3 ID3 data https://pypi.python.org/pypi/hsaudiotag
+from ctypes import *  # Used by playmp3.py windows based mp3 player http://bit.ly/1MgaGCh
+import getpass  # Used to get user name http://stackoverflow.com/questions/4325416/how-do-i-get-the-username-in-python
+
+
 
 
 def get_available_resolutions_win():  # Checks to see if device is 720p compatable for default display.
@@ -332,7 +349,7 @@ print "PyRSS2Gen is copyright (c) by Andrew Dalke Scientific, AB (previously"
 print "Dalke Scientific Software, LLC) and is released under the BSD license."
 print "Info on PyRSS2Gen at http://www.dalkescientific.com/Python/PyRSS2Gen.html"
 
-time.sleep(15)
+time.sleep(2) # Changed from a value of 15
 
 full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
 
@@ -443,30 +460,6 @@ def convergenceplayer():
 
     # This Python script has been tested and compiles into a windows.exe using Pyinstaller.
     # https://mborgerson.com/creating-an-executable-from-a-python-script
-
-    import sys  # Used for testing new code. Required to add sys.exit() and Used to check and switch resolutions.
-    import re  # Used in searching Genre substrings. Specifically word-boundaries of regular expressions.
-    import subprocess
-    from subprocess import call
-    from subprocess import Popen, PIPE  # requred for mpg321 mp3 player for Rasberry Pi version
-    from Tkinter import *  # Used as message to alert users to place MP3's in music folder
-    import tkMessageBox
-    import Tkinter
-    import Tkinter as tk
-    from operator import itemgetter
-    import os
-    import os.path, time
-    import glob
-    import datetime  # Used to convert song duration in seconds to minutes/seconds.
-    import random
-    import time  # Used in time_date_stamp. http://bit.ly/1MKPl5x and http://bit.ly/1HRKTMJ
-    import pickle  # Used to save and reload python lists
-    from hsaudiotag import auto  # Used to work with MP3 ID3 data https://pypi.python.org/pypi/hsaudiotag
-    from ctypes import *  # Used by playmp3.py windows based mp3 player http://bit.ly/1MgaGCh
-    import \
-        getpass  # Used to get user name http://stackoverflow.com/questions/4325416/how-do-i-get-the-username-in-python
-    # import os.path, time
-
     print "Welcome To Convergence Jukebox"
     print "Your Jukebox Is Being Configured"
     print "This Could Take A Few Minutes"
