@@ -147,6 +147,7 @@ class MyFinalApp(App):
         else:
             self.song_playing_artist.font_size = 50
         self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
+        self.opening_message = Label(text="Welcome to the Windows version of Convergence Jukebox",  color= (1,1,1,1), pos=(370, 200), font_size=50,width=500, halign="right", valign="middle")
         self.my_first_title = Button(text=str(song_list[adder][0]), pos=(495, 456))
         self.my_first_artist = Button(text=str(song_list[adder][1]), pos=(495, 433))
         self.my_second_title = Button(text=str(song_list[adder + 1][0]), pos=(495, 403))
@@ -187,7 +188,7 @@ class MyFinalApp(App):
         self.my_title_album = Label(text="Album: " + str(display_info[2]), pos=(40, 165))
         selections_screen_starter(self)
         selections_screen_updater(self)
-        self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
+        '''self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
         self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
         final_gui.add_widget(self.song_playing_name)
         final_gui.add_widget(self.song_playing_artist)
@@ -248,10 +249,11 @@ class MyFinalApp(App):
         final_gui.add_widget(self.my_fifteenth_title)
         final_gui.add_widget(self.my_fifteenth_artist)
         final_gui.add_widget(self.my_sixteenth_title)
-        final_gui.add_widget(self.my_sixteenth_artist)
-        self.my_first_title.background_color = (160, 160, 160, .2)
+        final_gui.add_widget(self.my_sixteenth_artist)'''
+        final_gui.add_widget(self.opening_message)
+        '''self.my_first_title.background_color = (160, 160, 160, .2)
         self.my_first_artist.background_color = (160, 160, 160, .2)
-        selection_font_size(self)
+        selection_font_size(self)'''
         return final_gui
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
