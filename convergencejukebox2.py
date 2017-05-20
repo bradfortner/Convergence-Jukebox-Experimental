@@ -147,7 +147,7 @@ class MyFinalApp(App):
         else:
             self.song_playing_artist.font_size = 50
         self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
-        self.opening_message = Label(text="Welcome to the Windows version of Convergence Jukebox",  color= (1,1,1,1), pos=(370, 200), font_size=50,width=500, halign="right", valign="middle")
+        self.opening_message = Label(text="Welcome To Convergence\n Jukebox Windows Edition",  color= (1,1,1,1), pos=(200, 205), font_size=50,width=500, halign="center", valign="middle")
         self.my_first_title = Button(text=str(song_list[adder][0]), pos=(495, 456))
         self.my_first_artist = Button(text=str(song_list[adder][1]), pos=(495, 433))
         self.my_second_title = Button(text=str(song_list[adder + 1][0]), pos=(495, 403))
