@@ -15,6 +15,7 @@ from kivy.uix.label import Label
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.clock import Clock
+from kivy.graphics import *
 from operator import itemgetter
 import os
 import os.path, time
@@ -148,6 +149,7 @@ class MyFinalApp(App):
             self.song_playing_artist.font_size = 50
         self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
         self.opening_message = Label(text="Welcome To Convergence\n Jukebox Windows Edition",  color= (1,1,1,1), pos=(200, 205), font_size=50,width=500, halign="center", valign="middle")
+
         self.my_first_title = Button(text=str(song_list[adder][0]), pos=(495, 456))
         self.my_first_artist = Button(text=str(song_list[adder][1]), pos=(495, 433))
         self.my_second_title = Button(text=str(song_list[adder + 1][0]), pos=(495, 403))
@@ -251,9 +253,13 @@ class MyFinalApp(App):
         final_gui.add_widget(self.my_sixteenth_title)
         final_gui.add_widget(self.my_sixteenth_artist)'''
         final_gui.add_widget(self.opening_message)
+        with final_gui.canvas:
+            Color(.4, .1, .1)
+            Rectangle(pos=(100, 100), size=(100, 100))
         '''self.my_first_title.background_color = (160, 160, 160, .2)
         self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)'''
+
         return final_gui
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
