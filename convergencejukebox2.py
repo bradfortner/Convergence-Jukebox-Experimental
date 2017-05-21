@@ -254,8 +254,8 @@ class MyFinalApp(App):
         final_gui.add_widget(self.my_sixteenth_artist)'''
         final_gui.add_widget(self.opening_message)
         with final_gui.canvas:
-            Color(.4, .1, .1)
-            Rectangle(pos=(100, 100), size=(100, 100))
+            Color(0, 0, 0)
+            Rectangle(pos=(485, 495), size=(690, -435))
         '''self.my_first_title.background_color = (160, 160, 160, .2)
         self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)'''
