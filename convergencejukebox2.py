@@ -289,20 +289,22 @@ class MyFinalApp(App):
         print "Key Number Pressed Is: " + str(key_event[1])
         if str(key_event[1]) == '111':  # Changes sort mode to title
             last_pressed = "o"
-            self.my_upcoming_selections.text = " "
-            self.my_play_cost.text = " "
-            self.my_credit_amount.text = " "
-            self.selections_available.text = " "
-            self.song_playing_name.text = " "
-            self.song_playing_artist.text = " "
-            self.my_play_mode.text = " "
-            self.my_title_song.text = " "
-            self.my_title_artist.text = " "
-            self.my_title_year.text = " "
-            self.my_title_length.text = " "
-            self.my_title_album.text = " "
-            self.sort_mode.text = " "
-            self.my_first_title.text = " "
+            self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
+            self.licence_message.text = str(licence)
+            self.my_upcoming_selections.color=(0,.7,0,0)
+            self.my_play_cost.color=(0,.7,0,0)
+            self.my_credit_amount.color=(0,.7,0,0)
+            self.selections_available.color=(0,.7,0,0)
+            self.song_playing_name.color=(1,1,1,0)
+            self.song_playing_artist.color=(1,1,1,0)
+            self.my_play_mode.color=(0,.7,0,0)
+            self.my_title_song.color=(0,.7,0,0)
+            self.my_title_artist.color=(0,.7,0,0)
+            self.my_title_year.color=(0,.7,0,0)
+            self.my_title_length.color=(0,.7,0,0)
+            self.my_title_album.color=(0,.7,0,0)
+            self.sort_mode.color=(0,.7,0,0)
+            '''self.my_first_title.text = " "
             self.my_first_artist.text = " "
             self.my_second_title.text = " "
             self.my_second_artist.text = " "
@@ -333,7 +335,7 @@ class MyFinalApp(App):
             self.my_fifteenth_title.text = " "
             self.my_fifteenth_artist.text = " "
             self.my_sixteenth_title.text = " "
-            self.my_sixteenth_artist.text = " "
+            self.my_sixteenth_artist.text = " "'''
             self.my_selection_one.text = " "
             self.my_selection_two.text = " "
             self.my_selection_three.text = " "
@@ -351,8 +353,7 @@ class MyFinalApp(App):
             self.my_selection_fifteen.text = " "
             self.my_selection_sixteen.text = " "
             self.my_selection_seventeen.text = " "
-            self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
-            self.licence_message.text = str(licence)
+
         if str(key_event[1]) == '47':  # Changes sort mode to title
             last_pressed = "forward slash"
             if self.sort_mode.text != "Sort Mode By Title":
@@ -423,6 +424,19 @@ class MyFinalApp(App):
             return
         if str(key_event[1]) == '98':  # b keyboard key updates display on song change
             print upcoming_list
+            self.my_upcoming_selections.color = (0,.7,0,1)
+            self.my_play_cost.color = (0,.7,0,1)
+            self.my_credit_amount.color = (0,.7,0,1)
+            self.selections_available.color = (0,.7,0,1)
+            self.song_playing_name.color = (1, 1, 1, 0)
+            self.song_playing_artist.color = (1, 1, 1, 0)
+            self.my_play_mode.color = (0,.7,0,1)
+            self.my_title_song.color = (0,.7,0,1)
+            self.my_title_artist.color = (0,.7,0,1)
+            self.my_title_year.color = (0,.7,0,1)
+            self.my_title_length.color = (0,.7,0,1)
+            self.my_title_album.color = (0,.7,0,1)
+            self.sort_mode.color = (0,.7,0,1)
             self.opening_message.text = " "
             self.licence_message.text = " "
             self.my_selection_one.text = " "
