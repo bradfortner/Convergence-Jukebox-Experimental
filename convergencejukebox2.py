@@ -120,18 +120,6 @@ Builder.load_string('''
             pos: self.pos
             size: self.size
     Label:
-        id: sort_mode
-        text: "UPCOMING SELECTIONS"
-        font_size: 28
-        halign: 'center'
-        size_hint: .32, 1
-        pos: 1,131
-    Label:
-        text: "Twenty-Five Cents Per Selection"
-        halign: 'center'
-        size_hint: .3, 1
-        pos: 12,-267
-    Label:
         id: jukebox_name
         text: "Convergence Music System 2.0"
         color: 0,0,0,1 # Sets text colour to black.
@@ -168,9 +156,8 @@ class MyFinalApp(App):
         else:
             self.song_playing_artist.font_size = 50
         self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
-        self.opening_message = Label(text="Welcome To Convergence\n Jukebox Windows Edition",  color= (1,1,1,1), pos=(200, 205), font_size=50,width=500, halign="center", valign="middle")
-        self.licence_message = Label(text=licence, color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500, halign="left", valign="top")
-
+        self.opening_message = Label(text=" ",  color= (1,1,1,1), pos=(200, 205), font_size=50,width=500, halign="center", valign="middle")
+        self.licence_message = Label(text=" ", color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500, halign="left", valign="top")
         self.my_first_title = Button(text=str(song_list[adder][0]), pos=(495, 456))
         self.my_first_artist = Button(text=str(song_list[adder][1]), pos=(495, 433))
         self.my_second_title = Button(text=str(song_list[adder + 1][0]), pos=(495, 403))
@@ -211,8 +198,12 @@ class MyFinalApp(App):
         self.my_title_album = Label(text="Album: " + str(display_info[2]), pos=(40, 165))
         selections_screen_starter(self)
         selections_screen_updater(self)
-        '''self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
+        self.my_upcoming_selections = Label(text="UPCOMING SELECTIONS", font_size=28, pos=(48, 132))
+        self.my_play_cost = Label(text="Twenty-Five Cents Per Selection", pos=(50, -265), font_size=22)
+        self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
         self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
+        final_gui.add_widget(self.my_upcoming_selections)
+        final_gui.add_widget(self.my_play_cost)
         final_gui.add_widget(self.song_playing_name)
         final_gui.add_widget(self.song_playing_artist)
         final_gui.add_widget(self.my_selection_one)
@@ -272,20 +263,17 @@ class MyFinalApp(App):
         final_gui.add_widget(self.my_fifteenth_title)
         final_gui.add_widget(self.my_fifteenth_artist)
         final_gui.add_widget(self.my_sixteenth_title)
-        final_gui.add_widget(self.my_sixteenth_artist)'''
-        final_gui.canvas.clear()
+        final_gui.add_widget(self.my_sixteenth_artist)
+        #final_gui.canvas.clear()
         final_gui.add_widget(self.opening_message)
         final_gui.add_widget(self.licence_message)
         with final_gui.canvas:# Modified from http://bit.ly/2qGyLQ7
             Color(0, 0, 0)
             Rectangle(pos=(485, 495), size=(690, -435))
-        '''with final_gui.canvas:
-            Color(0, 0, 0)
-            Rectangle(pos=(485, 495), size=(0, 0))'''
         #final_gui.canvas.clear()
-        '''self.my_first_title.background_color = (160, 160, 160, .2)
+        self.my_first_title.background_color = (160, 160, 160, .2)
         self.my_first_artist.background_color = (160, 160, 160, .2)
-        selection_font_size(self)'''
+        selection_font_size(self)
 
         return final_gui
 
@@ -299,6 +287,72 @@ class MyFinalApp(App):
         global display_info
         global upcoming_list
         print "Key Number Pressed Is: " + str(key_event[1])
+        if str(key_event[1]) == '111':  # Changes sort mode to title
+            last_pressed = "o"
+            self.my_upcoming_selections.text = " "
+            self.my_play_cost.text = " "
+            self.my_credit_amount.text = " "
+            self.selections_available.text = " "
+            self.song_playing_name.text = " "
+            self.song_playing_artist.text = " "
+            self.my_play_mode.text = " "
+            self.my_title_song.text = " "
+            self.my_title_artist.text = " "
+            self.my_title_year.text = " "
+            self.my_title_length.text = " "
+            self.my_title_album.text = " "
+            self.sort_mode.text = " "
+            self.my_first_title.text = " "
+            self.my_first_artist.text = " "
+            self.my_second_title.text = " "
+            self.my_second_artist.text = " "
+            self.my_third_title.text = " "
+            self.my_third_artist.text = " "
+            self.my_fourth_title.text = " "
+            self.my_fourth_artist.text = " "
+            self.my_fifth_title.text = " "
+            self.my_fifth_artist.text = " "
+            self.my_sixth_title.text = " "
+            self.my_sixth_artist.text = " "
+            self.my_seventh_title.text = " "
+            self.my_seventh_artist.text = " "
+            self.my_eigth_title.text = " "
+            self.my_eigth_artist.text = " "
+            self.my_ninth_title.text = " "
+            self.my_ninth_artist.text = " "
+            self.my_tenth_title.text = " "
+            self.my_tenth_artist.text = " "
+            self.my_eleventh_title.text = " "
+            self.my_eleventh_artist.text = " "
+            self.my_twelfth_title.text = " "
+            self.my_twelfth_artist.text = " "
+            self.my_thirteenth_title.text = " "
+            self.my_thirteenth_artist.text = " "
+            self.my_fourteenth_title.text = " "
+            self.my_fourteenth_artist.text = " "
+            self.my_fifteenth_title.text = " "
+            self.my_fifteenth_artist.text = " "
+            self.my_sixteenth_title.text = " "
+            self.my_sixteenth_artist.text = " "
+            self.my_selection_one.text = " "
+            self.my_selection_two.text = " "
+            self.my_selection_three.text = " "
+            self.my_selection_four.text = " "
+            self.my_selection_five.text = " "
+            self.my_selection_six.text = " "
+            self.my_selection_seven.text = " "
+            self.my_selection_eight.text = " "
+            self.my_selection_nine.text = " "
+            self.my_selection_ten.text = " "
+            self.my_selection_eleven.text = " "
+            self.my_selection_twelve.text = " "
+            self.my_selection_thirteen.text = " "
+            self.my_selection_fourteen.text = " "
+            self.my_selection_fifteen.text = " "
+            self.my_selection_sixteen.text = " "
+            self.my_selection_seventeen.text = " "
+            self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
+            self.licence_message.text = str(licence)
         if str(key_event[1]) == '47':  # Changes sort mode to title
             last_pressed = "forward slash"
             if self.sort_mode.text != "Sort Mode By Title":
@@ -369,6 +423,8 @@ class MyFinalApp(App):
             return
         if str(key_event[1]) == '98':  # b keyboard key updates display on song change
             print upcoming_list
+            self.opening_message.text = " "
+            self.licence_message.text = " "
             self.my_selection_one.text = " "
             self.my_selection_two.text = " "
             self.my_selection_three.text = " "
