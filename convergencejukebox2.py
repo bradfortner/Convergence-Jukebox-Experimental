@@ -202,6 +202,8 @@ class MyFinalApp(App):
         self.my_play_cost = Label(text="Twenty-Five Cents Per Selection", pos=(50, -265), font_size=22)
         self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
         self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
+        self.my_blackout = Button(size_hint = (.547,.613),text=" ", background_color=(0,0,0,0),pos=(480, 56))
+        final_gui.add_widget(self.my_blackout)
         final_gui.add_widget(self.my_upcoming_selections)
         final_gui.add_widget(self.my_play_cost)
         final_gui.add_widget(self.song_playing_name)
@@ -267,9 +269,9 @@ class MyFinalApp(App):
         #final_gui.canvas.clear()
         final_gui.add_widget(self.opening_message)
         final_gui.add_widget(self.licence_message)
-        with final_gui.canvas:# Modified from http://bit.ly/2qGyLQ7
+        '''with final_gui.canvas:# Modified from http://bit.ly/2qGyLQ7
             Color(0, 0, 0)
-            Rectangle(pos=(485, 495), size=(690, -435))
+            Rectangle(pos=(485, 495), size=(690, -435))'''
         #final_gui.canvas.clear()
         self.my_first_title.background_color = (160, 160, 160, .2)
         self.my_first_artist.background_color = (160, 160, 160, .2)
@@ -291,6 +293,9 @@ class MyFinalApp(App):
             last_pressed = "o"
             self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
             self.licence_message.text = str(licence)
+            self.my_first_title.background_color = (160, 160, 160, 0)
+            self.my_first_artist.background_color = (160, 160, 160, 0)
+            self.my_blackout.background_color = (0,0,0,1)
             self.my_upcoming_selections.color=(0,.7,0,0)
             self.my_play_cost.color=(0,.7,0,0)
             self.my_credit_amount.color=(0,.7,0,0)
@@ -304,38 +309,38 @@ class MyFinalApp(App):
             self.my_title_length.color=(0,.7,0,0)
             self.my_title_album.color=(0,.7,0,0)
             self.sort_mode.color=(0,.7,0,0)
-            '''self.my_first_title.text = " "
-            self.my_first_artist.text = " "
-            self.my_second_title.text = " "
-            self.my_second_artist.text = " "
-            self.my_third_title.text = " "
-            self.my_third_artist.text = " "
-            self.my_fourth_title.text = " "
-            self.my_fourth_artist.text = " "
-            self.my_fifth_title.text = " "
-            self.my_fifth_artist.text = " "
-            self.my_sixth_title.text = " "
-            self.my_sixth_artist.text = " "
-            self.my_seventh_title.text = " "
-            self.my_seventh_artist.text = " "
-            self.my_eigth_title.text = " "
-            self.my_eigth_artist.text = " "
-            self.my_ninth_title.text = " "
-            self.my_ninth_artist.text = " "
-            self.my_tenth_title.text = " "
-            self.my_tenth_artist.text = " "
-            self.my_eleventh_title.text = " "
-            self.my_eleventh_artist.text = " "
-            self.my_twelfth_title.text = " "
-            self.my_twelfth_artist.text = " "
-            self.my_thirteenth_title.text = " "
-            self.my_thirteenth_artist.text = " "
-            self.my_fourteenth_title.text = " "
-            self.my_fourteenth_artist.text = " "
-            self.my_fifteenth_title.text = " "
-            self.my_fifteenth_artist.text = " "
-            self.my_sixteenth_title.text = " "
-            self.my_sixteenth_artist.text = " "'''
+            self.my_first_title.color=(1,1,1,0)
+            self.my_first_artist.color=(1,1,1,0)
+            self.my_second_title.color=(1,1,1,0)
+            self.my_second_artist.color=(1,1,1,0)
+            self.my_third_title.color=(1,1,1,0)
+            self.my_third_artist.color=(1,1,1,0)
+            self.my_fourth_title.color=(1,1,1,0)
+            self.my_fourth_artist.color=(1,1,1,0)
+            self.my_fifth_title.color=(1,1,1,0)
+            self.my_fifth_artist.color=(1,1,1,0)
+            self.my_sixth_title.color=(1,1,1,0)
+            self.my_sixth_artist.color=(1,1,1,0)
+            self.my_seventh_title.color=(1,1,1,0)
+            self.my_seventh_artist.color=(1,1,1,0)
+            self.my_eigth_title.color=(1,1,1,0)
+            self.my_eigth_artist.color=(1,1,1,0)
+            self.my_ninth_title.color=(1,1,1,0)
+            self.my_ninth_artist.color=(1,1,1,0)
+            self.my_tenth_title.color=(1,1,1,0)
+            self.my_tenth_artist.color=(1,1,1,0)
+            self.my_eleventh_title.color=(1,1,1,0)
+            self.my_eleventh_artist.color=(1,1,1,0)
+            self.my_twelfth_title.color=(1,1,1,0)
+            self.my_twelfth_artist.color=(1,1,1,0)
+            self.my_thirteenth_title.color=(1,1,1,0)
+            self.my_thirteenth_artist.color=(1,1,1,0)
+            self.my_fourteenth_title.color=(1,1,1,0)
+            self.my_fourteenth_artist.color=(1,1,1,0)
+            self.my_fifteenth_title.color=(1,1,1,0)
+            self.my_fifteenth_artist.color=(1,1,1,0)
+            self.my_sixteenth_title.color=(1,1,1,0)
+            self.my_sixteenth_artist.color=(1,1,1,0)
             self.my_selection_one.text = " "
             self.my_selection_two.text = " "
             self.my_selection_three.text = " "
@@ -424,6 +429,38 @@ class MyFinalApp(App):
             return
         if str(key_event[1]) == '98':  # b keyboard key updates display on song change
             print upcoming_list
+            self.my_first_artist.color = (1,1,1,1)
+            self.my_second_title.color = (1,1,1,1)
+            self.my_second_artist.color = (1,1,1,1)
+            self.my_third_title.color = (1,1,1,1)
+            self.my_third_artist.color = (1,1,1,1)
+            self.my_fourth_title.color = (1,1,1,1)
+            self.my_fourth_artist.color = (1,1,1,1)
+            self.my_fifth_title.color = (1,1,1,1)
+            self.my_fifth_artist.color = (1,1,1,1)
+            self.my_sixth_title.color = (1,1,1,1)
+            self.my_sixth_artist.color = (1,1,1,1)
+            self.my_seventh_title.color = (1,1,1,1)
+            self.my_seventh_artist.color = (1,1,1,1)
+            self.my_eigth_title.color = (1,1,1,1)
+            self.my_eigth_artist.color = (1,1,1,1)
+            self.my_ninth_title.color = (1,1,1,1)
+            self.my_ninth_artist.color = (1,1,1,1)
+            self.my_tenth_title.color = (1,1,1,1)
+            self.my_tenth_artist.color = (1,1,1,1)
+            self.my_eleventh_title.color = (1,1,1,1)
+            self.my_eleventh_artist.color = (1,1,1,1)
+            self.my_twelfth_title.color = (1,1,1,1)
+            self.my_twelfth_artist.color = (1,1,1,1)
+            self.my_thirteenth_title.color = (1,1,1,1)
+            self.my_thirteenth_artist.color = (1,1,1,1)
+            self.my_fourteenth_title.color = (1,1,1,1)
+            self.my_fourteenth_artist.color = (1,1,1,1)
+            self.my_fifteenth_title.color = (1,1,1,1)
+            self.my_fifteenth_artist.color = (1,1,1,1)
+            self.my_sixteenth_title.color = (1,1,1,1)
+            self.my_sixteenth_artist.color = (1,1,1,1)
+            self.my_blackout.background_color = (0, 0, 0, 0)
             self.my_upcoming_selections.color = (0,.7,0,1)
             self.my_play_cost.color = (0,.7,0,1)
             self.my_credit_amount.color = (0,.7,0,1)
