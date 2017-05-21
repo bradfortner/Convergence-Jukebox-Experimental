@@ -58,6 +58,26 @@ the_bands_list_lower_case = []
 for s in the_bands_list:
     the_bands_list_lower_case.append(s.lower())
 
+licence = "Convergence Jukebox is Python\n" + \
+          "based code that emulates a\n" + \
+          "Jukebox and plays mp3 media.\n" + " \n" + \
+          "Copyright (C) 2012-2017\n" + \
+          "by Brad Fortner.\n" + \
+          " \n" + "This program is free software you can\n" + \
+          "redistribute it and\or modify it\n" + \
+          "under the terms of the GNU General\n" + \
+          "Public License as published by the\n" + \
+          "Free Software Foundation; either\n" + \
+          "version 3 of the License, or (at your\n" + \
+          "option) any later version.\n" + " \n" + \
+          "This program is distributed in the\n" + \
+          "hope that it will be useful, but\n" + \
+          "WITHOUT ANY WARRANTY; without\n" + \
+          "even the implied warranty of\n" + \
+          "MERCHANTABILITY or FITNESS FOR\n" + \
+          "A PARTICULAR PURPOSE. Details:\n" + \
+          "see the GNU General Public License.\n" + " \n" + \
+          "Info: www.convergencejukebox.com"
 upcoming_list_recover = open('upcoming_list.pkl', 'rb')
 upcoming_list = pickle.load(upcoming_list_recover)
 upcoming_list_recover.close()
@@ -149,6 +169,7 @@ class MyFinalApp(App):
             self.song_playing_artist.font_size = 50
         self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
         self.opening_message = Label(text="Welcome To Convergence\n Jukebox Windows Edition",  color= (1,1,1,1), pos=(200, 205), font_size=50,width=500, halign="center", valign="middle")
+        self.licence_message = Label(text=licence, color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500, halign="left", valign="top")
 
         self.my_first_title = Button(text=str(song_list[adder][0]), pos=(495, 456))
         self.my_first_artist = Button(text=str(song_list[adder][1]), pos=(495, 433))
@@ -252,10 +273,16 @@ class MyFinalApp(App):
         final_gui.add_widget(self.my_fifteenth_artist)
         final_gui.add_widget(self.my_sixteenth_title)
         final_gui.add_widget(self.my_sixteenth_artist)'''
+        final_gui.canvas.clear()
         final_gui.add_widget(self.opening_message)
-        with final_gui.canvas:
+        final_gui.add_widget(self.licence_message)
+        with final_gui.canvas:# Modified from http://bit.ly/2qGyLQ7
             Color(0, 0, 0)
             Rectangle(pos=(485, 495), size=(690, -435))
+        '''with final_gui.canvas:
+            Color(0, 0, 0)
+            Rectangle(pos=(485, 495), size=(0, 0))'''
+        #final_gui.canvas.clear()
         '''self.my_first_title.background_color = (160, 160, 160, .2)
         self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)'''
