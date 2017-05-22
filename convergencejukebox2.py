@@ -293,8 +293,6 @@ class MyFinalApp(App):
             last_pressed = "o"
             self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
             self.licence_message.text = str(licence)
-            self.my_first_title.background_color = (160, 160, 160, 0)
-            self.my_first_artist.background_color = (160, 160, 160, 0)
             self.my_blackout.background_color = (0,0,0,1)
             self.my_upcoming_selections.color=(0,.7,0,0)
             self.my_play_cost.color=(0,.7,0,0)
@@ -465,8 +463,8 @@ class MyFinalApp(App):
             self.my_play_cost.color = (0,.7,0,1)
             self.my_credit_amount.color = (0,.7,0,1)
             self.selections_available.color = (0,.7,0,1)
-            self.song_playing_name.color = (1, 1, 1, 0)
-            self.song_playing_artist.color = (1, 1, 1, 0)
+            self.song_playing_name.color = (1, 1, 1, 1)
+            self.song_playing_artist.color = (1, 1, 1, 1)
             self.my_play_mode.color = (0,.7,0,1)
             self.my_title_song.color = (0,.7,0,1)
             self.my_title_artist.color = (0,.7,0,1)
