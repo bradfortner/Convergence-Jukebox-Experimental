@@ -91,6 +91,7 @@ screen_number = 0
 song_selection_number = ""
 x = 0
 file_time_old = "Wed Dec 30 22:56:15 2015"
+start_up = 0
 
 Window.fullscreen = True  # does not force full screen
 Window.size = (1280, 720)  # sets 720p
@@ -1026,11 +1027,18 @@ class MyFinalApp(App):
     def file_reader(self, *args):
         global file_time_old
         global upcoming_list
+        global start_up
         file_time_check = str(time.ctime(os.path.getmtime("output_list.txt")))  # http://bit.ly/22zKqLS
+
         if file_time_old != file_time_check:
+            global start_up
             # screen_display()  # Updates screen based on file change.
             rss_writer()
             keyboard.press_and_release('b')  # Updates Selection Screen
+            if start_up == 0:
+                keyboard.press_and_release('o')  # Updates Selection Screen
+                start_up +=1
+
             file_time_old = file_time_check
         else:
             print "Same"
