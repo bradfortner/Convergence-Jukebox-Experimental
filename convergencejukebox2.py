@@ -428,6 +428,7 @@ class MyFinalApp(App):
             return
         if str(key_event[1]) == '98':  # b keyboard key updates display on song change
             print upcoming_list
+            self.my_first_title.color = (1, 1, 1, 1)
             self.my_first_artist.color = (1,1,1,1)
             self.my_second_title.color = (1,1,1,1)
             self.my_second_artist.color = (1,1,1,1)
@@ -1037,6 +1038,7 @@ class MyFinalApp(App):
             keyboard.press_and_release('b')  # Updates Selection Screen
             if start_up == 0:
                 keyboard.press_and_release('o')  # Updates Selection Screen
+                #time.sleep(3)
                 start_up +=1
 
             file_time_old = file_time_check
