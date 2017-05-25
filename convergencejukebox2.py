@@ -32,11 +32,55 @@ import tkMessageBox
 import Tkinter
 import Tkinter as tk'''
 
+###### Variables #####
+artist_list = []
+artistSelectRoutine = 0  # Used to break Artist
+artistSortRequired = "No"
+artistSortRequiredByYear = "No"
+adder = 0
+build_list = []  # List temporarily holds ID3 data during song processing. Data later written to song_list then cleared.
 computer_account_user_name = getpass.getuser()  # Used to write various log and RSS files to local directories.
+counter = 0
+credit_amount = 0
+current_directory = os.getcwd() # Gets current directory.
+cursor_position = 0
+file_time_check = ""
+file_time_old = "Wed Dec 30 22:56:15 2015"
+flag_fourteen = ""
+flag_fourteen_change = ""
+genre_file_changed = ""
+genreYearSort = "No"
+last_pressed = ""
+output_list = []  # List is used to output information related to Jukebox functions. Contains information on songs
+play_list = []  # Holds song numbers for paid selections.
+random_list = []
+random_change_list = ""
+remove_list = []  # Python List used to remove songs from random_list
+screen_number = 0
+selectedArtists = []  # Used to select multiple artists in random play routine
+song_list = []  # List is used to build final list of all songs including ID3 information and file location.
+song_selection_number = ""
+start_up = 0
+x = 0
+
+# song_list info locations: songTitle = song_list[x][0], songArtist = song_list[x][1], songAlbum = song_list[x][2]
+# song_year = song_list[x][3], songDurationSeconds = song_list[x][4], songGenre = song_list[x][5],
+# songDurationTime = song_list[x][6], songComment = song_list[x][7]
+
+#####Program Initialization#####
+
 if sys.platform == 'win32':
     winmm = windll.winmm  # Variable used in playmp3.py.
+
+if current_directory == "/home/pi": # Changes home directory on Raspberry Pi
+    os.chdir("/home/pi/python/jukebox")
+    current_directory = os.getcwd()
+
 full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
+print current_directory
 print full_path
+
+
 
 song_list_recover = open('song_list.pkl', 'rb')
 song_list = pickle.load(song_list_recover)
@@ -83,16 +127,7 @@ upcoming_list = pickle.load(upcoming_list_recover)
 upcoming_list_recover.close()
 selections_available = len(song_list)
 del upcoming_list_recover
-credit_amount = 0
-adder = 0
-last_pressed = ""
-cursor_position = 0
-screen_number = 0
-song_selection_number = ""
-x = 0
-file_time_old = "Wed Dec 30 22:56:15 2015"
-start_up = 0
-artist_list = []
+
 
 Window.fullscreen = True  # does not force full screen
 Window.size = (1280, 720)  # sets 720p
@@ -133,16 +168,21 @@ Builder.load_string('''
 ''')
 
 
+
 class JukeboxScreen(FloatLayout):
     pass
 
 
 class MyFinalApp(App):
+
     def build(self):
         final_gui = JukeboxScreen()
         Clock.schedule_interval(MyFinalApp.file_reader, 5)
         event = Clock.schedule_interval(my_clock_function, 1000000000) # Code To Use Later
         Window.bind(on_key_down=self.key_action)
+        set_up_user_files_first_time()
+        write_jukebox_startup_to_log()
+        genre_read_and_select_engine()
         #brad_love()
         self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),width=500)
         self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,size_hint=(None, None), width=800, halign="center", valign="middle")
@@ -280,7 +320,6 @@ class MyFinalApp(App):
             self.my_first_title.background_color = (160, 160, 160, .2)
             self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)
-
         return final_gui
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
@@ -377,7 +416,6 @@ class MyFinalApp(App):
                     screen_message_update = screen_message + " Music directory exists at " \
                                      + str(os.path.dirname(full_path)) + "\music.\nNothing to do here"
                     self.my_blackout.text = screen_message_update
-                    Clock.schedule_interval(my_clock_function,3)
                 else:
                     screen_message_update = screen_message + "Music directory does not exist\n" + " Program Stopped" \
                             " And Will Terminate In Ten Seconds.\nPlease place fifty mp3's in the\n" \
@@ -386,8 +424,6 @@ class MyFinalApp(App):
                     self.my_blackout.background_color = (1, 0, 0, 1)
                     self.my_blackout.text = screen_message_update
                     os.makedirs(str(os.path.dirname(full_path)) + "\music")
-                    Clock.schedule_interval(my_clock_function, 3)
-
             if sys.platform.startswith('linux'): # Needs to be rewritten during Raspberry Pi testing.
                 if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
                     print "music directory exists at " + str(
@@ -1119,6 +1155,222 @@ def my_clock_function(dt): # Code To Use Later
 def brad_love():
     print "Hello, world!"
     sys.exit()
+
+
+def genre_read_and_select_engine():  # Opens and reads genreFlags.csv file. Assigns genres to random play functionality.
+
+    print "Entering genre_read_and_select_engine()."
+
+    # Convergence Jukebox Function
+    # Purpose is to look up genre_flags.txt file and assigns genres to random play functionality.
+    # Videos to understand functions, variables, global variables, scopes and lists at http://bit.ly/1Qx32aW
+
+    global flag_one  # Global variables created.
+    global flag_two
+    global flag_three
+    global flag_four
+    global flag_five
+    global flag_six
+    global flag_seven
+    global flag_eight
+    global flag_nine
+    global flag_ten
+    global flag_eleven
+    global flag_twelve
+    global flag_thirteen
+    global flag_fourteen
+    global flag_fourteen_change
+
+    # Code below reads genre_flags.txt from computers dropbox public directory. Allows for remote genre changes.
+    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\genre_flags.txt"))):
+        genre_file_open = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\" + "genre_flags.txt", 'r+')
+        to_be_split = genre_file_open.read()
+        genre_file_open.close()
+    else:
+        genre_file_open = open("genre_flags.txt", 'r+')
+        to_be_split = genre_file_open.read()
+        genre_file_open.close()
+    print "genre_flags.txt file contains: ", to_be_split
+
+    flag_file_input = to_be_split.split(",")  # Split function explained at http://www.dotnetperls.com/split-python.
+
+    if flag_file_input[0] == "null":  # flag_one assigned.
+        flag_one = "none"
+    else:
+        flag_one = flag_file_input[0]
+    if flag_file_input[1] == "null":  # flag_two assigned.
+        flag_two = ""
+    else:
+        flag_two = flag_file_input[1]
+    if flag_file_input[2] == "null":  # flag_three assigned.
+        flag_three = ""
+    else:
+        flag_three = flag_file_input[2]
+    if flag_file_input[3] == "null":  # flag_four assigned.
+        flag_four = ""
+    else:
+        flag_four = flag_file_input[3]
+    if flag_file_input[4] == "null":  # flag_five assigned.
+        flag_five = ""
+    else:
+        flag_five = flag_file_input[4]
+    if flag_file_input[5] == "Starting Year":  # flag_six assigned.
+        flag_six = "null"
+    else:
+        flag_six = flag_file_input[5]
+    if flag_file_input[6] == "Ending Year":  # flag_seven assigned.
+        flag_seven = "null"
+    else:
+        flag_seven = flag_file_input[6]
+    if flag_file_input[7] == "Select Artists A thru C":  # flag_eight assigned.
+        flag_eight = "null"
+    else:
+        flag_eight = flag_file_input[7]
+    if flag_file_input[8] == "Select Artists D thru H":  # flag_nine assigned.
+        flag_nine = "null"
+    else:
+        flag_nine = flag_file_input[8]
+    if flag_file_input[9] == "Select Artists I Thru M":  # flag_ten assigned.
+        flag_ten = "null"
+    else:
+        flag_ten = flag_file_input[9]
+    if flag_file_input[10] == "Select Artists N Thru R":  # flag_eleven assigned.
+        flag_eleven = "null"
+    else:
+        flag_eleven = flag_file_input[10]
+    if flag_file_input[11] == "Select Artists S Thru V":  # flag_twelve assigned.
+        flag_twelve = "null"
+    else:
+        flag_twelve = flag_file_input[11]
+    if flag_file_input[12] == "Select Artists W Thru Z":  # flag_thirteen assigned.
+        flag_thirteen = "null"
+    else:
+        flag_thirteen = flag_file_input[12]
+    flag_fourteen = flag_file_input[13]  # flag_fourteen assigned.
+    flag_fourteen_change = flag_fourteen  # flag_fourteen_change assigned.
+
+
+def write_jukebox_startup_to_log():
+    time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # time_date_stamp. bit.ly/1MKPl5x
+    log_file_entry = open("log.txt", "a+")
+    log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
+    log_file_entry.close()
+
+    # Code below writes log entry to computers dropbox public directory for remote log access
+    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+        log_file_entry = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                              + computer_account_user_name.lower() + "log.txt", "a+")
+        log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
+        log_file_entry.close()
+
+
+
+def set_up_user_files_first_time():
+    global full_path
+    current_directory = os.getcwd()
+
+    if current_directory == "/home/pi":
+        os.chdir("/home/pi/python/jukebox")
+        #current_directory = os.getcwd()
+        full_path = os.getcwd()
+    else:
+        full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
+    artist_list = []
+    upcoming_list = []
+
+    '''if sys.platform == 'win32':
+        if os.path.exists(str(os.path.dirname(full_path)) + "\music"):
+            print "music directory exists. Nothing to do here."
+        else:
+            print "music directory does not exist."
+            os.makedirs(str(os.path.dirname(full_path)) + "\music")
+            master = Tk()
+            screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
+                         + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
+            msg = Message(master, text=screen_message)
+            msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
+            msg.pack()
+            mainloop()
+
+    if sys.platform.startswith('linux'):
+        if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
+            print "music directory exists. Nothing to do here."
+        else:
+            print "music directory does not exist."
+            os.makedirs(str(os.path.dirname(full_path)) + "/music")
+            master = Tk()
+            screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
+                         + str(os.path.dirname(full_path)) + "/music and then re-run the Convergence Jukebox software"
+            msg = Message(master, text=screen_message)
+            msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
+            msg.pack()
+            mainloop()'''
+
+    if os.path.exists("log.txt"):
+        print "log.txt exists. Nothing to do here."
+    else:
+        log_file = file("log.txt", "w")
+        log_file.close()
+        print "log.txt created."
+
+    if os.path.exists("genre_flags.txt"):
+        print "genre_flags.txt exists. Nothing to do here."
+    else:
+        genre_file = file("genre_flags.txt", "w")
+        genre_file.write("null,null,null,null,null,Starting Year,Ending Year,Select Artists A thru C,"
+                         + "Select Artists D thru H,Select Artists I Thru M,Select Artists N Thru R,"
+                         + "Select Artists S Thru V,Select Artists W Thru Z,"
+                         + "Wednesday December 16 2015 12:44:11 PM")
+        genre_file.close()
+        print "genre_flags.txt created."
+
+    if os.path.exists("file_count.txt"):
+        print "file_count.txt exists. Nothing to do here."
+    else:
+        old_file_count = file("file_count.txt", "w")
+        old_file_count.write("0")
+        old_file_count.close()
+        print "file_count.txt created."
+
+    if os.path.exists("song_list.pkl"):
+        print "song_list.pkl exists. Nothing to do here."
+    else:
+        song_list_file_create = file("song_list.pkl", "wb")
+        song_list_file_create.close()
+        print "song_list.pkl created."
+
+    if os.path.exists("output_list.txt"):
+        print "output_list.txt exists. Nothing to do here."
+    else:
+        output_list_file_create = file("output_list.txt", "w")
+        output_list_file_create.write("Convergence Jukebox,Brad Fortner,www.convergencejukebox.com,2012,2016,GNU General Public License V3")
+        output_list_file_create.close()
+        print "output_list.txt created."
+
+    if os.path.exists("play_list.pkl"):
+        print "play_list.pkl exists. Nothing to do here."
+    else:
+        play_list_file_create = open('play_list.pkl', 'wb')
+        pickle.dump(play_list, play_list_file_create)
+        play_list_file_create.close()
+        print "play_list.pkl created."
+
+    if os.path.exists("upcoming_list.pkl"):
+        print "upcoming_list.pkl exists. Nothing to do here."
+    else:
+        upcoming_list_file_create = open('upcoming_list.pkl', 'wb')
+        pickle.dump(upcoming_list, upcoming_list_file_create)
+        upcoming_list_file_create.close()
+        print "upcoming_list.pkl created."
+
+    if os.path.exists("artist_list.pkl"):
+        print "artist_list.pkl exists. Nothing to do here."
+    else:
+        artist_list_file_create = open('artist_list.pkl', 'wb')
+        pickle.dump(artist_list, artist_list_file_create)
+        artist_list_file_create.close()
+        print "artist_list.pkl created."
+
 
 
 def get_available_resolutions_win():  # Checks to see if device is 720p compatable for default display.
