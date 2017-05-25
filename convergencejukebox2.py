@@ -92,6 +92,7 @@ song_selection_number = ""
 x = 0
 file_time_old = "Wed Dec 30 22:56:15 2015"
 start_up = 0
+artist_list = []
 
 Window.fullscreen = True  # does not force full screen
 Window.size = (1280, 720)  # sets 720p
@@ -140,6 +141,7 @@ class MyFinalApp(App):
     def build(self):
         final_gui = JukeboxScreen()
         Clock.schedule_interval(MyFinalApp.file_reader, 5)
+        event = Clock.schedule_interval(my_clock_function, 1000000000) # Code To Use Later
         Window.bind(on_key_down=self.key_action)
         #brad_love()
         self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),width=500)
@@ -203,7 +205,7 @@ class MyFinalApp(App):
         self.my_play_cost = Label(text="Twenty-Five Cents Per Selection", pos=(50, -265), font_size=22)
         self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
         self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
-        self.my_blackout = Button(size_hint = (.547,.613),text=" ", background_color=(0,0,0,0),pos=(480, 56))
+        self.my_blackout = Button(size_hint = (.547,.613),text=" ", background_color=(0,0,0,0),pos=(480, 56),valign="top")
         final_gui.add_widget(self.my_blackout)
         final_gui.add_widget(self.my_upcoming_selections)
         final_gui.add_widget(self.my_play_cost)
@@ -274,8 +276,9 @@ class MyFinalApp(App):
             Color(0, 0, 0)
             Rectangle(pos=(485, 495), size=(690, -435))'''
         #final_gui.canvas.clear()
-        self.my_first_title.background_color = (160, 160, 160, .2)
-        self.my_first_artist.background_color = (160, 160, 160, .2)
+        if start_up !=0:
+            self.my_first_title.background_color = (160, 160, 160, .2)
+            self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)
 
         return final_gui
@@ -289,12 +292,19 @@ class MyFinalApp(App):
         key_event = list(args)
         global display_info
         global upcoming_list
+        global start_up
         print "Key Number Pressed Is: " + str(key_event[1])
         if str(key_event[1]) == '111':  # Changes sort mode to title
             last_pressed = "o"
+            screen_message = "Welcome To Convergence Jukebox\nYour Jukebox Is Being Configured\nThis Could Take A Few Minutes\n\n"
             self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
             self.licence_message.text = str(licence)
+            self.my_first_title.background_color = (160, 160, 160, 0)
+            self.my_first_artist.background_color = (160, 160, 160, 0)
             self.my_blackout.background_color = (0,0,0,1)
+            self.my_blackout.text = screen_message
+            self.my_blackout.color = (1,1,1,1)
+            self.my_blackout.font_size = 25
             self.my_upcoming_selections.color=(0,.7,0,0)
             self.my_play_cost.color=(0,.7,0,0)
             self.my_credit_amount.color=(0,.7,0,0)
@@ -357,6 +367,41 @@ class MyFinalApp(App):
             self.my_selection_fifteen.text = " "
             self.my_selection_sixteen.text = " "
             self.my_selection_seventeen.text = " "
+            if sys.platform.startswith('linux'):
+                # Needs to be written when testing on Raspberry Pi
+                # This needs to heck Raspberry Pi has 720p resolution.
+                pass
+
+            if sys.platform == 'win32':
+                if os.path.exists(str(os.path.dirname(full_path)) + "\music"):
+                    screen_message_update = screen_message + " Music directory exists at " \
+                                     + str(os.path.dirname(full_path)) + "\music.\nNothing to do here"
+                    self.my_blackout.text = screen_message_update
+                    Clock.schedule_interval(my_clock_function,3)
+                else:
+                    screen_message_update = screen_message + "Music directory does not exist\n" + " Program Stopped" \
+                            " And Will Terminate In Ten Seconds.\nPlease place fifty mp3's in the\n" \
+                            "Convergence Jukebox music directory at\n" + str(os.path.dirname(full_path)) + "\music\n" \
+                            "and then re-run the Convergence Jukebox software"
+                    self.my_blackout.background_color = (1, 0, 0, 1)
+                    self.my_blackout.text = screen_message_update
+                    os.makedirs(str(os.path.dirname(full_path)) + "\music")
+                    Clock.schedule_interval(my_clock_function, 3)
+
+            if sys.platform.startswith('linux'): # Needs to be rewritten when tested on Raspberry Pi
+                if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
+                    print "music directory exists at " + str(
+                        os.path.dirname(full_path)) + "Adding underscores to MP3 Files."
+                    current_path = os.getcwd()
+                    path = str(current_path) + "/music"
+                    os.chdir(path)  # sets path for mpg321
+                    [os.rename(f, f.replace(' ', '_')) for f in os.listdir('.') if not f.startswith('.')]
+                else:
+                    print "music directory does not exist."
+                    os.makedirs(str(os.path.dirname(full_path)) + "/music")
+
+
+
 
         if str(key_event[1]) == '47':  # Changes sort mode to title
             last_pressed = "forward slash"
@@ -428,6 +473,7 @@ class MyFinalApp(App):
             return
         if str(key_event[1]) == '98':  # b keyboard key updates display on song change
             print upcoming_list
+            self.my_blackout.color = (1, 1, 1, 0)
             self.my_first_title.color = (1, 1, 1, 1)
             self.my_first_artist.color = (1,1,1,1)
             self.my_second_title.color = (1,1,1,1)
@@ -1034,12 +1080,14 @@ class MyFinalApp(App):
         if file_time_old != file_time_check:
             global start_up
             # screen_display()  # Updates screen based on file change.
-            rss_writer()
             keyboard.press_and_release('b')  # Updates Selection Screen
+
             if start_up == 0:
                 keyboard.press_and_release('o')  # Updates Selection Screen
                 #time.sleep(3)
                 start_up +=1
+
+            rss_writer()
 
             file_time_old = file_time_check
         else:
@@ -1049,6 +1097,9 @@ class MyFinalApp(App):
             upcoming_list_recover.close()
             # selections_screen_updater(self)
 
+
+def my_clock_function(dt): # Code To Use Later
+    print 'My callback is called', dt
 
 def brad_love():
     print "Hello, world!"
@@ -1528,8 +1579,9 @@ def highlighted_selection_generator(self):  # Updates cursor location on selecti
     global song_selection_number
     if cursor_position == 0:
         clear_button_color(self)
-        self.my_first_title.background_color = (160, 160, 160, .2)
-        self.my_first_artist.background_color = (160, 160, 160, .2)
+        if start_up != 0:
+            self.my_first_title.background_color = (160, 160, 160, .2)
+            self.my_first_artist.background_color = (160, 160, 160, .2)
         if self.my_first_artist.text[0:4] == "The ":
             self.my_first_artist.text = self.my_first_artist.text[4:]
         for i in range(0, len(song_list) - 1):  # Identifies song number from song_list
