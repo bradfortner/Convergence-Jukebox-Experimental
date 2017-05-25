@@ -388,7 +388,7 @@ class MyFinalApp(App):
                     os.makedirs(str(os.path.dirname(full_path)) + "\music")
                     Clock.schedule_interval(my_clock_function, 3)
 
-            if sys.platform.startswith('linux'): # Needs to be rewritten when tested on Raspberry Pi
+            if sys.platform.startswith('linux'): # Needs to be rewritten during Raspberry Pi testing.
                 if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
                     print "music directory exists at " + str(
                         os.path.dirname(full_path)) + "Adding underscores to MP3 Files."
@@ -400,7 +400,22 @@ class MyFinalApp(App):
                     print "music directory does not exist."
                     os.makedirs(str(os.path.dirname(full_path)) + "/music")
 
+            mp3_counter = len(
+                glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Counts number of MP3 files
+            current_file_count = int(mp3_counter)  # provides int output for later comparison
+            screen_message_update = screen_message + " Number of songs at startup: " + str(current_file_count)
+            self.my_blackout.text = screen_message_update
+            Clock.schedule_interval(my_clock_function, 3)
 
+            if int(mp3_counter) < 50:
+                screen_message_update = screen_message + "Not Enough MP3's To Start Convergence Jukebox\n" \
+                                        + " Program Stopped" \
+                                        " And Will Terminate In Ten Seconds.\nPlease place fifty mp3's in the\n" \
+                                        "Convergence Jukebox music directory at\n" + str(
+                    os.path.dirname(full_path)) + "\music\n" \
+                                                  "and then re-run the Convergence Jukebox software"
+                self.my_blackout.background_color = (1, 0, 0, 1)
+                self.my_blackout.text = screen_message_update
 
 
         if str(key_event[1]) == '47':  # Changes sort mode to title
