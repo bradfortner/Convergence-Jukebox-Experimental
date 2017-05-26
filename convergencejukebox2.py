@@ -90,8 +90,8 @@ song_list_recover = open('song_list.pkl', 'rb')
 song_list = pickle.load(song_list_recover)
 song_list_recover.close()
 del song_list_recover
-for i in range(0, 16):  # Adds blank songs to end of sont_list
-    song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])
+'''for i in range(0, 16):  # Adds blank songs to end of sont_list
+    song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])'''
 song_list.sort(key=itemgetter(1), reverse=False)
 display_info_recover = open("output_list.txt", 'r+')
 output_list_read = display_info_recover.read()
@@ -170,10 +170,6 @@ Builder.load_string('''
         size_hint: .7, 1
         pos: 390,292
 ''')
-
-
-class JukeboxScreen(FloatLayout):
-    pass
 
 
 class MyFinalApp(App):
@@ -1374,13 +1370,113 @@ class MyFinalApp(App):
             # selections_screen_updater(self)
 
 
-def my_clock_function(dt): # Code To Use Later
-    print 'My callback is called', dt
-
 def brad_love():
     print "Hello, world!"
     sys.exit()
 
+def clear_alpha_keys(event=None):
+    global a_key_press
+    global d_key_press
+    global g_key_press
+    global j_key_press
+    global m_key_press
+    global p_key_press
+    global t_key_press
+    global w_key_press
+    a_key_press = 0  # Resets other multikeys to base letter..
+    d_key_press = 0
+    g_key_press = 0
+    j_key_press = 0
+    m_key_press = 0
+    p_key_press = 0
+    w_key_press = 0
+    t_key_press = 0
+
+
+def clear_button_color(self):
+    self.my_first_title.background_color = (0, 0, 0, 0)
+    self.my_first_artist.background_color = (0, 0, 0, 0)
+    self.my_second_title.background_color = (0, 0, 0, 0)
+    self.my_second_artist.background_color = (0, 0, 0, 0)
+    self.my_third_title.background_color = (0, 0, 0, 0)
+    self.my_third_artist.background_color = (0, 0, 0, 0)
+    self.my_fourth_title.background_color = (0, 0, 0, 0)
+    self.my_fourth_artist.background_color = (0, 0, 0, 0)
+    self.my_fifth_title.background_color = (0, 0, 0, 0)
+    self.my_fifth_artist.background_color = (0, 0, 0, 0)
+    self.my_sixth_title.background_color = (0, 0, 0, 0)
+    self.my_sixth_artist.background_color = (0, 0, 0, 0)
+    self.my_seventh_title.background_color = (0, 0, 0, 0)
+    self.my_seventh_artist.background_color = (0, 0, 0, 0)
+    self.my_eigth_title.background_color = (0, 0, 0, 0)
+    self.my_eigth_artist.background_color = (0, 0, 0, 0)
+    self.my_ninth_title.background_color = (0, 0, 0, 0)
+    self.my_ninth_artist.background_color = (0, 0, 0, 0)
+    self.my_tenth_title.background_color = (0, 0, 0, 0)
+    self.my_tenth_artist.background_color = (0, 0, 0, 0)
+    self.my_eleventh_title.background_color = (0, 0, 0, 0)
+    self.my_eleventh_artist.background_color = (0, 0, 0, 0)
+    self.my_twelfth_title.background_color = (0, 0, 0, 0)
+    self.my_twelfth_artist.background_color = (0, 0, 0, 0)
+    self.my_thirteenth_title.background_color = (0, 0, 0, 0)
+    self.my_thirteenth_artist.background_color = (0, 0, 0, 0)
+    self.my_fourteenth_title.background_color = (0, 0, 0, 0)
+    self.my_fourteenth_artist.background_color = (0, 0, 0, 0)
+    self.my_fifteenth_title.background_color = (0, 0, 0, 0)
+    self.my_fifteenth_artist.background_color = (0, 0, 0, 0)
+    self.my_sixteenth_title.background_color = (0, 0, 0, 0)
+    self.my_sixteenth_artist.background_color = (0, 0, 0, 0)
+
+
+def clear_last_selections(self):
+    if self.my_first_title.text == "zzzzz":
+        self.my_first_title.font_size = 0
+        self.my_first_artist.font_size = 0
+    if self.my_second_title.text == "zzzzz":
+        self.my_second_title.font_size = 0
+        self.my_second_artist.font_size = 0
+    if self.my_third_title.text == "zzzzz":
+        self.my_third_title.font_size = 0
+        self.my_third_artist.font_size = 0
+    if self.my_fourth_title.text == "zzzzz":
+        self.my_fourth_title.font_size = 0
+        self.my_fourth_artist.font_size = 0
+    if self.my_fifth_title.text == "zzzzz":
+        self.my_fifth_title.font_size = 0
+        self.my_fifth_artist.font_size = 0
+    if self.my_sixth_title.text == "zzzzz":
+        self.my_sixth_title.font_size = 0
+        self.my_sixth_artist.font_size = 0
+    if self.my_seventh_title.text == "zzzzz":
+        self.my_seventh_title.font_size = 0
+        self.my_seventh_artist.font_size = 0
+    if self.my_eigth_title.text == "zzzzz":
+        self.my_eigth_title.font_size = 0
+        self.my_eigth_artist.font_size = 0
+    if self.my_ninth_title.text == "zzzzz":
+        self.my_ninth_title.font_size = 0
+        self.my_ninth_artist.font_size = 0
+    if self.my_tenth_title.text == "zzzzz":
+        self.my_tenth_title.font_size = 0
+        self.my_tenth_artist.font_size = 0
+    if self.my_eleventh_title.text == "zzzzz":
+        self.my_eleventh_title.font_size = 0
+        self.my_eleventh_artist.font_size = 0
+    if self.my_twelfth_title.text == "zzzzz":
+        self.my_twelfth_title.font_size = 0
+        self.my_twelfth_artist.font_size = 0
+    if self.my_thirteenth_title.text == "zzzzz":
+        self.my_thirteenth_title.font_size = 0
+        self.my_thirteenth_artist.font_size = 0
+    if self.my_fourteenth_title.text == "zzzzz":
+        self.my_fourteenth_title.font_size = 0
+        self.my_fourteenth_artist.font_size = 0
+    if self.my_fifteenth_title.text == "zzzzz":
+        self.my_fifteenth_title.font_size = 0
+        self.my_fifteenth_artist.font_size = 0
+    if self.my_sixteenth_title.text == "zzzzz":
+        self.my_sixteenth_title.font_size = 0
+        self.my_sixteenth_artist.font_size = 0
 
 
 def count_number_mp3_songs():
@@ -1433,6 +1529,13 @@ def count_number_mp3_songs():
     print "Exiting count_number_mp3_songs()"
 
 
+def credit_calculator(event=None):
+    global credit_amount
+    credit_amount += 1
+    print credit_amount
+
+
+
 def database_indicator():
     def song_counter_label(label):
         def count():
@@ -1454,200 +1557,6 @@ def database_indicator():
     song_counter_label(label)
     song_counter.mainloop()'''
     print "All Done"
-
-
-def song_list_generator():
-    global song_list
-    global file_name_with_error
-    delete_indicator = ""
-    #bad_file_name = ""
-    print "Entering song_list_generator()"
-
-    if last_file_count == current_file_count:  # If matched the song_list is loaded from file
-        print "Jukebox music files same as last startup. Using existing song database."  # Message to console.
-        song_list_recover = open('song_list.pkl', 'rb')  # Loads song_list
-        song_list_open = pickle.load(song_list_recover)
-        song_list_recover.close()
-        song_list = song_list_open
-    else:  # New song_list, filecount and location_list generated and saved.
-        song_list_generate = []
-        build_list = []
-        location_list = []
-        time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # Timestamp generate bit.ly/1MKPl5x
-        log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-        log_file_entry.write(str(time_date_stamp + ',' + 'New song_list generated' + ',' + '\n'))
-        log_file_entry.close()
-        # Code below writes log entry to computers dropbox public directory for remote log access
-        if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
-            log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
-                                  + computer_account_user_name.lower() + "log.txt", "a+")
-            log_file_update.write(str(time_date_stamp + ',' + 'New song_list generated' + ',' + '\n'))
-            log_file_update.close()
-        file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt file for next start.
-        s = str(current_file_count)
-        file_count_update.write(s)
-        file_count_update.close()
-        location_list = []  # Creates temporary location_list used for initial song file names for mp3 player.
-        # File names later inserted in song_list to be used to play mp3's
-        full_path = os.path.realpath('__file__')
-        if sys.platform == 'win32':
-            for name in os.listdir(str(os.path.dirname(full_path)) + "\music" + "\\"):  # Reads files in the music dir.
-                if name.endswith(".mp3"):  # If statement searching for files with mp3 designation
-                    title = name  # Name of mp3 transferred to title variable
-                    location_list.append(title)  # Name of song appended to location_list
-        if sys.platform.startswith('linux'):
-            for name in os.listdir(str(os.path.dirname(full_path)) + "/music"):  # Reads files in the music dir.
-                if name.endswith(".mp3"):  # If statement searching for files with mp3 designation
-                    title = name  # Name of mp3 transferred to title variable
-                    location_list.append(title)  # Name of song appended to location_list
-        x = 0  # hsaudiotag 1.1.1 code begins here to pull out ID3 information
-        while x < len(location_list):  # Python List len function http://docs.python.org/2/library/functions.html#len
-            if sys.platform == 'win32':
-                myfile = auto.File(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x] + "")
-            if sys.platform.startswith('linux'):
-                myfile = auto.File(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x] + "")
-            # Note "" Quotes Required in above string.
-            # hsaudiotag function that assigns mp3 song to myfile object
-            print "Building Song Database. Stand By. This can take some time"
-            albumorg = myfile.album  # Assigns above mp3 ID3 Album name to albumorg variable
-            yearorg = myfile.year  # Assigns above mp3 ID3 Year info to yearorg variable
-            durationorgseconds = myfile.duration  # Assigns mp3 Duration (in seconds) info to durationorgseconds var.
-            genreorg = myfile.genre  # Assigns above mp3 Genre info to genreorg variable
-            commentorg = myfile.comment  # Assigns above mp3 Comment info to commentorg variable
-            build_list.append(myfile.title)  # Title of song appended to build_list
-            try:  # http://www.pythonlovers.net/python-exceptions-handling
-                unicode_crash_test = str(myfile.title)  # Causes crash if Unicode found in Artist Name
-            except UnicodeEncodeError:
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because of a Unicode character in its ID3 Title data.' + '\n'))
-                log_file_entry.close()
-                print "Title Unicode Error"
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            try:  # http://www.pythonlovers.net/python-exceptions-handling
-                unicode_crash_test = str(myfile.artist)  # Causes crash if Unicode found in Artist Name
-            except UnicodeEncodeError:
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because of a Unicode character in its ID3 Artist data.' + '\n'))
-                log_file_entry.close()
-                print "Artist Unicode Error"
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            try:  # http://www.pythonlovers.net/python-exceptions-handling
-                unicode_crash_test = str(myfile.comment)  # Causes crash if Unicode found in Artist Name
-            except UnicodeEncodeError:
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because of a Unicode character in its ID3 Comment data.' + '\n'))
-                log_file_entry.close()
-                print "Comment Unicode Error"
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            if myfile.artist == "":  # Check for invalid Artist mp3 ID tag
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                print str(location_list[x]) + "'s Artist ID3 tag is not valid for Convergence Jukebox. Please correct or remove from media folder."
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because its ID3 Artist data is not valid.' + '\n'))
-                log_file_entry.close()
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            if myfile.title == "":  # Check for invalid mp3 Title ID tag
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                print str(location_list[x]) + "'s Title ID3 tag is not valid for Convergence Jukebox. Please correct or remove from media folder."
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because its ID3 Title data is not valid.' + '\n'))
-                log_file_entry.close()
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            if x == 0:
-                database_indicator()
-            if delete_indicator == "yes":
-                file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt file for next start.
-                s = str(0)
-                file_count_update.write(s)
-                file_count_update.close()
-            if delete_indicator != "yes":
-                build_list.append(myfile.artist)  # Artist of song appended to build_list
-                build_list.append(myfile.album)  # Album title of song appended to build_list
-                build_list.append(myfile.year)  # Year of song appended to build_list
-                build_list.append(myfile.duration)  # Duration of song in seconds appended to build_list
-                build_list.append(myfile.genre)  # Genre of song appended to build_list
-                durationtimefull = str(datetime.timedelta(seconds=durationorgseconds))  # Info at http://bit.ly/1L5pU9t
-                durationtime = durationtimefull[3:7]  # Slices string to minute:second notation. http://bit.ly/1QphhOW
-                build_list.append(durationtime)  # Time of song in minutes/seconds of song appended to build_list
-                build_list.append(myfile.comment)  # Comment in ID3 data appended to build_list
-                full_file_name = str(location_list[x])
-                if sys.platform.startswith('linux'):
-                    title_with_whitespace = full_file_name
-                    title_without_whitespace = title_with_whitespace.replace(" ", "_")
-                    full_file_name = title_without_whitespace
-                    current_path = os.getcwd()
-                    temp_path = str(current_path)+'/music'
-                    os.chdir(temp_path)  # resets path
-                    os.rename(str(title_with_whitespace), str(title_without_whitespace))
-                    os.chdir(current_path)# resets path
-                build_list.append(full_file_name)
-                song_list_generate.append(build_list)
-                build_list.append(x)
-                print location_list[x]
-                print build_list[8]
-                print build_list
-                build_list = []
-                y = len(location_list) - x
-                # print "www.convergencejukebox.com Building your database " + str(full_file_name) + ". " + str(y) + \
-                # " files remaining to process."
-            delete_indicator = ""
-            print x
-            x += 1
-        song_list_save = open('song_list.pkl', 'wb')  # song_list saved as binary pickle file
-        pickle.dump(song_list_generate, song_list_save)
-        song_list_save.close()
-        song_list = song_list_generate
-    print "Exiting song_list_generator()"
-    return song_list
-
 
 
 def genre_read_and_select_engine():  # Opens and reads genreFlags.csv file. Assigns genres to random play functionality.
@@ -1741,129 +1650,6 @@ def genre_read_and_select_engine():  # Opens and reads genreFlags.csv file. Assi
         flag_thirteen = flag_file_input[12]
     flag_fourteen = flag_file_input[13]  # flag_fourteen assigned.
     flag_fourteen_change = flag_fourteen  # flag_fourteen_change assigned.
-
-
-def write_jukebox_startup_to_log():
-    time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # time_date_stamp. bit.ly/1MKPl5x
-    log_file_entry = open("log.txt", "a+")
-    log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
-    log_file_entry.close()
-
-    # Code below writes log entry to computers dropbox public directory for remote log access
-    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
-        log_file_entry = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
-                              + computer_account_user_name.lower() + "log.txt", "a+")
-        log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
-        log_file_entry.close()
-
-
-def set_up_user_files_first_time():
-    global full_path
-    current_directory = os.getcwd()
-
-    if current_directory == "/home/pi":
-        os.chdir("/home/pi/python/jukebox")
-        #current_directory = os.getcwd()
-        full_path = os.getcwd()
-    else:
-        full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
-    artist_list = []
-    upcoming_list = []
-
-    '''if sys.platform == 'win32':
-        if os.path.exists(str(os.path.dirname(full_path)) + "\music"):
-            print "music directory exists. Nothing to do here."
-        else:
-            print "music directory does not exist."
-            os.makedirs(str(os.path.dirname(full_path)) + "\music")
-            master = Tk()
-            screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
-                         + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
-            msg = Message(master, text=screen_message)
-            msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
-            msg.pack()
-            mainloop()
-
-    if sys.platform.startswith('linux'):
-        if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
-            print "music directory exists. Nothing to do here."
-        else:
-            print "music directory does not exist."
-            os.makedirs(str(os.path.dirname(full_path)) + "/music")
-            master = Tk()
-            screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
-                         + str(os.path.dirname(full_path)) + "/music and then re-run the Convergence Jukebox software"
-            msg = Message(master, text=screen_message)
-            msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
-            msg.pack()
-            mainloop()'''
-
-    if os.path.exists("log.txt"):
-        print "log.txt exists. Nothing to do here."
-    else:
-        log_file = file("log.txt", "w")
-        log_file.close()
-        print "log.txt created."
-
-    if os.path.exists("genre_flags.txt"):
-        print "genre_flags.txt exists. Nothing to do here."
-    else:
-        genre_file = file("genre_flags.txt", "w")
-        genre_file.write("null,null,null,null,null,Starting Year,Ending Year,Select Artists A thru C,"
-                         + "Select Artists D thru H,Select Artists I Thru M,Select Artists N Thru R,"
-                         + "Select Artists S Thru V,Select Artists W Thru Z,"
-                         + "Wednesday December 16 2015 12:44:11 PM")
-        genre_file.close()
-        print "genre_flags.txt created."
-
-    if os.path.exists("file_count.txt"):
-        print "file_count.txt exists. Nothing to do here."
-    else:
-        old_file_count = file("file_count.txt", "w")
-        old_file_count.write("0")
-        old_file_count.close()
-        print "file_count.txt created."
-
-    if os.path.exists("song_list.pkl"):
-        print "song_list.pkl exists. Nothing to do here."
-    else:
-        song_list_file_create = file("song_list.pkl", "wb")
-        song_list_file_create.close()
-        print "song_list.pkl created."
-
-    if os.path.exists("output_list.txt"):
-        print "output_list.txt exists. Nothing to do here."
-    else:
-        output_list_file_create = file("output_list.txt", "w")
-        output_list_file_create.write("Convergence Jukebox,Brad Fortner,www.convergencejukebox.com,2012,2016,GNU General Public License V3")
-        output_list_file_create.close()
-        print "output_list.txt created."
-
-    if os.path.exists("play_list.pkl"):
-        print "play_list.pkl exists. Nothing to do here."
-    else:
-        play_list_file_create = open('play_list.pkl', 'wb')
-        pickle.dump(play_list, play_list_file_create)
-        play_list_file_create.close()
-        print "play_list.pkl created."
-
-    if os.path.exists("upcoming_list.pkl"):
-        print "upcoming_list.pkl exists. Nothing to do here."
-    else:
-        upcoming_list_file_create = open('upcoming_list.pkl', 'wb')
-        pickle.dump(upcoming_list, upcoming_list_file_create)
-        upcoming_list_file_create.close()
-        print "upcoming_list.pkl created."
-
-    if os.path.exists("artist_list.pkl"):
-        print "artist_list.pkl exists. Nothing to do here."
-    else:
-        artist_list_file_create = open('artist_list.pkl', 'wb')
-        pickle.dump(artist_list, artist_list_file_create)
-        artist_list_file_create.close()
-        print "artist_list.pkl created."
-
-
 
 def get_available_resolutions_win():  # Checks to see if device is 720p compatable for default display.
 
@@ -2008,329 +1794,6 @@ def get_available_resolutions_win():  # Checks to see if device is 720p compatab
             msg.pack()
             mainloop()
             sys.exit()
-
-
-def set_720_resolution():
-
-    class ScreenRes(object):  # http://bit.ly/1R6CXjF
-        @classmethod
-        def set(cls, width=None, height=None, depth=32):
-            '''
-            Set the primary display to the specified mode
-            '''
-            if width and height:
-                print('Setting resolution to {}x{}'.format(width, height, depth))
-            else:
-                print('Setting resolution to defaults')
-
-            if sys.platform == 'win32':
-                cls._win32_set(width, height, depth)
-            elif sys.platform.startswith('linux'):
-                cls._linux_set(width, height, depth)
-            elif sys.platform.startswith('darwin'):
-                cls._osx_set(width, height, depth)
-
-        @classmethod
-        def get(cls):
-            if sys.platform == 'win32':
-                return cls._win32_get()
-            elif sys.platform.startswith('linux'):
-                return cls._linux_get()
-            elif sys.platform.startswith('darwin'):
-                return cls._osx_get()
-
-        @classmethod
-        def get_modes(cls):
-            if sys.platform == 'win32':
-                return cls._win32_get_modes()
-            elif sys.platform.startswith('linux'):
-                return cls._linux_get_modes()
-            elif sys.platform.startswith('darwin'):
-                return cls._osx_get_modes()
-
-        @staticmethod
-        def _win32_get_modes():  #  Get the primary windows display width and height
-            import win32api
-            from pywintypes import DEVMODEType, error
-            modes = []
-            i = 0
-            try:
-                while True:
-                    mode = win32api.EnumDisplaySettings(None, i)
-                    modes.append((
-                        int(mode.PelsWidth),
-                        int(mode.PelsHeight),
-                        int(mode.BitsPerPel),
-                        ))
-                    i += 1
-            except error:
-                pass
-
-            return modes
-
-        @staticmethod
-        def _win32_get():  #  Get the primary windows display width and height
-            import ctypes
-            user32 = ctypes.windll.user32
-            screensize = (
-                user32.GetSystemMetrics(0),
-                user32.GetSystemMetrics(1),
-                )
-            return screensize
-
-        @staticmethod
-        def _win32_set(width=None, height=None, depth=32):  # Set the primary windows display to the specified mode
-            # Gave up on ctypes, the struct is really complicated
-            import win32api
-            from pywintypes import DEVMODEType
-            if width and height:
-
-                if not depth:
-                    depth = 32
-
-                mode = win32api.EnumDisplaySettings()
-                mode.PelsWidth = width
-                mode.PelsHeight = height
-                mode.BitsPerPel = depth
-
-                win32api.ChangeDisplaySettings(mode, 0)
-            else:
-                win32api.ChangeDisplaySettings(None, 0)
-
-        @staticmethod
-        def _win32_set_default():  #  Reset the primary windows display to the default mode
-            # Interesting since it doesn't depend on pywin32
-            import ctypes
-            user32 = ctypes.windll.user32
-            # set screen size
-            user32.ChangeDisplaySettingsW(None, 0)
-
-        @staticmethod
-        def _linux_set(width=None, height=None, depth=32):
-            raise NotImplementedError()
-
-        @staticmethod
-        def _linux_get():
-            raise NotImplementedError()
-
-        @staticmethod
-        def _linux_get_modes():
-            raise NotImplementedError()
-
-        @staticmethod
-        def _osx_set(width=None, height=None, depth=32):
-            raise NotImplementedError()
-
-        @staticmethod
-        def _osx_get():
-            raise NotImplementedError()
-
-        @staticmethod
-        def _osx_get_modes():
-            raise NotImplementedError()
-
-    if __name__ == '__main__':
-        print('Primary screen resolution: {}x{}'.format(
-            *ScreenRes.get()
-            ))
-        # print(ScreenRes.get_modes())
-        ScreenRes.set(1280, 720)
-        # ScreenRes.set(1920, 1080)
-        # ScreenRes.set() # Set defaults
-
-
-def rss_writer():  # This function writes rss feeds to Dropbox public directory.
-
-    global text_display_1
-    global display_info
-    display_info_recover = open("output_list.txt", 'r+')
-    output_list_read = display_info_recover.read()
-    display_info_recover.close()
-    display_info = output_list_read.split(",")
-    rss_song_name = display_info[0]
-    rss_artist_name = display_info[1]
-    rss_album_name = display_info[2]
-    rss_year_info = display_info[3]
-    rss_time_info = display_info[4]
-    rss_mode_info = display_info[5]
-    print rss_song_name
-    print rss_artist_name
-    rss_current_song = " . . . . . " + str(rss_song_name) + " - " + str(rss_artist_name)
-    full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
-    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
-        time_now = datetime.datetime.now()
-        rss = PyRSS2Gen.RSS2(
-            title="Convergence Music System RSS Feed Current Song",
-            link="http://www.convergencejukebox.com",
-            description="",
-            lastBuildDate=datetime.datetime.now(),
-            items=[
-                PyRSS2Gen.RSSItem(
-                    title=str(rss_current_song),
-                    link="http://www.convergencejukebox.com",
-                    description="Currently Playing",
-                    pubDate=datetime.datetime(int(time_now.year), int(time_now.month), int(time_now.day),
-                                              int(time_now.hour), int(time_now.minute))),
-            ])
-
-        rss.write_xml(open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
-                           + computer_account_user_name.lower() + "_current_song.xml", "w"))
-
-        rss = PyRSS2Gen.RSS2(
-            title="Convergence Music System RSS Feed Current Song",
-            link="http://www.convergencejukebox.com",
-            description="",
-            lastBuildDate=datetime.datetime.now(),
-
-            items=[
-                PyRSS2Gen.RSSItem(
-                    title=str(rss_song_name),
-                    link="http://www.convergencejukebox.com",
-                    description="Title Currently Playing",
-                    pubDate=datetime.datetime(int(time_now.year), int(time_now.month), int(time_now.day),
-                                              int(time_now.hour), int(time_now.minute))),
-            ])
-
-        rss.write_xml(open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
-                           + computer_account_user_name.lower() + "_title_current_song.xml", "w"))
-
-        rss = PyRSS2Gen.RSS2(
-            title="Convergence Music System RSS Feed Current Song",
-            link="http://www.convergencejukebox.com",
-            description="",
-            lastBuildDate=datetime.datetime.now(),
-
-            items=[
-                PyRSS2Gen.RSSItem(
-                    title=str(rss_artist_name),
-                    link="http://www.convergencejukebox.com",
-                    description="ArtistCurrently Playing",
-                    pubDate=datetime.datetime(int(time_now.year), int(time_now.month), int(time_now.day),
-                                              int(time_now.hour), int(time_now.minute))),
-            ])
-
-        rss.write_xml(open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
-                           + computer_account_user_name.lower() + "_artist_current_song.xml", "w"))
-
-
-def selections_screen_updater(self):
-    if len(upcoming_list) >= 1:
-        self.my_selection_one.text = str(upcoming_list[0])
-    if len(upcoming_list) >= 2:
-        self.my_selection_two.text = str(upcoming_list[1])
-    if len(upcoming_list) >= 3:
-        self.my_selection_three.text = str(upcoming_list[2])
-    if len(upcoming_list) >= 4:
-        self.my_selection_four.text = str(upcoming_list[3])
-    if len(upcoming_list) >= 5:
-        self.my_selection_five.text = str(upcoming_list[4])
-    if len(upcoming_list) >= 6:
-        self.my_selection_six.text = str(upcoming_list[5])
-    if len(upcoming_list) >= 7:
-        self.my_selection_seven.text = str(upcoming_list[6])
-    if len(upcoming_list) >= 8:
-        self.my_selection_eight.text = str(upcoming_list[7])
-    if len(upcoming_list) >= 9:
-        self.my_selection_nine.text = str(upcoming_list[8])
-    if len(upcoming_list) >= 10:
-        self.my_selection_ten.text = str(upcoming_list[9])
-    if len(upcoming_list) >= 11:
-        self.my_selection_eleven.text = str(upcoming_list[10])
-    if len(upcoming_list) >= 12:
-        self.my_selection_twelve.text = str(upcoming_list[11])
-    if len(upcoming_list) >= 13:
-        self.my_selection_thirteen.text = str(upcoming_list[12])
-    if len(upcoming_list) >= 14:
-        self.my_selection_fourteen.text = str(upcoming_list[13])
-    if len(upcoming_list) >= 15:
-        self.my_selection_fifteen.text = str(upcoming_list[14])
-    if len(upcoming_list) >= 16:
-        self.my_selection_sixteen.text = str(upcoming_list[15])
-    if len(upcoming_list) == 17:
-        self.my_selection_seventeen.text = str(upcoming_list[16])
-
-
-def screen_cursor_positioner(adder):  # Determines Screen Number And Cursor Position
-    global cursor_position
-    global screen_number
-    screen_number = adder / 16
-    if screen_number > 0:
-        cursor_position = (adder % (screen_number * 16))
-    else:
-        cursor_position = adder
-    return adder
-
-
-def selections_screen_starter(self):
-    global upcoming_list
-    if len(upcoming_list) >= 1:
-        self.my_selection_one = Label(text=str(upcoming_list[0]), pos=(40, 107))
-    else:
-        self.my_selection_one = Label(text=' ', pos=(40, 107))
-    if len(upcoming_list) >= 2:
-        self.my_selection_two = Label(text=str(upcoming_list[1]), pos=(40, 88))
-    else:
-        self.my_selection_two = Label(text=' ', pos=(40, 88))
-    if len(upcoming_list) >= 3:
-        self.my_selection_three = Label(text=str(upcoming_list[2]), pos=(40, 69))
-    else:
-        self.my_selection_three = Label(text=' ', pos=(40, 69))
-    if len(upcoming_list) >= 4:
-        self.my_selection_four = Label(text=str(upcoming_list[3]), pos=(40, 50))
-    else:
-        self.my_selection_four = Label(text=' ', pos=(40, 50))
-    if len(upcoming_list) >= 5:
-        self.my_selection_five = Label(text=str(upcoming_list[4]), pos=(40, 31))
-    else:
-        self.my_selection_five = Label(text=' ', pos=(40, 31))
-    if len(upcoming_list) >= 6:
-        self.my_selection_six = Label(text=str(upcoming_list[5]), pos=(40, 12))
-    else:
-        self.my_selection_six = Label(text=' ', pos=(40, 12))
-    if len(upcoming_list) >= 7:
-        self.my_selection_seven = Label(text=str(upcoming_list[6]), pos=(40, -7))
-    else:
-        self.my_selection_seven = Label(text=' ', pos=(40, -7))
-    if len(upcoming_list) >= 8:
-        self.my_selection_eight = Label(text=str(upcoming_list[7]), pos=(40, -26))
-    else:
-        self.my_selection_eight = Label(text=' ', pos=(40, -26))
-    if len(upcoming_list) >= 9:
-        self.my_selection_nine = Label(text=str(upcoming_list[8]), pos=(40, -47))
-    else:
-        self.my_selection_nine = Label(text=' ', pos=(40, -47))
-    if len(upcoming_list) >= 10:
-        self.my_selection_ten = Label(text=str(upcoming_list[9]), pos=(40, -66))
-    else:
-        self.my_selection_ten = Label(text=' ', pos=(40, -66))
-    if len(upcoming_list) >= 11:
-        self.my_selection_eleven = Label(text=str(upcoming_list[10]), pos=(40, -85))
-    else:
-        self.my_selection_eleven = Label(text=' ', pos=(40, -85))
-    if len(upcoming_list) >= 12:
-        self.my_selection_twelve = Label(text=str(upcoming_list[11]), pos=(40, -104))
-    else:
-        self.my_selection_twelve = Label(text=' ', pos=(40, -104))
-    if len(upcoming_list) >= 13:
-        self.my_selection_thirteen = Label(text=str(upcoming_list[12]), pos=(40, -123))
-    else:
-        self.my_selection_thirteen = Label(text=' ', pos=(40, -123))
-    if len(upcoming_list) >= 14:
-        self.my_selection_fourteen = Label(text=str(upcoming_list[13]), pos=(40, -142))
-    else:
-        self.my_selection_fourteen = Label(text=' ', pos=(40, -142))
-    if len(upcoming_list) >= 15:
-        self.my_selection_fifteen = Label(text=str(upcoming_list[14]), pos=(40, -161))
-    else:
-        self.my_selection_fifteen = Label(text=' ', pos=(40, -161))
-    if len(upcoming_list) >= 16:
-        self.my_selection_sixteen = Label(text=str(upcoming_list[15]), pos=(40, -180))
-    else:
-        self.my_selection_sixteen = Label(text=" ", pos=(40, -180))
-    if len(upcoming_list) == 17:
-        self.my_selection_seventeen = Label(text=str(upcoming_list[16]), pos=(40, -199))
-    else:
-        self.my_selection_seventeen = Label(text=' ', pos=(40, -199))
 
 
 def highlighted_selection_generator(self):  # Updates cursor location on selection screen.
@@ -2481,6 +1944,176 @@ def highlighted_selection_generator(self):  # Updates cursor location on selecti
         for i in range(0, len(song_list) - 1):
             if song_list[i][0] == self.my_sixteenth_title.text and song_list[i][1] == self.my_sixteenth_artist.text:
                 song_selection_number = song_list[i][9]
+
+
+
+class JukeboxScreen(FloatLayout):
+    pass
+
+
+def mciSend(s):  # Function of playmp3.py
+    if sys.platform == 'win32':
+        winmm = windll.winmm  # Variable used in playmp3.py.
+        i = winmm.mciSendStringA(s, 0, 0, 0)
+        if i != 0:
+            print "Error %d in mciSendString %s" % (i, s)
+
+
+def my_clock_function(dt): # Code To Use Later
+    print 'My callback is called', dt
+
+
+
+def playMP3(mp3Name):  # Function of playmp3.py
+    mciSend("Close All")
+    mciSend("Open \"%s\" Type MPEGVideo Alias theMP3" % mp3Name)
+    mciSend("Play theMP3 Wait")
+    mciSend("Close theMP3")
+
+
+
+
+def resize_button_text(self):
+    self.my_first_title.font_size = 16
+    self.my_first_artist.font_size = 16
+    self.my_second_title.font_size = 16
+    self.my_second_artist.font_size = 16
+    self.my_third_title.font_size = 16
+    self.my_third_artist.font_size = 16
+    self.my_fourth_title.font_size = 16
+    self.my_fourth_artist.font_size = 16
+    self.my_fifth_title.font_size = 16
+    self.my_fifth_artist.font_size = 16
+    self.my_sixth_title.font_size = 16
+    self.my_sixth_artist.font_size = 16
+    self.my_seventh_title.font_size = 16
+    self.my_seventh_artist.font_size = 16
+    self.my_eigth_title.font_size = 16
+    self.my_eigth_artist.font_size = 16
+    self.my_ninth_title.font_size = 16
+    self.my_ninth_artist.font_size = 16
+    self.my_tenth_title.font_size = 16
+    self.my_tenth_artist.font_size = 16
+    self.my_eleventh_title.font_size = 16
+    self.my_eleventh_artist.font_size = 16
+    self.my_twelfth_title.font_size = 16
+    self.my_twelfth_artist.font_size = 16
+    self.my_thirteenth_title.font_size = 16
+    self.my_thirteenth_artist.font_size = 16
+    self.my_fourteenth_title.font_size = 16
+    self.my_fourteenth_artist.font_size = 16
+    self.my_fifteenth_title.font_size = 16
+    self.my_fifteenth_artist.font_size = 16
+    self.my_sixteenth_title.font_size = 16
+    self.my_sixteenth_artist.font_size = 16
+
+
+
+def rss_writer():  # This function writes rss feeds to Dropbox public directory.
+
+    global text_display_1
+    global display_info
+    display_info_recover = open("output_list.txt", 'r+')
+    output_list_read = display_info_recover.read()
+    display_info_recover.close()
+    display_info = output_list_read.split(",")
+    rss_song_name = display_info[0]
+    rss_artist_name = display_info[1]
+    rss_album_name = display_info[2]
+    rss_year_info = display_info[3]
+    rss_time_info = display_info[4]
+    rss_mode_info = display_info[5]
+    print rss_song_name
+    print rss_artist_name
+    rss_current_song = " . . . . . " + str(rss_song_name) + " - " + str(rss_artist_name)
+    full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
+    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+        time_now = datetime.datetime.now()
+        rss = PyRSS2Gen.RSS2(
+            title="Convergence Music System RSS Feed Current Song",
+            link="http://www.convergencejukebox.com",
+            description="",
+            lastBuildDate=datetime.datetime.now(),
+            items=[
+                PyRSS2Gen.RSSItem(
+                    title=str(rss_current_song),
+                    link="http://www.convergencejukebox.com",
+                    description="Currently Playing",
+                    pubDate=datetime.datetime(int(time_now.year), int(time_now.month), int(time_now.day),
+                                              int(time_now.hour), int(time_now.minute))),
+            ])
+
+        rss.write_xml(open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                           + computer_account_user_name.lower() + "_current_song.xml", "w"))
+
+        rss = PyRSS2Gen.RSS2(
+            title="Convergence Music System RSS Feed Current Song",
+            link="http://www.convergencejukebox.com",
+            description="",
+            lastBuildDate=datetime.datetime.now(),
+
+            items=[
+                PyRSS2Gen.RSSItem(
+                    title=str(rss_song_name),
+                    link="http://www.convergencejukebox.com",
+                    description="Title Currently Playing",
+                    pubDate=datetime.datetime(int(time_now.year), int(time_now.month), int(time_now.day),
+                                              int(time_now.hour), int(time_now.minute))),
+            ])
+
+        rss.write_xml(open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                           + computer_account_user_name.lower() + "_title_current_song.xml", "w"))
+
+        rss = PyRSS2Gen.RSS2(
+            title="Convergence Music System RSS Feed Current Song",
+            link="http://www.convergencejukebox.com",
+            description="",
+            lastBuildDate=datetime.datetime.now(),
+
+            items=[
+                PyRSS2Gen.RSSItem(
+                    title=str(rss_artist_name),
+                    link="http://www.convergencejukebox.com",
+                    description="ArtistCurrently Playing",
+                    pubDate=datetime.datetime(int(time_now.year), int(time_now.month), int(time_now.day),
+                                              int(time_now.hour), int(time_now.minute))),
+            ])
+
+        rss.write_xml(open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                           + computer_account_user_name.lower() + "_artist_current_song.xml", "w"))
+
+
+
+def screen_cursor_positioner(adder):  # Determines Screen Number And Cursor Position
+    global cursor_position
+    global screen_number
+    screen_number = adder / 16
+    if screen_number > 0:
+        cursor_position = (adder % (screen_number * 16))
+    else:
+        cursor_position = adder
+    return adder
+
+
+def selection_font_size(self):
+    self.my_selection_one.font_size = 16
+    self.my_selection_two.font_size = 16
+    self.my_selection_three.font_size = 16
+    self.my_selection_four.font_size = 16
+    self.my_selection_five.font_size = 16
+    self.my_selection_six.font_size = 16
+    self.my_selection_seven.font_size = 16
+    self.my_selection_eight.font_size = 16
+    self.my_selection_nine.font_size = 16
+    self.my_selection_ten.font_size = 16
+    self.my_selection_eleven.font_size = 16
+    self.my_selection_twelve.font_size = 16
+    self.my_selection_thirteen.font_size = 16
+    self.my_selection_fourteen.font_size = 16
+    self.my_selection_fifteen.font_size = 16
+    self.my_selection_sixteen.font_size = 16
+    self.my_selection_seventeen.font_size = 16
+
 
 
 def selection_screen(self):  # Updates selection screen.
@@ -2831,238 +2464,244 @@ def selection_screen(self):  # Updates selection screen.
     clear_button_color(self)
 
 
-def credit_calculator(event=None):
-    global credit_amount
-    credit_amount += 1
-    print credit_amount
 
-
-def selection_font_size(self):
-    self.my_selection_one.font_size = 16
-    self.my_selection_two.font_size = 16
-    self.my_selection_three.font_size = 16
-    self.my_selection_four.font_size = 16
-    self.my_selection_five.font_size = 16
-    self.my_selection_six.font_size = 16
-    self.my_selection_seven.font_size = 16
-    self.my_selection_eight.font_size = 16
-    self.my_selection_nine.font_size = 16
-    self.my_selection_ten.font_size = 16
-    self.my_selection_eleven.font_size = 16
-    self.my_selection_twelve.font_size = 16
-    self.my_selection_thirteen.font_size = 16
-    self.my_selection_fourteen.font_size = 16
-    self.my_selection_fifteen.font_size = 16
-    self.my_selection_sixteen.font_size = 16
-    self.my_selection_seventeen.font_size = 16
-
-
-def resize_button_text(self):
-    self.my_first_title.font_size = 16
-    self.my_first_artist.font_size = 16
-    self.my_second_title.font_size = 16
-    self.my_second_artist.font_size = 16
-    self.my_third_title.font_size = 16
-    self.my_third_artist.font_size = 16
-    self.my_fourth_title.font_size = 16
-    self.my_fourth_artist.font_size = 16
-    self.my_fifth_title.font_size = 16
-    self.my_fifth_artist.font_size = 16
-    self.my_sixth_title.font_size = 16
-    self.my_sixth_artist.font_size = 16
-    self.my_seventh_title.font_size = 16
-    self.my_seventh_artist.font_size = 16
-    self.my_eigth_title.font_size = 16
-    self.my_eigth_artist.font_size = 16
-    self.my_ninth_title.font_size = 16
-    self.my_ninth_artist.font_size = 16
-    self.my_tenth_title.font_size = 16
-    self.my_tenth_artist.font_size = 16
-    self.my_eleventh_title.font_size = 16
-    self.my_eleventh_artist.font_size = 16
-    self.my_twelfth_title.font_size = 16
-    self.my_twelfth_artist.font_size = 16
-    self.my_thirteenth_title.font_size = 16
-    self.my_thirteenth_artist.font_size = 16
-    self.my_fourteenth_title.font_size = 16
-    self.my_fourteenth_artist.font_size = 16
-    self.my_fifteenth_title.font_size = 16
-    self.my_fifteenth_artist.font_size = 16
-    self.my_sixteenth_title.font_size = 16
-    self.my_sixteenth_artist.font_size = 16
-
-
-def clear_button_color(self):
-    self.my_first_title.background_color = (0, 0, 0, 0)
-    self.my_first_artist.background_color = (0, 0, 0, 0)
-    self.my_second_title.background_color = (0, 0, 0, 0)
-    self.my_second_artist.background_color = (0, 0, 0, 0)
-    self.my_third_title.background_color = (0, 0, 0, 0)
-    self.my_third_artist.background_color = (0, 0, 0, 0)
-    self.my_fourth_title.background_color = (0, 0, 0, 0)
-    self.my_fourth_artist.background_color = (0, 0, 0, 0)
-    self.my_fifth_title.background_color = (0, 0, 0, 0)
-    self.my_fifth_artist.background_color = (0, 0, 0, 0)
-    self.my_sixth_title.background_color = (0, 0, 0, 0)
-    self.my_sixth_artist.background_color = (0, 0, 0, 0)
-    self.my_seventh_title.background_color = (0, 0, 0, 0)
-    self.my_seventh_artist.background_color = (0, 0, 0, 0)
-    self.my_eigth_title.background_color = (0, 0, 0, 0)
-    self.my_eigth_artist.background_color = (0, 0, 0, 0)
-    self.my_ninth_title.background_color = (0, 0, 0, 0)
-    self.my_ninth_artist.background_color = (0, 0, 0, 0)
-    self.my_tenth_title.background_color = (0, 0, 0, 0)
-    self.my_tenth_artist.background_color = (0, 0, 0, 0)
-    self.my_eleventh_title.background_color = (0, 0, 0, 0)
-    self.my_eleventh_artist.background_color = (0, 0, 0, 0)
-    self.my_twelfth_title.background_color = (0, 0, 0, 0)
-    self.my_twelfth_artist.background_color = (0, 0, 0, 0)
-    self.my_thirteenth_title.background_color = (0, 0, 0, 0)
-    self.my_thirteenth_artist.background_color = (0, 0, 0, 0)
-    self.my_fourteenth_title.background_color = (0, 0, 0, 0)
-    self.my_fourteenth_artist.background_color = (0, 0, 0, 0)
-    self.my_fifteenth_title.background_color = (0, 0, 0, 0)
-    self.my_fifteenth_artist.background_color = (0, 0, 0, 0)
-    self.my_sixteenth_title.background_color = (0, 0, 0, 0)
-    self.my_sixteenth_artist.background_color = (0, 0, 0, 0)
-
-
-def clear_last_selections(self):
-    if self.my_first_title.text == "zzzzz":
-        self.my_first_title.font_size = 0
-        self.my_first_artist.font_size = 0
-    if self.my_second_title.text == "zzzzz":
-        self.my_second_title.font_size = 0
-        self.my_second_artist.font_size = 0
-    if self.my_third_title.text == "zzzzz":
-        self.my_third_title.font_size = 0
-        self.my_third_artist.font_size = 0
-    if self.my_fourth_title.text == "zzzzz":
-        self.my_fourth_title.font_size = 0
-        self.my_fourth_artist.font_size = 0
-    if self.my_fifth_title.text == "zzzzz":
-        self.my_fifth_title.font_size = 0
-        self.my_fifth_artist.font_size = 0
-    if self.my_sixth_title.text == "zzzzz":
-        self.my_sixth_title.font_size = 0
-        self.my_sixth_artist.font_size = 0
-    if self.my_seventh_title.text == "zzzzz":
-        self.my_seventh_title.font_size = 0
-        self.my_seventh_artist.font_size = 0
-    if self.my_eigth_title.text == "zzzzz":
-        self.my_eigth_title.font_size = 0
-        self.my_eigth_artist.font_size = 0
-    if self.my_ninth_title.text == "zzzzz":
-        self.my_ninth_title.font_size = 0
-        self.my_ninth_artist.font_size = 0
-    if self.my_tenth_title.text == "zzzzz":
-        self.my_tenth_title.font_size = 0
-        self.my_tenth_artist.font_size = 0
-    if self.my_eleventh_title.text == "zzzzz":
-        self.my_eleventh_title.font_size = 0
-        self.my_eleventh_artist.font_size = 0
-    if self.my_twelfth_title.text == "zzzzz":
-        self.my_twelfth_title.font_size = 0
-        self.my_twelfth_artist.font_size = 0
-    if self.my_thirteenth_title.text == "zzzzz":
-        self.my_thirteenth_title.font_size = 0
-        self.my_thirteenth_artist.font_size = 0
-    if self.my_fourteenth_title.text == "zzzzz":
-        self.my_fourteenth_title.font_size = 0
-        self.my_fourteenth_artist.font_size = 0
-    if self.my_fifteenth_title.text == "zzzzz":
-        self.my_fifteenth_title.font_size = 0
-        self.my_fifteenth_artist.font_size = 0
-    if self.my_sixteenth_title.text == "zzzzz":
-        self.my_sixteenth_title.font_size = 0
-        self.my_sixteenth_artist.font_size = 0
-
-
-def song_entry(song_number):  # Writes selected song to playlist.
-    global credit_amount
+def selections_screen_starter(self):
     global upcoming_list
-    if credit_amount == 0:
-        playMP3('buzz.mp3')
-        return
-    play_list_recover = open('play_list.pkl', 'rb')
-    play_list = pickle.load(play_list_recover)
-    play_list_recover.close()
-    new_entry = song_number
-    print new_entry
-    if new_entry in play_list:  # Checks if song number is in play_list to avoid duplicates. http://bit.ly/2pTlkLS
-        a = play_list.index(song_number)  # Locates song number in play_list. Index number assigned to variable.
-        b = play_list[a]  # b variable assigned song number at play_list index provided in above line.
-        if song_number == b:
-            return
-    x = 0
-    while x < len(song_list):  # Saves all upcoming song titles and artist to upcoming_list for side display.
-        if song_list[x][9] == new_entry:
-            print song_list[x][0]
-            upcoming_song = str(song_list[x][0]) + " - " + str(song_list[x][1])
-            upcoming_list_recover = open('upcoming_list.pkl', 'rb')
-            upcoming_list = pickle.load(upcoming_list_recover)
-            upcoming_list_recover.close()
-            upcoming_list.append(upcoming_song)
-            upcoming_list_save = open('upcoming_list.pkl', 'wb')
-            pickle.dump(upcoming_list, upcoming_list_save)
-            upcoming_list_save.close()
-        x += 1
-    play_list.append(new_entry)
-    play_list_save = open('play_list.pkl', 'wb')
-    pickle.dump(play_list, play_list_save)
-    play_list_save.close()
-    credit_amount -= 1
-    playMP3('success.mp3')
+    if len(upcoming_list) >= 1:
+        self.my_selection_one = Label(text=str(upcoming_list[0]), pos=(40, 107))
+    else:
+        self.my_selection_one = Label(text=' ', pos=(40, 107))
+    if len(upcoming_list) >= 2:
+        self.my_selection_two = Label(text=str(upcoming_list[1]), pos=(40, 88))
+    else:
+        self.my_selection_two = Label(text=' ', pos=(40, 88))
+    if len(upcoming_list) >= 3:
+        self.my_selection_three = Label(text=str(upcoming_list[2]), pos=(40, 69))
+    else:
+        self.my_selection_three = Label(text=' ', pos=(40, 69))
+    if len(upcoming_list) >= 4:
+        self.my_selection_four = Label(text=str(upcoming_list[3]), pos=(40, 50))
+    else:
+        self.my_selection_four = Label(text=' ', pos=(40, 50))
+    if len(upcoming_list) >= 5:
+        self.my_selection_five = Label(text=str(upcoming_list[4]), pos=(40, 31))
+    else:
+        self.my_selection_five = Label(text=' ', pos=(40, 31))
+    if len(upcoming_list) >= 6:
+        self.my_selection_six = Label(text=str(upcoming_list[5]), pos=(40, 12))
+    else:
+        self.my_selection_six = Label(text=' ', pos=(40, 12))
+    if len(upcoming_list) >= 7:
+        self.my_selection_seven = Label(text=str(upcoming_list[6]), pos=(40, -7))
+    else:
+        self.my_selection_seven = Label(text=' ', pos=(40, -7))
+    if len(upcoming_list) >= 8:
+        self.my_selection_eight = Label(text=str(upcoming_list[7]), pos=(40, -26))
+    else:
+        self.my_selection_eight = Label(text=' ', pos=(40, -26))
+    if len(upcoming_list) >= 9:
+        self.my_selection_nine = Label(text=str(upcoming_list[8]), pos=(40, -47))
+    else:
+        self.my_selection_nine = Label(text=' ', pos=(40, -47))
+    if len(upcoming_list) >= 10:
+        self.my_selection_ten = Label(text=str(upcoming_list[9]), pos=(40, -66))
+    else:
+        self.my_selection_ten = Label(text=' ', pos=(40, -66))
+    if len(upcoming_list) >= 11:
+        self.my_selection_eleven = Label(text=str(upcoming_list[10]), pos=(40, -85))
+    else:
+        self.my_selection_eleven = Label(text=' ', pos=(40, -85))
+    if len(upcoming_list) >= 12:
+        self.my_selection_twelve = Label(text=str(upcoming_list[11]), pos=(40, -104))
+    else:
+        self.my_selection_twelve = Label(text=' ', pos=(40, -104))
+    if len(upcoming_list) >= 13:
+        self.my_selection_thirteen = Label(text=str(upcoming_list[12]), pos=(40, -123))
+    else:
+        self.my_selection_thirteen = Label(text=' ', pos=(40, -123))
+    if len(upcoming_list) >= 14:
+        self.my_selection_fourteen = Label(text=str(upcoming_list[13]), pos=(40, -142))
+    else:
+        self.my_selection_fourteen = Label(text=' ', pos=(40, -142))
+    if len(upcoming_list) >= 15:
+        self.my_selection_fifteen = Label(text=str(upcoming_list[14]), pos=(40, -161))
+    else:
+        self.my_selection_fifteen = Label(text=' ', pos=(40, -161))
+    if len(upcoming_list) >= 16:
+        self.my_selection_sixteen = Label(text=str(upcoming_list[15]), pos=(40, -180))
+    else:
+        self.my_selection_sixteen = Label(text=" ", pos=(40, -180))
+    if len(upcoming_list) == 17:
+        self.my_selection_seventeen = Label(text=str(upcoming_list[16]), pos=(40, -199))
+    else:
+        self.my_selection_seventeen = Label(text=' ', pos=(40, -199))
 
 
-def mciSend(s):  # Function of playmp3.py
-    if sys.platform == 'win32':
-        winmm = windll.winmm  # Variable used in playmp3.py.
-        i = winmm.mciSendStringA(s, 0, 0, 0)
-        if i != 0:
-            print "Error %d in mciSendString %s" % (i, s)
+
+def selections_screen_updater(self):
+    if len(upcoming_list) >= 1:
+        self.my_selection_one.text = str(upcoming_list[0])
+    if len(upcoming_list) >= 2:
+        self.my_selection_two.text = str(upcoming_list[1])
+    if len(upcoming_list) >= 3:
+        self.my_selection_three.text = str(upcoming_list[2])
+    if len(upcoming_list) >= 4:
+        self.my_selection_four.text = str(upcoming_list[3])
+    if len(upcoming_list) >= 5:
+        self.my_selection_five.text = str(upcoming_list[4])
+    if len(upcoming_list) >= 6:
+        self.my_selection_six.text = str(upcoming_list[5])
+    if len(upcoming_list) >= 7:
+        self.my_selection_seven.text = str(upcoming_list[6])
+    if len(upcoming_list) >= 8:
+        self.my_selection_eight.text = str(upcoming_list[7])
+    if len(upcoming_list) >= 9:
+        self.my_selection_nine.text = str(upcoming_list[8])
+    if len(upcoming_list) >= 10:
+        self.my_selection_ten.text = str(upcoming_list[9])
+    if len(upcoming_list) >= 11:
+        self.my_selection_eleven.text = str(upcoming_list[10])
+    if len(upcoming_list) >= 12:
+        self.my_selection_twelve.text = str(upcoming_list[11])
+    if len(upcoming_list) >= 13:
+        self.my_selection_thirteen.text = str(upcoming_list[12])
+    if len(upcoming_list) >= 14:
+        self.my_selection_fourteen.text = str(upcoming_list[13])
+    if len(upcoming_list) >= 15:
+        self.my_selection_fifteen.text = str(upcoming_list[14])
+    if len(upcoming_list) >= 16:
+        self.my_selection_sixteen.text = str(upcoming_list[15])
+    if len(upcoming_list) == 17:
+        self.my_selection_seventeen.text = str(upcoming_list[16])
 
 
-def playMP3(mp3Name):  # Function of playmp3.py
-    mciSend("Close All")
-    mciSend("Open \"%s\" Type MPEGVideo Alias theMP3" % mp3Name)
-    mciSend("Play theMP3 Wait")
-    mciSend("Close theMP3")
+def set_720_resolution():
 
+    class ScreenRes(object):  # http://bit.ly/1R6CXjF
+        @classmethod
+        def set(cls, width=None, height=None, depth=32):
+            '''
+            Set the primary display to the specified mode
+            '''
+            if width and height:
+                print('Setting resolution to {}x{}'.format(width, height, depth))
+            else:
+                print('Setting resolution to defaults')
 
-def clear_alpha_keys(event=None):
-    global a_key_press
-    global d_key_press
-    global g_key_press
-    global j_key_press
-    global m_key_press
-    global p_key_press
-    global t_key_press
-    global w_key_press
-    a_key_press = 0  # Resets other multikeys to base letter..
-    d_key_press = 0
-    g_key_press = 0
-    j_key_press = 0
-    m_key_press = 0
-    p_key_press = 0
-    w_key_press = 0
-    t_key_press = 0
+            if sys.platform == 'win32':
+                cls._win32_set(width, height, depth)
+            elif sys.platform.startswith('linux'):
+                cls._linux_set(width, height, depth)
+            elif sys.platform.startswith('darwin'):
+                cls._osx_set(width, height, depth)
 
+        @classmethod
+        def get(cls):
+            if sys.platform == 'win32':
+                return cls._win32_get()
+            elif sys.platform.startswith('linux'):
+                return cls._linux_get()
+            elif sys.platform.startswith('darwin'):
+                return cls._osx_get()
 
-def so_long(event=None):  # Used to terminate program.
+        @classmethod
+        def get_modes(cls):
+            if sys.platform == 'win32':
+                return cls._win32_get_modes()
+            elif sys.platform.startswith('linux'):
+                return cls._linux_get_modes()
+            elif sys.platform.startswith('darwin'):
+                return cls._osx_get_modes()
 
-    if sys.platform == 'win32':
-        set_default_screen_resolution()
-        if os.path.exists(str(os.path.dirname(full_path)) + "\convergenceplayer.py"):
-            os.system("player_quit_py.exe")  # Launches Convergence Jukebox Player
-            jukebox_display.destroy()
-        else:
-            os.system("taskkill /im convergenceplayer.exe")
-            jukebox_display.destroy()
+        @staticmethod
+        def _win32_get_modes():  #  Get the primary windows display width and height
+            import win32api
+            from pywintypes import DEVMODEType, error
+            modes = []
+            i = 0
+            try:
+                while True:
+                    mode = win32api.EnumDisplaySettings(None, i)
+                    modes.append((
+                        int(mode.PelsWidth),
+                        int(mode.PelsHeight),
+                        int(mode.BitsPerPel),
+                        ))
+                    i += 1
+            except error:
+                pass
 
-    if sys.platform.startswith('linux'):
-        sys.exit()
+            return modes
 
+        @staticmethod
+        def _win32_get():  #  Get the primary windows display width and height
+            import ctypes
+            user32 = ctypes.windll.user32
+            screensize = (
+                user32.GetSystemMetrics(0),
+                user32.GetSystemMetrics(1),
+                )
+            return screensize
+
+        @staticmethod
+        def _win32_set(width=None, height=None, depth=32):  # Set the primary windows display to the specified mode
+            # Gave up on ctypes, the struct is really complicated
+            import win32api
+            from pywintypes import DEVMODEType
+            if width and height:
+
+                if not depth:
+                    depth = 32
+
+                mode = win32api.EnumDisplaySettings()
+                mode.PelsWidth = width
+                mode.PelsHeight = height
+                mode.BitsPerPel = depth
+
+                win32api.ChangeDisplaySettings(mode, 0)
+            else:
+                win32api.ChangeDisplaySettings(None, 0)
+
+        @staticmethod
+        def _win32_set_default():  #  Reset the primary windows display to the default mode
+            # Interesting since it doesn't depend on pywin32
+            import ctypes
+            user32 = ctypes.windll.user32
+            # set screen size
+            user32.ChangeDisplaySettingsW(None, 0)
+
+        @staticmethod
+        def _linux_set(width=None, height=None, depth=32):
+            raise NotImplementedError()
+
+        @staticmethod
+        def _linux_get():
+            raise NotImplementedError()
+
+        @staticmethod
+        def _linux_get_modes():
+            raise NotImplementedError()
+
+        @staticmethod
+        def _osx_set(width=None, height=None, depth=32):
+            raise NotImplementedError()
+
+        @staticmethod
+        def _osx_get():
+            raise NotImplementedError()
+
+        @staticmethod
+        def _osx_get_modes():
+            raise NotImplementedError()
+
+    if __name__ == '__main__':
+        print('Primary screen resolution: {}x{}'.format(
+            *ScreenRes.get()
+            ))
+        # print(ScreenRes.get_modes())
+        ScreenRes.set(1280, 720)
+        # ScreenRes.set(1920, 1080)
+        # ScreenRes.set() # Set defaults
 
 def set_default_screen_resolution():  # Used by so_long()
 
@@ -3211,6 +2850,370 @@ def set_default_screen_resolution():  # Used by so_long()
             os.chdir(path)  # sets path for mpg321
             [os.rename(f, f.replace('_', ' ')) for f in os.listdir('.') if not f.startswith('.')]
         ScreenRes.set()  # Set defaults
+
+def set_up_user_files_first_time():
+    global full_path
+    current_directory = os.getcwd()
+
+    if current_directory == "/home/pi":
+        os.chdir("/home/pi/python/jukebox")
+        #current_directory = os.getcwd()
+        full_path = os.getcwd()
+    else:
+        full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
+    artist_list = []
+    upcoming_list = []
+
+    '''if sys.platform == 'win32':
+        if os.path.exists(str(os.path.dirname(full_path)) + "\music"):
+            print "music directory exists. Nothing to do here."
+        else:
+            print "music directory does not exist."
+            os.makedirs(str(os.path.dirname(full_path)) + "\music")
+            master = Tk()
+            screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
+                         + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
+            msg = Message(master, text=screen_message)
+            msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
+            msg.pack()
+            mainloop()
+
+    if sys.platform.startswith('linux'):
+        if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
+            print "music directory exists. Nothing to do here."
+        else:
+            print "music directory does not exist."
+            os.makedirs(str(os.path.dirname(full_path)) + "/music")
+            master = Tk()
+            screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
+                         + str(os.path.dirname(full_path)) + "/music and then re-run the Convergence Jukebox software"
+            msg = Message(master, text=screen_message)
+            msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
+            msg.pack()
+            mainloop()'''
+
+    if os.path.exists("log.txt"):
+        print "log.txt exists. Nothing to do here."
+    else:
+        log_file = file("log.txt", "w")
+        log_file.close()
+        print "log.txt created."
+
+    if os.path.exists("genre_flags.txt"):
+        print "genre_flags.txt exists. Nothing to do here."
+    else:
+        genre_file = file("genre_flags.txt", "w")
+        genre_file.write("null,null,null,null,null,Starting Year,Ending Year,Select Artists A thru C,"
+                         + "Select Artists D thru H,Select Artists I Thru M,Select Artists N Thru R,"
+                         + "Select Artists S Thru V,Select Artists W Thru Z,"
+                         + "Wednesday December 16 2015 12:44:11 PM")
+        genre_file.close()
+        print "genre_flags.txt created."
+
+    if os.path.exists("file_count.txt"):
+        print "file_count.txt exists. Nothing to do here."
+    else:
+        old_file_count = file("file_count.txt", "w")
+        old_file_count.write("0")
+        old_file_count.close()
+        print "file_count.txt created."
+
+    if os.path.exists("song_list.pkl"):
+        print "song_list.pkl exists. Nothing to do here."
+    else:
+        song_list_file_create = file("song_list.pkl", "wb")
+        song_list_file_create.close()
+        print "song_list.pkl created."
+
+    if os.path.exists("output_list.txt"):
+        print "output_list.txt exists. Nothing to do here."
+    else:
+        output_list_file_create = file("output_list.txt", "w")
+        output_list_file_create.write("Convergence Jukebox,Brad Fortner,www.convergencejukebox.com,2012,2016,GNU General Public License V3")
+        output_list_file_create.close()
+        print "output_list.txt created."
+
+    if os.path.exists("play_list.pkl"):
+        print "play_list.pkl exists. Nothing to do here."
+    else:
+        play_list_file_create = open('play_list.pkl', 'wb')
+        pickle.dump(play_list, play_list_file_create)
+        play_list_file_create.close()
+        print "play_list.pkl created."
+
+    if os.path.exists("upcoming_list.pkl"):
+        print "upcoming_list.pkl exists. Nothing to do here."
+    else:
+        upcoming_list_file_create = open('upcoming_list.pkl', 'wb')
+        pickle.dump(upcoming_list, upcoming_list_file_create)
+        upcoming_list_file_create.close()
+        print "upcoming_list.pkl created."
+
+    if os.path.exists("artist_list.pkl"):
+        print "artist_list.pkl exists. Nothing to do here."
+    else:
+        artist_list_file_create = open('artist_list.pkl', 'wb')
+        pickle.dump(artist_list, artist_list_file_create)
+        artist_list_file_create.close()
+        print "artist_list.pkl created."
+
+def so_long(event=None):  # Used to terminate program.
+
+    if sys.platform == 'win32':
+        set_default_screen_resolution()
+        if os.path.exists(str(os.path.dirname(full_path)) + "\convergenceplayer.py"):
+            os.system("player_quit_py.exe")  # Launches Convergence Jukebox Player
+            jukebox_display.destroy()
+        else:
+            os.system("taskkill /im convergenceplayer.exe")
+            jukebox_display.destroy()
+
+    if sys.platform.startswith('linux'):
+        sys.exit()
+
+
+def song_entry(song_number):  # Writes selected song to playlist.
+    global credit_amount
+    global upcoming_list
+    if credit_amount == 0:
+        playMP3('buzz.mp3')
+        return
+    play_list_recover = open('play_list.pkl', 'rb')
+    play_list = pickle.load(play_list_recover)
+    play_list_recover.close()
+    new_entry = song_number
+    print new_entry
+    if new_entry in play_list:  # Checks if song number is in play_list to avoid duplicates. http://bit.ly/2pTlkLS
+        a = play_list.index(song_number)  # Locates song number in play_list. Index number assigned to variable.
+        b = play_list[a]  # b variable assigned song number at play_list index provided in above line.
+        if song_number == b:
+            return
+    x = 0
+    while x < len(song_list):  # Saves all upcoming song titles and artist to upcoming_list for side display.
+        if song_list[x][9] == new_entry:
+            print song_list[x][0]
+            upcoming_song = str(song_list[x][0]) + " - " + str(song_list[x][1])
+            upcoming_list_recover = open('upcoming_list.pkl', 'rb')
+            upcoming_list = pickle.load(upcoming_list_recover)
+            upcoming_list_recover.close()
+            upcoming_list.append(upcoming_song)
+            upcoming_list_save = open('upcoming_list.pkl', 'wb')
+            pickle.dump(upcoming_list, upcoming_list_save)
+            upcoming_list_save.close()
+        x += 1
+    play_list.append(new_entry)
+    play_list_save = open('play_list.pkl', 'wb')
+    pickle.dump(play_list, play_list_save)
+    play_list_save.close()
+    credit_amount -= 1
+    playMP3('success.mp3')
+
+
+def song_list_generator():
+    global song_list
+    global file_name_with_error
+    delete_indicator = ""
+    #bad_file_name = ""
+    print "Entering song_list_generator()"
+
+    if last_file_count == current_file_count:  # If matched the song_list is loaded from file
+        print "Jukebox music files same as last startup. Using existing song database."  # Message to console.
+        song_list_recover = open('song_list.pkl', 'rb')  # Loads song_list
+        song_list_open = pickle.load(song_list_recover)
+        song_list_recover.close()
+        song_list = song_list_open
+    else:  # New song_list, filecount and location_list generated and saved.
+        song_list_generate = []
+        build_list = []
+        location_list = []
+        time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # Timestamp generate bit.ly/1MKPl5x
+        log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+        log_file_entry.write(str(time_date_stamp + ',' + 'New song_list generated' + ',' + '\n'))
+        log_file_entry.close()
+        # Code below writes log entry to computers dropbox public directory for remote log access
+        if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+            log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                                  + computer_account_user_name.lower() + "log.txt", "a+")
+            log_file_update.write(str(time_date_stamp + ',' + 'New song_list generated' + ',' + '\n'))
+            log_file_update.close()
+        file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt file for next start.
+        s = str(current_file_count)
+        file_count_update.write(s)
+        file_count_update.close()
+        location_list = []  # Creates temporary location_list used for initial song file names for mp3 player.
+        # File names later inserted in song_list to be used to play mp3's
+        full_path = os.path.realpath('__file__')
+        if sys.platform == 'win32':
+            for name in os.listdir(str(os.path.dirname(full_path)) + "\music" + "\\"):  # Reads files in the music dir.
+                if name.endswith(".mp3"):  # If statement searching for files with mp3 designation
+                    title = name  # Name of mp3 transferred to title variable
+                    location_list.append(title)  # Name of song appended to location_list
+        if sys.platform.startswith('linux'):
+            for name in os.listdir(str(os.path.dirname(full_path)) + "/music"):  # Reads files in the music dir.
+                if name.endswith(".mp3"):  # If statement searching for files with mp3 designation
+                    title = name  # Name of mp3 transferred to title variable
+                    location_list.append(title)  # Name of song appended to location_list
+        x = 0  # hsaudiotag 1.1.1 code begins here to pull out ID3 information
+        while x < len(location_list):  # Python List len function http://docs.python.org/2/library/functions.html#len
+            if sys.platform == 'win32':
+                myfile = auto.File(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x] + "")
+            if sys.platform.startswith('linux'):
+                myfile = auto.File(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x] + "")
+            # Note "" Quotes Required in above string.
+            # hsaudiotag function that assigns mp3 song to myfile object
+            print "Building Song Database. Stand By. This can take some time"
+            albumorg = myfile.album  # Assigns above mp3 ID3 Album name to albumorg variable
+            yearorg = myfile.year  # Assigns above mp3 ID3 Year info to yearorg variable
+            durationorgseconds = myfile.duration  # Assigns mp3 Duration (in seconds) info to durationorgseconds var.
+            genreorg = myfile.genre  # Assigns above mp3 Genre info to genreorg variable
+            commentorg = myfile.comment  # Assigns above mp3 Comment info to commentorg variable
+            build_list.append(myfile.title)  # Title of song appended to build_list
+            try:  # http://www.pythonlovers.net/python-exceptions-handling
+                unicode_crash_test = str(myfile.title)  # Causes crash if Unicode found in Artist Name
+            except UnicodeEncodeError:
+                print str(location_list[x])
+                #bad_file_name = str(location_list[x])
+                file_name_with_error = str(location_list[x])
+                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                log_file_entry.write(str(file_name_with_error + ' was deleted because of a Unicode character in its ID3 Title data.' + '\n'))
+                log_file_entry.close()
+                print "Title Unicode Error"
+                if sys.platform == 'win32':
+                    print "Removing " + str(location_list[x])
+                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                if sys.platform.startswith('linux'):
+                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                delete_indicator = "yes"
+                if location_list[x] in build_list:
+                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
+            try:  # http://www.pythonlovers.net/python-exceptions-handling
+                unicode_crash_test = str(myfile.artist)  # Causes crash if Unicode found in Artist Name
+            except UnicodeEncodeError:
+                print str(location_list[x])
+                #bad_file_name = str(location_list[x])
+                file_name_with_error = str(location_list[x])
+                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                log_file_entry.write(str(file_name_with_error + ' was deleted because of a Unicode character in its ID3 Artist data.' + '\n'))
+                log_file_entry.close()
+                print "Artist Unicode Error"
+                if sys.platform == 'win32':
+                    print "Removing " + str(location_list[x])
+                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                if sys.platform.startswith('linux'):
+                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                delete_indicator = "yes"
+                if location_list[x] in build_list:
+                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
+            try:  # http://www.pythonlovers.net/python-exceptions-handling
+                unicode_crash_test = str(myfile.comment)  # Causes crash if Unicode found in Artist Name
+            except UnicodeEncodeError:
+                print str(location_list[x])
+                #bad_file_name = str(location_list[x])
+                file_name_with_error = str(location_list[x])
+                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                log_file_entry.write(str(file_name_with_error + ' was deleted because of a Unicode character in its ID3 Comment data.' + '\n'))
+                log_file_entry.close()
+                print "Comment Unicode Error"
+                if sys.platform == 'win32':
+                    print "Removing " + str(location_list[x])
+                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                if sys.platform.startswith('linux'):
+                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                delete_indicator = "yes"
+                if location_list[x] in build_list:
+                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
+            if myfile.artist == "":  # Check for invalid Artist mp3 ID tag
+                print str(location_list[x])
+                #bad_file_name = str(location_list[x])
+                file_name_with_error = str(location_list[x])
+                print str(location_list[x]) + "'s Artist ID3 tag is not valid for Convergence Jukebox. Please correct or remove from media folder."
+                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                log_file_entry.write(str(file_name_with_error + ' was deleted because its ID3 Artist data is not valid.' + '\n'))
+                log_file_entry.close()
+                if sys.platform == 'win32':
+                    print "Removing " + str(location_list[x])
+                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                if sys.platform.startswith('linux'):
+                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                delete_indicator = "yes"
+                if location_list[x] in build_list:
+                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
+            if myfile.title == "":  # Check for invalid mp3 Title ID tag
+                print str(location_list[x])
+                #bad_file_name = str(location_list[x])
+                file_name_with_error = str(location_list[x])
+                print str(location_list[x]) + "'s Title ID3 tag is not valid for Convergence Jukebox. Please correct or remove from media folder."
+                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                log_file_entry.write(str(file_name_with_error + ' was deleted because its ID3 Title data is not valid.' + '\n'))
+                log_file_entry.close()
+                if sys.platform == 'win32':
+                    print "Removing " + str(location_list[x])
+                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                if sys.platform.startswith('linux'):
+                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                delete_indicator = "yes"
+                if location_list[x] in build_list:
+                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
+            if x == 0:
+                database_indicator()
+            if delete_indicator == "yes":
+                file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt file for next start.
+                s = str(0)
+                file_count_update.write(s)
+                file_count_update.close()
+            if delete_indicator != "yes":
+                build_list.append(myfile.artist)  # Artist of song appended to build_list
+                build_list.append(myfile.album)  # Album title of song appended to build_list
+                build_list.append(myfile.year)  # Year of song appended to build_list
+                build_list.append(myfile.duration)  # Duration of song in seconds appended to build_list
+                build_list.append(myfile.genre)  # Genre of song appended to build_list
+                durationtimefull = str(datetime.timedelta(seconds=durationorgseconds))  # Info at http://bit.ly/1L5pU9t
+                durationtime = durationtimefull[3:7]  # Slices string to minute:second notation. http://bit.ly/1QphhOW
+                build_list.append(durationtime)  # Time of song in minutes/seconds of song appended to build_list
+                build_list.append(myfile.comment)  # Comment in ID3 data appended to build_list
+                full_file_name = str(location_list[x])
+                if sys.platform.startswith('linux'):
+                    title_with_whitespace = full_file_name
+                    title_without_whitespace = title_with_whitespace.replace(" ", "_")
+                    full_file_name = title_without_whitespace
+                    current_path = os.getcwd()
+                    temp_path = str(current_path)+'/music'
+                    os.chdir(temp_path)  # resets path
+                    os.rename(str(title_with_whitespace), str(title_without_whitespace))
+                    os.chdir(current_path)# resets path
+                build_list.append(full_file_name)
+                song_list_generate.append(build_list)
+                build_list.append(x)
+                print location_list[x]
+                print build_list[8]
+                print build_list
+                build_list = []
+                y = len(location_list) - x
+                # print "www.convergencejukebox.com Building your database " + str(full_file_name) + ". " + str(y) + \
+                # " files remaining to process."
+            delete_indicator = ""
+            print x
+            x += 1
+        song_list_save = open('song_list.pkl', 'wb')  # song_list saved as binary pickle file
+        pickle.dump(song_list_generate, song_list_save)
+        song_list_save.close()
+        song_list = song_list_generate
+    print "Exiting song_list_generator()"
+    return song_list
+
+
+def write_jukebox_startup_to_log():
+    time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # time_date_stamp. bit.ly/1MKPl5x
+    log_file_entry = open("log.txt", "a+")
+    log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
+    log_file_entry.close()
+
+    # Code below writes log entry to computers dropbox public directory for remote log access
+    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+        log_file_entry = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                              + computer_account_user_name.lower() + "log.txt", "a+")
+        log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
+        log_file_entry.close()
 
 
 if __name__ == "__main__":
