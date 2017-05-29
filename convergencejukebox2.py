@@ -349,6 +349,7 @@ class MyFinalApp(App):
         global current_file_count
         global song_list
         global delete_indicator
+        global random_list
         print "Key Number Pressed Is: " + str(key_event[1])
         if str(key_event[1]) == '111':  # Changes sort mode to title
             last_pressed = "o"
@@ -672,6 +673,10 @@ class MyFinalApp(App):
                 song_list.sort(key=itemgetter(1), reverse=False)
             print "Exiting song_list_generator()"
             print song_list
+            if not random_list:  # This code sets up random_list and random_list_with_year for all routines to use
+                basic_random_list_generator()
+                flag_printer()
+                genre_year_artist_random_sort_engine()
             #sys.exit()
 
 
@@ -696,9 +701,43 @@ class MyFinalApp(App):
 
         if str(key_event[1]) == '114':
             global song_status
+            global random_list
+            x = random_list[0]
+            print "About to randomly play: " +str(song_list[x][8])
             print song_status
             print "Letter r pressed. "
-            playMP3("success.mp3")
+
+            title = str(song_list[x][0])
+            artist = str(song_list[x][1])
+            album = str(song_list[x][2])
+            year = str(song_list[x][3])
+            time = str(song_list[x][4])
+
+            mode = "Mode: Playing Song"
+            print "Title: " + title
+            print "Artist: " + artist
+            print "Album: " + album
+            print "Year Released: " + year + " Time: " + time
+            output_prep = title + "," + artist + "," + album + "," + year + "," + time + "," + mode
+            output_list_save = open("output_list.txt", "w")
+            output_list_save.write(str(output_prep))
+            output_list_save.close()
+            time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")
+            log_file_entry = open("log.txt", "a+")
+            log_file_entry.write(str(time_date_stamp + ',' + str(song_list[x][8]) + ',' + str(mode) + ',' + '0' + '\n'))
+            log_file_entry.close()
+            # Code below writes log entry to computers dropbox public directory for remote log access
+            if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+                log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                                       + computer_account_user_name.lower() + "log.txt", "a+")
+                log_file_update.write(
+                    str(time_date_stamp + ',' + str(song_list[x][8]) + ',' + str(mode) + ',' + '0' + '\n'))
+                log_file_update.close()
+            full_path = os.path.realpath('__file__')
+            print "Now playing: " + str(x)
+
+            playMP3(str(os.path.dirname(full_path)) + '\music' + '\\\\' + song_list[x][8])  # Plays song using mp3Play.
+            del random_list[0]
             song_status = "finished"
             print song_status
 
