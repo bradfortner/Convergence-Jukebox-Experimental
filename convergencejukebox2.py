@@ -33,6 +33,12 @@ import Tkinter
 import Tkinter as tk'''
 
 ###### Variables #####
+global title
+global artist
+global album
+global year
+global ptime
+global randomplay
 artist_list = []
 artistSelectRoutine = 0  # Used to break Artist
 artistSortRequired = "No"
@@ -323,6 +329,8 @@ class MyFinalApp(App):
         if start_up !=0:
             self.my_first_title.background_color = (160, 160, 160, .2)
             self.my_first_artist.background_color = (160, 160, 160, .2)
+        artist_list_generator()
+        my_old_infinite_loop()
         selection_font_size(self)
         return final_gui
 
@@ -1380,6 +1388,87 @@ class MyFinalApp(App):
             upcoming_list_recover.close()
             # selections_screen_updater(self)
 
+def my_old_infinite_loop():
+    global random_list
+    play_list_loader()  # Loads paid play_list
+    if len(play_list) > 0:  # Checks for any paid songs to play
+        play_list_player()  # Plays paid songs
+    genre_read_and_select_engine()
+    genre_file_change_detector()  # Looks for change to genre_flags.txt If file changed deletes existing random_list.
+    if len(random_list) > 0:  # Plays random song.
+        print "Proceeding to bottom of sequence."
+    if not random_list:  # This code sets up random_list and random_list_with_year for all routines to use
+        basic_random_list_generator()
+        flag_printer()
+        genre_year_artist_random_sort_engine()
+    norandom_song_number_test = random_list[0]  # Test for norandom song designation.
+    if "norandom" in str(song_list[norandom_song_number_test][7]):
+        print song_list[norandom_song_number_test][7]
+        del random_list[0]  # Deletes norandom song before playback.
+    x = random_list[0]
+    title = str(song_list[x][0])
+    artist = str(song_list[x][1])
+    album = str(song_list[x][2])
+    year = (song_list[x][3])
+    ptime = (song_list[x][6])
+    random_mode_playback()
+    if random_change_list == "yes":
+        random_list = []
+
+def artist_list_generator():
+    artist_list = []
+    x = 0
+    for i in song_list:
+        if song_list[x][1] not in artist_list:
+            artist_list.append(song_list[x][1])
+        x += 1
+    artist_list_file_populate = open('artist_list.pkl', 'wb')
+    pickle.dump(artist_list, artist_list_file_populate)
+    artist_list_file_populate.close()
+
+
+def basic_random_list_generator():
+    global random_list_with_year
+    if not song_list:
+        print "Error - No song_list in basic_random_list_generator() to develop basic random_list"
+    random_list_with_year = []
+    year_builder = []
+    print "Building Random List"
+    y = 0
+    zz = len(song_list)
+    z = zz - 1
+    while y <= z:  # ##########code to build random_list_with_year starts here.##########
+        test_string = str(song_list[y][7])
+        norandom_check = "norandom"
+
+        if re.search(r'\b' + norandom_check + r'\b', test_string):  # regex word boundaries http://bit.ly/1lSLXeP
+
+            log_file_update = open("log.txt", "a+")  # new song_list added to log file.
+            log_file_update.write(str("Song " + str(song_list[y][1]) + " " + str(song_list[y][2])
+                                      + " has not been added to random_list because it's marked norandom." + '\n'))
+            log_file_update.close()
+
+            # Code below writes log entry to computers dropbox public directory for remote log access
+            if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+                log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                                      + computer_account_user_name.lower() + "log.txt", "a+")
+                log_file_update.write(str("Song " + str(song_list[y][1]) + " " + str(song_list[y][2])
+                                      + " has not been added to random_list because it's marked norandom." + '\n'))
+                log_file_update.close()
+            y += 1
+        else:
+            random_list.append(y)  # adds song number to random_list
+            song_number = song_list[y][9]  # assigns song number from song_list to song_number variable
+            song_year = song_list[y][3]  # assigns song year from song_list to song_year variable
+            year_builder.append(song_number)  # appends song_number to year_builder list
+            year_builder.append(song_year)  # appends song_year to year_builder list
+            random_list_with_year.append(year_builder)  # appends year_builder List to random_list_with_year
+            year_builder = []  # clears year_builder list
+            y += 1
+            #  ##########code to build random_list_with_year ends here##########
+    return random_list
+
+
 
 def brad_love():
     print "Hello, world!"
@@ -1562,6 +1651,126 @@ def database_indicator():
     song_counter_label(label)
     song_counter.mainloop()'''
     print "All Done"
+
+
+def flag_printer():
+    print "flag_one = " + str(flag_one)
+    print "flag_two = " + str(flag_two)
+    print "flag_three = " + str(flag_three)
+    print "flag_four = " + str(flag_four)
+    print "flag_five = " + str(flag_five)
+    print "flag_six = " + str(flag_six)
+    print "flag_seven = " + str(flag_seven)
+    print "flag_eight = " + str(flag_eight)
+    print "flag_nine = " + str(flag_nine)
+    print "flag_ten = " + str(flag_ten)
+    print "flag_eleven = " + str(flag_eleven)
+    print "flag_twelve = " + str(flag_twelve)
+    print "flag_thirteen = " + str(flag_thirteen)
+    print "flag_fourteen = " + str(flag_fourteen)
+    print "flag_fourteen_change = " + str(flag_fourteen_change)
+
+
+
+def genre_file_change_detector():
+    global random_list
+    global computer_account_user_name
+    global file_time_old
+    global file_time_check
+    print "Entering genre_file_change_detector()"
+    # Below from http://stackoverflow.com/questions/237079/how-to-get-file-creation-modification-date-times-in-python
+    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\genre_flags.txt"))):
+        file_time_check = d = modification_date("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\" + "genre_flags.txt")
+    else:
+        file_time_check = d = modification_date("genre_flags.txt")
+    if file_time_old != file_time_check:
+        file_time_old = file_time_check
+        print "A new genre flags file has been detected."
+        random_list = []
+
+
+def genre_only_random_sorter():
+    genre_search_flag = []
+    flag_one_remove_list = []
+    flag_two_remove_list = []
+    flag_three_remove_list = []
+    flag_four_remove_list = []
+    flag_five_remove_list = []
+    remove_list = []  # clears remove_list in advance of use
+    if flag_one != "":  # Creates genre_search_flag list from various flags
+        genre_search_flag.append(flag_one)
+    if flag_two != "":
+        genre_search_flag.append(flag_two)
+    if flag_three != "":
+        genre_search_flag.append(flag_three)
+    if flag_four != "":
+        genre_search_flag.append(flag_four)
+    if flag_five != "":
+        genre_search_flag.append(flag_five)
+    print "Genres to be searched are: " + str(genre_search_flag)  # Print to console.
+    flag_number = 1  # Used to determine name of flag_xxx_remove_list
+    for j in genre_search_flag:
+        counter = 0
+        for i in song_list:  # List created (remove_list) to be deleted from random_list based on Genre in flag_one.
+            if j in song_list[counter][7]:  # Looks for same genre selection(flag_one) in song_list
+                remove_list.append(counter)  # when matched adds song number to remove_list
+            counter += 1
+        for i in remove_list:  # This loop uses remove_list generated above to remove ongs from random_list
+            counter = 0
+            if i in random_list:
+                random_list.remove(i)  # Removes song numbers from random_list
+            counter += 1
+            if flag_number == 1:  # assigns removed song numbers to appropriate remove list
+                flag_one_remove_list = remove_list
+            if flag_number == 2:  # assigns removed song numbers to appropriate remove list
+                flag_two_remove_list = remove_list
+            if flag_number == 3:  # assigns removed song numbers to appropriate remove list
+                flag_three_remove_list = remove_list
+            if flag_number == 4:  # assigns removed song numbers to appropriate remove list
+                flag_four_remove_list = remove_list
+            if flag_number == 5:  # assigns removed song numbers to appropriate remove list
+                flag_five_remove_list = remove_list
+        flag_number += 1
+        remove_list = []  # clears remove_list so next Genre can use it during processing
+    if flag_one != "":  # Combines and creates genre_remove_list
+        genre_remove_list = flag_one_remove_list + flag_two_remove_list + flag_three_remove_list \
+                            + flag_four_remove_list + flag_five_remove_list
+    random.shuffle(random_list)
+    random.shuffle(genre_remove_list)
+    counter = -1
+    for i in genre_remove_list:  # this loop places the removed songs at start of random_list in random order
+        counter += 1
+        song_insert = genre_remove_list[counter]
+        random_list.insert(0, song_insert)
+
+
+
+def genre_year_artist_random_sort_engine():
+    if flag_one == "none" and flag_six == "null" and flag_seven == "null" and flag_eight == "null" \
+            and flag_nine == "null" and flag_ten == "null" and flag_eleven == "null" and flag_twelve == "null" \
+            and flag_thirteen == "null":
+        no_flag_random_sort()
+    if flag_one != "none" and flag_six == "null" and flag_seven == "null" and flag_eight == "null" \
+            and flag_nine == "null" and flag_ten == "null" and flag_eleven == "null" and flag_twelve == "null" \
+            and flag_thirteen == "null":
+        genre_only_random_sorter()
+    if flag_one == "none" and flag_six != "null" and flag_seven != "null" and flag_eight == "null" \
+            and flag_nine == "null" and flag_ten == "null" and flag_eleven == "null" and flag_twelve == "null" \
+            and flag_thirteen == "null":
+        multiple_year_random_sorter_no_genre()
+    if flag_one == "none" and flag_six != "null" and flag_seven == "null" and flag_eight == "null" \
+            and flag_nine == "null" and flag_ten == "null" and flag_eleven == "null" and flag_twelve == "null" \
+            and flag_thirteen == "null":
+        single_year_random_sorter_no_genre()
+    if flag_one != "none" and flag_six != "null" and flag_eight == "null" and flag_nine == "null" \
+            and flag_ten == "null" and flag_eleven == "null" and flag_twelve == "null" and flag_thirteen == "null":
+        genre_by_year_random_sorter()
+    if flag_one == "none":
+        if flag_eight != "null" or flag_nine != "null" or flag_ten != "null" or flag_eleven != "null" \
+                or flag_twelve != "null" or flag_thirteen != "null":
+            artist_by_year_random_sorter()
+
+
 
 def genre_read_and_select_engine():  # Opens and reads genreFlags.csv file. Assigns genres to random play functionality.
 
@@ -1955,14 +2164,181 @@ def mciSend(s):  # Function of playmp3.py
         if i != 0:
             print "Error %d in mciSendString %s" % (i, s)
 
+
+def modification_date(filename):
+    t = os.path.getmtime(filename)
+    return datetime.datetime.fromtimestamp(t)
+
+
+
 def my_clock_function(dt): # Code To Use Later
     print 'My callback is called', dt
+
+def play_list_loader():
+    global play_list
+    play_list_recover = open('play_list.pkl', 'rb')  # Loads play_list.
+    play_list = pickle.load(play_list_recover)
+    play_list_recover.close()
+    return play_list
+
+def play_list_player():
+    global play_list
+
+    # This statement runs songs in play_list, deletes first song in play_list after it completes
+    #  playing song and finally opens play_list to see if any new songs have appeared.
+    print "Song in play_list: " + str(play_list[0])
+    x = play_list[0]
+    print x
+    print  # x variable used below to print song data to screen
+    title = str(song_list[x][0])
+    artist = str(song_list[x][1])
+    album = str(song_list[x][2])
+    year = (song_list[x][3])
+    ptime = (song_list[x][6])
+    song_number = song_list[x][9]
+    mode = "Mode: Playing Selected Song"
+    print "Title: " + title
+    print "Artist: " + artist
+    print "Album: " + album
+    print "Year Released: " + year + " Time: " + ptime
+    output_prep = title + "," + artist + "," + album + "," + year + "," + ptime + "," + mode
+    output_list_save = open("output_list.txt", "w")
+    output_list_save.write(str(output_prep))
+    output_list_save.close()
+    time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")
+    log_file_entry = open("log.txt", "a+")
+    comma_removal = str(song_list[x][8])
+    comma_free_title = comma_removal.replace(',', '')  # http://bit.ly/1SuAnRh
+    log_file_entry.write(str(time_date_stamp + ',' + str(comma_free_title) + ',' + str(mode) + ',' + '1' + '\n'))
+    log_file_entry.close()
+    # Code below writes log entry to computers dropbox public directory for remote log access
+    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+        log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                              + computer_account_user_name.lower() + "log.txt", "a+")
+        log_file_update.write(str(time_date_stamp + ',' + str(comma_free_title) + ',' + str(mode) + ',' + '1' + '\n'))
+        log_file_update.close()
+    del comma_free_title
+    del comma_removal
+    upcoming_list_recover = open('upcoming_list.pkl', 'rb')
+    upcoming_list = pickle.load(upcoming_list_recover)
+    upcoming_list_recover.close()
+    if len(upcoming_list) > 0:
+        del upcoming_list[0]
+    upcoming_list_save = open('upcoming_list.pkl', 'wb')
+    pickle.dump(upcoming_list, upcoming_list_save)
+    upcoming_list_save.close()
+
+    if song_number in random_list:  # Removes paid songs from random_list. Checks for song number is in random_list.
+        song_index = random_list.index(song_number)  # Index number assigned to variable. bit.ly/20FsVsl
+        delete_song_index = random_list[song_index]  # Variable assigned to song number song number to be deleted.
+        if song_number == delete_song_index:  # Checks if song to be deleted is still in random_list
+            del random_list[song_index]  # Deletes song number from random list if found. http://bit.ly/1MRbT6I
+    full_path = os.path.realpath('__file__')
+    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+        log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                              + computer_account_user_name.lower() + "log.txt", "a+")
+        log_file_update.write(str(time_date_stamp + ',' + str(song_list[x][8]) + ',' + str(mode) + ',' + '0' + '\n'))
+        log_file_update.close()
+    full_path = os.path.realpath('__file__')
+    print "Now playing: " + str(x)
+    if sys.platform == 'win32':
+        playMP3(str(os.path.dirname(full_path)) + '\music' + '\\\\' + song_list[x][8])  # Plays song using mp3Play.
+        # info on mp3Play at http://www.mailsend-online.com/blog/play-mp3-files-with-python-on-windows.html
+    if sys.platform.startswith('linux'):
+        current_path = os.getcwd()
+        print current_path
+        path = str(current_path) + "/music"
+        os.chdir( path )# sets path for mpg321
+        music = os.popen('mpg321 '+ song_list[x][8], 'w')
+        music.close()
+        path = current_path
+        os.chdir( path )# resets path
+    play_list_recover = open('play_list.pkl', 'rb')
+    play_list = pickle.load(play_list_recover)
+    play_list_recover.close()
+    del play_list[0]
+    play_list_save = open('play_list.pkl', 'wb')
+    pickle.dump(play_list, play_list_save)
+    play_list_save.close()
+    if len(play_list) > 0:  # Checks for any paid songs to play
+        play_list_player()  # Plays paid songs
 
 def playMP3(mp3Name):  # Function of playmp3.py
     mciSend("Close All")
     mciSend("Open \"%s\" Type MPEGVideo Alias theMP3" % mp3Name)
     mciSend("Play theMP3 Wait")
     mciSend("Close theMP3")
+
+
+def random_mode_playback():
+    global title
+    global artist
+    global album
+    global year
+    global ptime
+    global randomplay
+    print "The play_list is empty. Operating in random mode."
+    x = random_list[0]  # First element in random_list assigned to x variable
+    print len(random_list)
+    title = str(song_list[x][0])
+    artist = str(song_list[x][1])
+    album = str(song_list[x][2])
+    year = (song_list[x][3])
+    ptime = (song_list[x][6])
+    randomplay = str(song_list[x][7])
+    play_random_song()
+    del random_list[0]
+    return random_list
+
+
+def play_random_song():
+    global title
+    global artist
+    global album
+    global year
+    global ptime
+    global randomplay
+    mode = "Mode: Playing Song"
+    print "Title: " + title
+    print "Artist: " + artist
+    print "Album: " + album
+    print "Year Released: " + year + " Time: " + ptime
+    output_prep = title + "," + artist + "," + album + "," + year + "," + ptime + "," + mode
+    output_list_save = open("output_list.txt", "w")
+    output_list_save.write(str(output_prep))
+    output_list_save.close()
+    time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")
+    log_file_entry = open("log.txt", "a+")
+    log_file_entry.write(str(time_date_stamp + ',' + str(song_list[x][8]) + ',' + str(mode) + ',' + '0' + '\n'))
+    log_file_entry.close()
+    # Code below writes log entry to computers dropbox public directory for remote log access
+    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+        log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                              + computer_account_user_name.lower() + "log.txt", "a+")
+        log_file_update.write(str(time_date_stamp + ',' + str(song_list[x][8]) + ',' + str(mode) + ',' + '0' + '\n'))
+        log_file_update.close()
+    full_path = os.path.realpath('__file__')
+    print "Now playing: " + str(x)
+    if sys.platform == 'win32':
+        playMP3(str(os.path.dirname(full_path)) + '\music' + '\\\\' + song_list[x][8])  # Plays song using mp3Play.
+        # info on mp3Play at http://www.mailsend-online.com/blog/play-mp3-files-with-python-on-windows.html
+    if sys.platform.startswith('linux'):
+        current_path = os.getcwd()
+        reset_path = current_path
+        path = str(current_path) + "/music"
+        print path
+        os.chdir( path )# sets path for mpg321
+        current_path = os.getcwd()
+        print current_path
+        print song_list[x][8]
+        print song_list[x][8]
+        music = os.popen('mpg321 '+ song_list[x][8], 'w')
+        music.close()
+        path = reset_path
+        os.chdir( path )# resets path
+        print path
+
+
 
 def resize_button_text(self):
     self.my_first_title.font_size = 16
