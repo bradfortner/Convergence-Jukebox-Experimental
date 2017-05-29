@@ -90,8 +90,8 @@ song_list_recover = open('song_list.pkl', 'rb')
 song_list = pickle.load(song_list_recover)
 song_list_recover.close()
 del song_list_recover
-'''for i in range(0, 16):  # Adds blank songs to end of sont_list
-    song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])'''
+for i in range(0, 16):  # Adds blank songs to end of sont_list
+    song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])
 song_list.sort(key=itemgetter(1), reverse=False)
 display_info_recover = open("output_list.txt", 'r+')
 output_list_read = display_info_recover.read()
@@ -170,6 +170,10 @@ Builder.load_string('''
         size_hint: .7, 1
         pos: 390,292
 ''')
+
+
+class JukeboxScreen(FloatLayout):
+    pass
 
 
 class MyFinalApp(App):
@@ -648,7 +652,7 @@ class MyFinalApp(App):
                     delete_indicator = ""
                     print x
                     x += 1
-                for i in range(0, 16):  # Adds blank songs to end of song_list
+                for i in range(0, 16):  # Adds blank songs to end of sont_list
                     song_list_generate.append(
                         [u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])
 
@@ -657,6 +661,13 @@ class MyFinalApp(App):
                 song_list_save.close()
                 song_list = song_list_generate
                 song_list.sort(key=itemgetter(1), reverse=False)
+            print "Exiting song_list_generator()"
+            print song_list
+            #sys.exit()
+
+
+
+
             mp3_counter = len(
                 glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Counts number of MP3 files
             current_file_count = int(mp3_counter)  # provides int output for later comparison
@@ -1392,7 +1403,6 @@ def clear_alpha_keys(event=None):
     w_key_press = 0
     t_key_press = 0
 
-
 def clear_button_color(self):
     self.my_first_title.background_color = (0, 0, 0, 0)
     self.my_first_artist.background_color = (0, 0, 0, 0)
@@ -1426,7 +1436,6 @@ def clear_button_color(self):
     self.my_fifteenth_artist.background_color = (0, 0, 0, 0)
     self.my_sixteenth_title.background_color = (0, 0, 0, 0)
     self.my_sixteenth_artist.background_color = (0, 0, 0, 0)
-
 
 def clear_last_selections(self):
     if self.my_first_title.text == "zzzzz":
@@ -1478,7 +1487,6 @@ def clear_last_selections(self):
         self.my_sixteenth_title.font_size = 0
         self.my_sixteenth_artist.font_size = 0
 
-
 def count_number_mp3_songs():
     print "Entering count_number_mp3_songs()"
     global last_file_count_a
@@ -1528,13 +1536,10 @@ def count_number_mp3_songs():
     last_file_count = int(last_file_count_a)  # Variable holding count of mp3 songs from last time Jukebox was run.
     print "Exiting count_number_mp3_songs()"
 
-
 def credit_calculator(event=None):
     global credit_amount
     credit_amount += 1
     print credit_amount
-
-
 
 def database_indicator():
     def song_counter_label(label):
@@ -1557,7 +1562,6 @@ def database_indicator():
     song_counter_label(label)
     song_counter.mainloop()'''
     print "All Done"
-
 
 def genre_read_and_select_engine():  # Opens and reads genreFlags.csv file. Assigns genres to random play functionality.
 
@@ -1795,7 +1799,6 @@ def get_available_resolutions_win():  # Checks to see if device is 720p compatab
             mainloop()
             sys.exit()
 
-
 def highlighted_selection_generator(self):  # Updates cursor location on selection screen.
     global cursor_position
     global song_selection_number
@@ -1945,12 +1948,6 @@ def highlighted_selection_generator(self):  # Updates cursor location on selecti
             if song_list[i][0] == self.my_sixteenth_title.text and song_list[i][1] == self.my_sixteenth_artist.text:
                 song_selection_number = song_list[i][9]
 
-
-
-class JukeboxScreen(FloatLayout):
-    pass
-
-
 def mciSend(s):  # Function of playmp3.py
     if sys.platform == 'win32':
         winmm = windll.winmm  # Variable used in playmp3.py.
@@ -1958,20 +1955,14 @@ def mciSend(s):  # Function of playmp3.py
         if i != 0:
             print "Error %d in mciSendString %s" % (i, s)
 
-
 def my_clock_function(dt): # Code To Use Later
     print 'My callback is called', dt
-
-
 
 def playMP3(mp3Name):  # Function of playmp3.py
     mciSend("Close All")
     mciSend("Open \"%s\" Type MPEGVideo Alias theMP3" % mp3Name)
     mciSend("Play theMP3 Wait")
     mciSend("Close theMP3")
-
-
-
 
 def resize_button_text(self):
     self.my_first_title.font_size = 16
@@ -2006,8 +1997,6 @@ def resize_button_text(self):
     self.my_fifteenth_artist.font_size = 16
     self.my_sixteenth_title.font_size = 16
     self.my_sixteenth_artist.font_size = 16
-
-
 
 def rss_writer():  # This function writes rss feeds to Dropbox public directory.
 
@@ -2082,8 +2071,6 @@ def rss_writer():  # This function writes rss feeds to Dropbox public directory.
         rss.write_xml(open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
                            + computer_account_user_name.lower() + "_artist_current_song.xml", "w"))
 
-
-
 def screen_cursor_positioner(adder):  # Determines Screen Number And Cursor Position
     global cursor_position
     global screen_number
@@ -2093,7 +2080,6 @@ def screen_cursor_positioner(adder):  # Determines Screen Number And Cursor Posi
     else:
         cursor_position = adder
     return adder
-
 
 def selection_font_size(self):
     self.my_selection_one.font_size = 16
@@ -2113,8 +2099,6 @@ def selection_font_size(self):
     self.my_selection_fifteen.font_size = 16
     self.my_selection_sixteen.font_size = 16
     self.my_selection_seventeen.font_size = 16
-
-
 
 def selection_screen(self):  # Updates selection screen.
     global cursor_position
@@ -2463,8 +2447,6 @@ def selection_screen(self):  # Updates selection screen.
 
     clear_button_color(self)
 
-
-
 def selections_screen_starter(self):
     global upcoming_list
     if len(upcoming_list) >= 1:
@@ -2536,8 +2518,6 @@ def selections_screen_starter(self):
     else:
         self.my_selection_seventeen = Label(text=' ', pos=(40, -199))
 
-
-
 def selections_screen_updater(self):
     if len(upcoming_list) >= 1:
         self.my_selection_one.text = str(upcoming_list[0])
@@ -2573,7 +2553,6 @@ def selections_screen_updater(self):
         self.my_selection_sixteen.text = str(upcoming_list[15])
     if len(upcoming_list) == 17:
         self.my_selection_seventeen.text = str(upcoming_list[16])
-
 
 def set_720_resolution():
 
@@ -2957,21 +2936,6 @@ def set_up_user_files_first_time():
         artist_list_file_create.close()
         print "artist_list.pkl created."
 
-def so_long(event=None):  # Used to terminate program.
-
-    if sys.platform == 'win32':
-        set_default_screen_resolution()
-        if os.path.exists(str(os.path.dirname(full_path)) + "\convergenceplayer.py"):
-            os.system("player_quit_py.exe")  # Launches Convergence Jukebox Player
-            jukebox_display.destroy()
-        else:
-            os.system("taskkill /im convergenceplayer.exe")
-            jukebox_display.destroy()
-
-    if sys.platform.startswith('linux'):
-        sys.exit()
-
-
 def song_entry(song_number):  # Writes selected song to playlist.
     global credit_amount
     global upcoming_list
@@ -3008,6 +2972,19 @@ def song_entry(song_number):  # Writes selected song to playlist.
     credit_amount -= 1
     playMP3('success.mp3')
 
+def so_long(event=None):  # Used to terminate program.
+
+    if sys.platform == 'win32':
+        set_default_screen_resolution()
+        if os.path.exists(str(os.path.dirname(full_path)) + "\convergenceplayer.py"):
+            os.system("player_quit_py.exe")  # Launches Convergence Jukebox Player
+            jukebox_display.destroy()
+        else:
+            os.system("taskkill /im convergenceplayer.exe")
+            jukebox_display.destroy()
+
+    if sys.platform.startswith('linux'):
+        sys.exit()
 
 def song_list_generator():
     global song_list
@@ -3201,7 +3178,6 @@ def song_list_generator():
     print "Exiting song_list_generator()"
     return song_list
 
-
 def write_jukebox_startup_to_log():
     time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # time_date_stamp. bit.ly/1MKPl5x
     log_file_entry = open("log.txt", "a+")
@@ -3214,6 +3190,7 @@ def write_jukebox_startup_to_log():
                               + computer_account_user_name.lower() + "log.txt", "a+")
         log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
         log_file_entry.close()
+
 
 
 if __name__ == "__main__":
