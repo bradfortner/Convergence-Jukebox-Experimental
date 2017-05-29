@@ -70,6 +70,7 @@ screen_number = 0
 selectedArtists = []  # Used to select multiple artists in random play routine
 song_list = []  # List is used to build final list of all songs including ID3 information and file location.
 song_selection_number = ""
+song_status = "none"
 start_up = 0
 x = 0
 
@@ -187,7 +188,7 @@ class MyFinalApp(App):
     def build(self):
         final_gui = JukeboxScreen()
         Clock.schedule_interval(MyFinalApp.file_reader, 5)
-        event = Clock.schedule_interval(my_clock_function, 1000000000) # Code To Use Later
+        event = Clock.schedule_interval(my_jukebox_play_function, 1) # Code To Use Later
         Window.bind(on_key_down=self.key_action)
         set_up_user_files_first_time()
         write_jukebox_startup_to_log()
@@ -330,7 +331,7 @@ class MyFinalApp(App):
             self.my_first_title.background_color = (160, 160, 160, .2)
             self.my_first_artist.background_color = (160, 160, 160, .2)
         artist_list_generator()
-        my_old_infinite_loop()
+        #my_old_infinite_loop()
         selection_font_size(self)
         return final_gui
 
@@ -681,7 +682,7 @@ class MyFinalApp(App):
             current_file_count = int(mp3_counter)  # provides int output for later comparison
             screen_message_update = screen_message + " Number of songs at startup: " + str(current_file_count)
             self.my_blackout.text = screen_message_update
-            Clock.schedule_interval(my_clock_function, 3)
+            Clock.schedule_interval(my_jukebox_play_function, 3)
 
             if int(mp3_counter) < 50:
                 screen_message_update = screen_message + "Not Enough MP3's To Start Convergence Jukebox\n" \
@@ -693,6 +694,13 @@ class MyFinalApp(App):
                 self.my_blackout.background_color = (1, 0, 0, 1)
                 self.my_blackout.text = screen_message_update
 
+        if str(key_event[1]) == '114':
+            global song_status
+            print song_status
+            print "Letter r pressed. "
+            playMP3("success.mp3")
+            song_status = "finished"
+            print song_status
 
         if str(key_event[1]) == '47':  # Changes sort mode to title
             last_pressed = "forward slash"
@@ -764,6 +772,7 @@ class MyFinalApp(App):
             return
         if str(key_event[1]) == '98':  # b keyboard key updates display on song change
             print upcoming_list
+            #my_old_infinite_loop()
             self.my_blackout.color = (1, 1, 1, 0)
             self.my_first_title.color = (1, 1, 1, 1)
             self.my_first_artist.color = (1,1,1,1)
@@ -1391,6 +1400,7 @@ class MyFinalApp(App):
 def my_old_infinite_loop():
     global random_list
     play_list_loader()  # Loads paid play_list
+
     if len(play_list) > 0:  # Checks for any paid songs to play
         play_list_player()  # Plays paid songs
     genre_read_and_select_engine()
@@ -1401,6 +1411,8 @@ def my_old_infinite_loop():
         basic_random_list_generator()
         flag_printer()
         genre_year_artist_random_sort_engine()
+    print random_list
+    sys.exit()
     norandom_song_number_test = random_list[0]  # Test for norandom song designation.
     if "norandom" in str(song_list[norandom_song_number_test][7]):
         print song_list[norandom_song_number_test][7]
@@ -1425,7 +1437,6 @@ def artist_list_generator():
     artist_list_file_populate = open('artist_list.pkl', 'wb')
     pickle.dump(artist_list, artist_list_file_populate)
     artist_list_file_populate.close()
-
 
 def basic_random_list_generator():
     global random_list_with_year
@@ -1467,8 +1478,6 @@ def basic_random_list_generator():
             y += 1
             #  ##########code to build random_list_with_year ends here##########
     return random_list
-
-
 
 def brad_love():
     print "Hello, world!"
@@ -1652,7 +1661,6 @@ def database_indicator():
     song_counter.mainloop()'''
     print "All Done"
 
-
 def flag_printer():
     print "flag_one = " + str(flag_one)
     print "flag_two = " + str(flag_two)
@@ -1670,8 +1678,6 @@ def flag_printer():
     print "flag_fourteen = " + str(flag_fourteen)
     print "flag_fourteen_change = " + str(flag_fourteen_change)
 
-
-
 def genre_file_change_detector():
     global random_list
     global computer_account_user_name
@@ -1687,7 +1693,6 @@ def genre_file_change_detector():
         file_time_old = file_time_check
         print "A new genre flags file has been detected."
         random_list = []
-
 
 def genre_only_random_sorter():
     genre_search_flag = []
@@ -1743,8 +1748,6 @@ def genre_only_random_sorter():
         song_insert = genre_remove_list[counter]
         random_list.insert(0, song_insert)
 
-
-
 def genre_year_artist_random_sort_engine():
     if flag_one == "none" and flag_six == "null" and flag_seven == "null" and flag_eight == "null" \
             and flag_nine == "null" and flag_ten == "null" and flag_eleven == "null" and flag_twelve == "null" \
@@ -1769,8 +1772,6 @@ def genre_year_artist_random_sort_engine():
         if flag_eight != "null" or flag_nine != "null" or flag_ten != "null" or flag_eleven != "null" \
                 or flag_twelve != "null" or flag_thirteen != "null":
             artist_by_year_random_sorter()
-
-
 
 def genre_read_and_select_engine():  # Opens and reads genreFlags.csv file. Assigns genres to random play functionality.
 
@@ -2164,15 +2165,18 @@ def mciSend(s):  # Function of playmp3.py
         if i != 0:
             print "Error %d in mciSendString %s" % (i, s)
 
-
 def modification_date(filename):
     t = os.path.getmtime(filename)
     return datetime.datetime.fromtimestamp(t)
 
-
-
-def my_clock_function(dt): # Code To Use Later
+def my_jukebox_play_function(dt): # Code To Use Later
+    global song_status
     print 'My callback is called', dt
+    print 'song_status at this time is: ' + str(song_status)
+    if str(song_status) == "finished":
+        print "Hello, world!"
+        song_status = "none"
+        keyboard.press_and_release('r')  # Updates Selection Screen
 
 def play_list_loader():
     global play_list
@@ -2269,7 +2273,6 @@ def playMP3(mp3Name):  # Function of playmp3.py
     mciSend("Play theMP3 Wait")
     mciSend("Close theMP3")
 
-
 def random_mode_playback():
     global title
     global artist
@@ -2289,7 +2292,6 @@ def random_mode_playback():
     play_random_song()
     del random_list[0]
     return random_list
-
 
 def play_random_song():
     global title
@@ -2337,8 +2339,6 @@ def play_random_song():
         path = reset_path
         os.chdir( path )# resets path
         print path
-
-
 
 def resize_button_text(self):
     self.my_first_title.font_size = 16
@@ -3566,8 +3566,6 @@ def write_jukebox_startup_to_log():
                               + computer_account_user_name.lower() + "log.txt", "a+")
         log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
         log_file_entry.close()
-
-
 
 if __name__ == "__main__":
     MyFinalApp().run()
