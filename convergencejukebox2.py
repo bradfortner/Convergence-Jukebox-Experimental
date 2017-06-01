@@ -654,15 +654,12 @@ class MyFinalApp(App):
                 song_list_save.close()
                 song_list = song_list_generate
                 song_list.sort(key=itemgetter(1), reverse=False)
-            print song_list
+            '''print song_list
             if not random_list:  # This code sets up random_list and random_list_with_year for all routines to use
                 basic_random_list_generator()
                 flag_printer()
                 genre_year_artist_random_sort_engine()
-            #sys.exit()
-
-
-
+            sys.exit()'''
 
             mp3_counter = len(
                 glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Counts number of MP3 files
