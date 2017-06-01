@@ -91,14 +91,45 @@ full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
 print current_directory
 print full_path
 
+try:
+    song_list_recover = open('song_list.pkl', 'rb')
+    song_list = pickle.load(song_list_recover)
+    song_list_recover.close()
+    del song_list_recover
+except IOError:
+    print song_list
+    #sys.exit()
+    for i in range(0, 16):  # Adds blank songs to end of sont_list
+        song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])
+    print song_list
+    song_list_save = open('song_list.pkl', 'wb')  # song_list saved as binary pickle file
+    pickle.dump(song_list, song_list_save)
+    song_list_save.close()
+    file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt.
+    file_count_update.write("-1")
+    file_count_update.close()
+    keyboard.press_and_release('o')
 
-
-song_list_recover = open('song_list.pkl', 'rb')
-song_list = pickle.load(song_list_recover)
-song_list_recover.close()
-del song_list_recover
-for i in range(0, 16):  # Adds blank songs to end of sont_list
-    song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])
+try:
+    song_list_recover = open('song_list.pkl', 'rb')
+    song_list = pickle.load(song_list_recover)
+    song_list_recover.close()
+    del song_list_recover
+except EOFError:
+    print song_list
+    #sys.exit()
+    for i in range(0, 16):  # Adds blank songs to end of sont_list
+        song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])
+    print song_list
+    song_list_save = open('song_list.pkl', 'wb')  # song_list saved as binary pickle file
+    pickle.dump(song_list, song_list_save)
+    song_list_save.close()
+    file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt.
+    file_count_update.write("-1")
+    file_count_update.close()
+    keyboard.press_and_release('o')
+'''for i in range(0, 16):  # Adds blank songs to end of sont_list
+    song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])'''
 song_list.sort(key=itemgetter(1), reverse=False)
 display_info_recover = open("output_list.txt", 'r+')
 output_list_read = display_info_recover.read()
@@ -325,6 +356,7 @@ class MyFinalApp(App):
             self.my_first_title.background_color = (160, 160, 160, .2)
             self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)
+        os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox GUI
         return final_gui
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
@@ -667,6 +699,7 @@ class MyFinalApp(App):
             screen_message_update = screen_message + " Number of songs at startup: " + str(current_file_count)
             self.my_blackout.text = screen_message_update
             Clock.schedule_interval(my_jukebox_play_function, 3)
+
 
             if int(mp3_counter) < 50:
                 screen_message_update = screen_message + "Not Enough MP3's To Start Convergence Jukebox\n" \
@@ -2175,6 +2208,16 @@ def highlighted_selection_generator(self):  # Updates cursor location on selecti
         for i in range(0, len(song_list) - 1):
             if song_list[i][0] == self.my_sixteenth_title.text and song_list[i][1] == self.my_sixteenth_artist.text:
                 song_selection_number = song_list[i][9]
+
+def player_launch():
+    def player_launch():
+        print "Hello, world!"
+        if os.path.exists(str(os.path.dirname(full_path)) + "\convergenceplayer2.py"):
+            print ".py directory exists at " + str(os.path.dirname(full_path)) + "\convergenceplayer2.py"
+            os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox GUI
+        else:
+            os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox GUI
+
 
 def mciSend(s):  # Function of playmp3.py
     if sys.platform == 'win32':
