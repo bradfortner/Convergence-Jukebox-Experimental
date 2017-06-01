@@ -43,9 +43,6 @@ from ctypes import *  # Used by playmp3.py windows based mp3 player http://bit.l
 import getpass  # Used to get user name http://stackoverflow.com/questions/4325416/how-do-i-get-the-username-in-python
 # import os.path, time
 
-print "Welcome To Convergence Jukebox"
-print "Your Jukebox Is Being Configured"
-print "This Could Take A Few Minutes"
 
 computer_account_user_name = getpass.getuser()
 genre_file_changed = ""
@@ -81,8 +78,13 @@ if current_directory == "/home/pi": # Changes home directory on Raspberry Pi
 full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
 print full_path
 
+song_list_recover = open('song_list.pkl', 'rb')  # Loads song_list
+song_list_open = pickle.load(song_list_recover)
+song_list_recover.close()
+song_list = song_list_open
 
-def set_up_user_files_first_time():
+
+'''def set_up_user_files_first_time():
     global full_path
     current_directory = os.getcwd()
 
@@ -187,10 +189,10 @@ def set_up_user_files_first_time():
         artist_list_file_create = open('artist_list.pkl', 'wb')
         pickle.dump(artist_list, artist_list_file_create)
         artist_list_file_create.close()
-        print "artist_list.pkl created."
+        print "artist_list.pkl created."'''
 
 
-def write_jukebox_startup_to_log():
+'''def write_jukebox_startup_to_log():
     time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # time_date_stamp. bit.ly/1MKPl5x
     log_file_entry = open("log.txt", "a+")
     log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
@@ -201,7 +203,7 @@ def write_jukebox_startup_to_log():
         log_file_entry = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
                               + computer_account_user_name.lower() + "log.txt", "a+")
         log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
-        log_file_entry.close()
+        log_file_entry.close()'''
 
 
 def genre_read_and_select_engine():  # Opens and reads genreFlags.csv file. Assigns genres to random play functionality.
@@ -389,11 +391,15 @@ def count_number_mp3_songs():
     print "Exiting count_number_mp3_songs()"
 
 
-def song_list_generator():
+'''def song_list_generator():
     global song_list
     global file_name_with_error
     delete_indicator = ""
     #bad_file_name = ""
+    song_list_recover = open('song_list.pkl', 'rb')  # Loads song_list
+    song_list_open = pickle.load(song_list_recover)
+    song_list_recover.close()
+    song_list = song_list_open
     print "Entering song_list_generator()"
 
     if last_file_count == current_file_count:  # If matched the song_list is loaded from file
@@ -579,7 +585,7 @@ def song_list_generator():
         song_list_save.close()
         song_list = song_list_generate
     print "Exiting song_list_generator()"
-    return song_list
+    return song_list'''
 
 
 def play_random_song():
@@ -1215,17 +1221,17 @@ def database_indicator():
     print "All Done"
 
 
-set_up_user_files_first_time()
-write_jukebox_startup_to_log()  # Writes Jukebox start time to log.
+#set_up_user_files_first_time()
+#write_jukebox_startup_to_log()  # Writes Jukebox start time to log.
 genre_read_and_select_engine()  # Invokes and builds lists for random play genre selection process.
 count_number_mp3_songs()  # Counts number of .mp3 files in /music.
-if not song_list:
-    song_list_generator()
+'''if not song_list:
+    song_list_generator()'''
 artist_list_generator()
-if sys.platform == 'win32':
+'''if sys.platform == 'win32':
     gui_launch()
 if sys.platform.startswith('linux'):  # http://stackoverflow.com/questions/2954516/run-python-in-a-separate-process
-    subprocess.call(['./run_gui_py'])
+    subprocess.call(['./run_gui_py'])'''
 infinite_loop = 1  # Jukebox infinite loop.
 while infinite_loop == 1:  # This infinite loop is the mp3 playback engine for the Jukebox. http://bit.ly/1vHqVkJ
     play_list_loader()  # Loads paid play_list
