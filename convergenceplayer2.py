@@ -26,11 +26,6 @@ import re  # Used in searching Genre substrings. Specifically word-boundaries of
 import subprocess
 from subprocess import call
 from subprocess import Popen, PIPE #  requred for mpg321 mp3 player for Rasberry Pi version
-'''from Tkinter import *  # Used as message to alert users to place MP3's in music folder
-import tkMessageBox
-import Tkinter
-import Tkinter as tk'''
-from operator import itemgetter
 import os
 import os.path, time
 import glob
@@ -41,8 +36,6 @@ import pickle  # Used to save and reload python lists
 from hsaudiotag import auto  # Used to work with MP3 ID3 data https://pypi.python.org/pypi/hsaudiotag
 from ctypes import *  # Used by playmp3.py windows based mp3 player http://bit.ly/1MgaGCh
 import getpass  # Used to get user name http://stackoverflow.com/questions/4325416/how-do-i-get-the-username-in-python
-# import os.path, time
-
 
 computer_account_user_name = getpass.getuser()
 genre_file_changed = ""
@@ -70,141 +63,25 @@ file_time_check = ""
 # songDurationTime = song_list[x][6], songComment = song_list[x][7]
 
 current_directory = os.getcwd() # Gets current directory.
-print current_directory
 if current_directory == "/home/pi": # Changes home directory on Raspberry Pi
     os.chdir("/home/pi/python/jukebox")
     current_directory = os.getcwd()
-
 full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
-print full_path
-try:
-    song_list_recover = open('song_list.pkl', 'rb')  # Loads song_list
-    song_list_open = pickle.load(song_list_recover)
-    song_list_recover.close()
-    song_list = song_list_open
-except IOError:
-    print "Hello, world!"
-
-'''def set_up_user_files_first_time():
-    global full_path
-    current_directory = os.getcwd()
-
-    if current_directory == "/home/pi":
-        os.chdir("/home/pi/python/jukebox")
-        #current_directory = os.getcwd()
-        full_path = os.getcwd()
-    else:
-        full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
-    artist_list = []
-    upcoming_list = []
-
-    if sys.platform == 'win32':
-        if os.path.exists(str(os.path.dirname(full_path)) + "\music"):
-            print "music directory exists. Nothing to do here."
-        else:
-            print "music directory does not exist."
-            os.makedirs(str(os.path.dirname(full_path)) + "\music")
-            master = Tk()
-            screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
-                         + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
-            msg = Message(master, text=screen_message)
-            msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
-            msg.pack()
-            mainloop()
-
-    if sys.platform.startswith('linux'):
-        if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
-            print "music directory exists. Nothing to do here."
-        else:
-            print "music directory does not exist."
-            os.makedirs(str(os.path.dirname(full_path)) + "/music")
-            master = Tk()
-            screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
-                         + str(os.path.dirname(full_path)) + "/music and then re-run the Convergence Jukebox software"
-            msg = Message(master, text=screen_message)
-            msg.config(bg='white', font=('times', 24, 'italic'), justify='center')
-            msg.pack()
-            mainloop()
-
-    if os.path.exists("log.txt"):
-        print "log.txt exists. Nothing to do here."
-    else:
-        log_file = file("log.txt", "w")
-        log_file.close()
-        print "log.txt created."
-
-    if os.path.exists("genre_flags.txt"):
-        print "genre_flags.txt exists. Nothing to do here."
-    else:
-        genre_file = file("genre_flags.txt", "w")
-        genre_file.write("null,null,null,null,null,Starting Year,Ending Year,Select Artists A thru C,"
-                         + "Select Artists D thru H,Select Artists I Thru M,Select Artists N Thru R,"
-                         + "Select Artists S Thru V,Select Artists W Thru Z,"
-                         + "Wednesday December 16 2015 12:44:11 PM")
-        genre_file.close()
-        print "genre_flags.txt created."
-
-    if os.path.exists("file_count.txt"):
-        print "file_count.txt exists. Nothing to do here."
-    else:
-        old_file_count = file("file_count.txt", "w")
-        old_file_count.write("0")
-        old_file_count.close()
-        print "file_count.txt created."
-
-    if os.path.exists("song_list.pkl"):
-        print "song_list.pkl exists. Nothing to do here."
-    else:
-        song_list_file_create = file("song_list.pkl", "wb")
-        song_list_file_create.close()
-        print "song_list.pkl created."
-
-    if os.path.exists("output_list.txt"):
-        print "output_list.txt exists. Nothing to do here."
-    else:
-        output_list_file_create = file("output_list.txt", "w")
-        output_list_file_create.write("Convergence Jukebox,Brad Fortner,www.convergencejukebox.com,2012,2016,GNU General Public License V3")
-
-        output_list_file_create.close()
-        print "output_list.txt created."
-
-    if os.path.exists("play_list.pkl"):
-        print "play_list.pkl exists. Nothing to do here."
-    else:
-        play_list_file_create = open('play_list.pkl', 'wb')
-        pickle.dump(play_list, play_list_file_create)
-        play_list_file_create.close()
-        print "play_list.pkl created."
-
-    if os.path.exists("upcoming_list.pkl"):
-        print "upcoming_list.pkl exists. Nothing to do here."
-    else:
-        upcoming_list_file_create = open('upcoming_list.pkl', 'wb')
-        pickle.dump(upcoming_list, upcoming_list_file_create)
-        upcoming_list_file_create.close()
-        print "upcoming_list.pkl created."
-
-    if os.path.exists("artist_list.pkl"):
-        print "artist_list.pkl exists. Nothing to do here."
-    else:
-        artist_list_file_create = open('artist_list.pkl', 'wb')
-        pickle.dump(artist_list, artist_list_file_create)
-        artist_list_file_create.close()
-        print "artist_list.pkl created."'''
+song_list_recover = open('song_list.pkl', 'rb')  # Loads song_list
+song_list_open = pickle.load(song_list_recover)
+song_list_recover.close()
+song_list = song_list_open
 
 
-'''def write_jukebox_startup_to_log():
-    time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # time_date_stamp. bit.ly/1MKPl5x
-    log_file_entry = open("log.txt", "a+")
-    log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
+time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # time_date_stamp. bit.ly/1MKPl5x
+log_file_entry = open("log.txt", "a+")
+log_file_entry.write(str(time_date_stamp + ',' + 'Convergence Player Engine Engaged For Day' + ',' + '\n'))
+log_file_entry.close()
+if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+    log_file_entry = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                          + computer_account_user_name.lower() + "log.txt", "a+")
+    log_file_entry.write(str(time_date_stamp + ',' + 'Convergence Player Engine Engaged For Day' + ',' + '\n'))
     log_file_entry.close()
-
-    # Code below writes log entry to computers dropbox public directory for remote log access
-    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
-        log_file_entry = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
-                              + computer_account_user_name.lower() + "log.txt", "a+")
-        log_file_entry.write(str(time_date_stamp + ',' + 'Jukebox Started For Day' + ',' + '\n'))
-        log_file_entry.close()'''
 
 
 def genre_read_and_select_engine():  # Opens and reads genreFlags.csv file. Assigns genres to random play functionality.
@@ -390,203 +267,6 @@ def count_number_mp3_songs():
     past_mp3_file_count.close()
     last_file_count = int(last_file_count_a)  # Variable holding count of mp3 songs from last time Jukebox was run.
     print "Exiting count_number_mp3_songs()"
-
-
-'''def song_list_generator():
-    global song_list
-    global file_name_with_error
-    delete_indicator = ""
-    #bad_file_name = ""
-    song_list_recover = open('song_list.pkl', 'rb')  # Loads song_list
-    song_list_open = pickle.load(song_list_recover)
-    song_list_recover.close()
-    song_list = song_list_open
-    print "Entering song_list_generator()"
-
-    if last_file_count == current_file_count:  # If matched the song_list is loaded from file
-        print "Jukebox music files same as last startup. Using existing song database."  # Message to console.
-        song_list_recover = open('song_list.pkl', 'rb')  # Loads song_list
-        song_list_open = pickle.load(song_list_recover)
-        song_list_recover.close()
-        song_list = song_list_open
-    else:  # New song_list, filecount and location_list generated and saved.
-        song_list_generate = []
-        build_list = []
-        location_list = []
-        time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")  # Timestamp generate bit.ly/1MKPl5x
-        log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-        log_file_entry.write(str(time_date_stamp + ',' + 'New song_list generated' + ',' + '\n'))
-        log_file_entry.close()
-        # Code below writes log entry to computers dropbox public directory for remote log access
-        if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
-            log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
-                                  + computer_account_user_name.lower() + "log.txt", "a+")
-            log_file_update.write(str(time_date_stamp + ',' + 'New song_list generated' + ',' + '\n'))
-            log_file_update.close()
-        file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt file for next start.
-        s = str(current_file_count)
-        file_count_update.write(s)
-        file_count_update.close()
-        location_list = []  # Creates temporary location_list used for initial song file names for mp3 player.
-        # File names later inserted in song_list to be used to play mp3's
-        full_path = os.path.realpath('__file__')
-        if sys.platform == 'win32':
-            for name in os.listdir(str(os.path.dirname(full_path)) + "\music" + "\\"):  # Reads files in the music dir.
-                if name.endswith(".mp3"):  # If statement searching for files with mp3 designation
-                    title = name  # Name of mp3 transferred to title variable
-                    location_list.append(title)  # Name of song appended to location_list
-        if sys.platform.startswith('linux'):
-            for name in os.listdir(str(os.path.dirname(full_path)) + "/music"):  # Reads files in the music dir.
-                if name.endswith(".mp3"):  # If statement searching for files with mp3 designation
-                    title = name  # Name of mp3 transferred to title variable
-                    location_list.append(title)  # Name of song appended to location_list
-        x = 0  # hsaudiotag 1.1.1 code begins here to pull out ID3 information
-        while x < len(location_list):  # Python List len function http://docs.python.org/2/library/functions.html#len
-            if sys.platform == 'win32':
-                myfile = auto.File(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x] + "")
-            if sys.platform.startswith('linux'):
-                myfile = auto.File(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x] + "")
-            # Note "" Quotes Required in above string.
-            # hsaudiotag function that assigns mp3 song to myfile object
-            print "Building Song Database. Stand By. This can take some time"
-            albumorg = myfile.album  # Assigns above mp3 ID3 Album name to albumorg variable
-            yearorg = myfile.year  # Assigns above mp3 ID3 Year info to yearorg variable
-            durationorgseconds = myfile.duration  # Assigns mp3 Duration (in seconds) info to durationorgseconds var.
-            genreorg = myfile.genre  # Assigns above mp3 Genre info to genreorg variable
-            commentorg = myfile.comment  # Assigns above mp3 Comment info to commentorg variable
-            build_list.append(myfile.title)  # Title of song appended to build_list
-            try:  # http://www.pythonlovers.net/python-exceptions-handling
-                unicode_crash_test = str(myfile.title)  # Causes crash if Unicode found in Artist Name
-            except UnicodeEncodeError:
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because of a Unicode character in its ID3 Title data.' + '\n'))
-                log_file_entry.close()
-                print "Title Unicode Error"
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            try:  # http://www.pythonlovers.net/python-exceptions-handling
-                unicode_crash_test = str(myfile.artist)  # Causes crash if Unicode found in Artist Name
-            except UnicodeEncodeError:
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because of a Unicode character in its ID3 Artist data.' + '\n'))
-                log_file_entry.close()
-                print "Artist Unicode Error"
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            try:  # http://www.pythonlovers.net/python-exceptions-handling
-                unicode_crash_test = str(myfile.comment)  # Causes crash if Unicode found in Artist Name
-            except UnicodeEncodeError:
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because of a Unicode character in its ID3 Comment data.' + '\n'))
-                log_file_entry.close()
-                print "Comment Unicode Error"
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            if myfile.artist == "":  # Check for invalid Artist mp3 ID tag
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                print str(location_list[x]) + "'s Artist ID3 tag is not valid for Convergence Jukebox. Please correct or remove from media folder."
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because its ID3 Artist data is not valid.' + '\n'))
-                log_file_entry.close()
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            if myfile.title == "":  # Check for invalid mp3 Title ID tag
-                print str(location_list[x])
-                #bad_file_name = str(location_list[x])
-                file_name_with_error = str(location_list[x])
-                print str(location_list[x]) + "'s Title ID3 tag is not valid for Convergence Jukebox. Please correct or remove from media folder."
-                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
-                log_file_entry.write(str(file_name_with_error + ' was deleted because its ID3 Title data is not valid.' + '\n'))
-                log_file_entry.close()
-                if sys.platform == 'win32':
-                    print "Removing " + str(location_list[x])
-                    os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
-                if sys.platform.startswith('linux'):
-                    os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
-                delete_indicator = "yes"
-                if location_list[x] in build_list:
-                    print "We need to delete " + str(location_list[x]) + " here Unicode title."
-            if x == 0:
-                database_indicator()
-            if delete_indicator == "yes":
-                file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt file for next start.
-                s = str(0)
-                file_count_update.write(s)
-                file_count_update.close()
-            if delete_indicator != "yes":
-                build_list.append(myfile.artist)  # Artist of song appended to build_list
-                build_list.append(myfile.album)  # Album title of song appended to build_list
-                build_list.append(myfile.year)  # Year of song appended to build_list
-                build_list.append(myfile.duration)  # Duration of song in seconds appended to build_list
-                build_list.append(myfile.genre)  # Genre of song appended to build_list
-                durationtimefull = str(datetime.timedelta(seconds=durationorgseconds))  # Info at http://bit.ly/1L5pU9t
-                durationtime = durationtimefull[3:7]  # Slices string to minute:second notation. http://bit.ly/1QphhOW
-                build_list.append(durationtime)  # Time of song in minutes/seconds of song appended to build_list
-                build_list.append(myfile.comment)  # Comment in ID3 data appended to build_list
-                full_file_name = str(location_list[x])
-                if sys.platform.startswith('linux'):
-                    title_with_whitespace = full_file_name
-                    title_without_whitespace = title_with_whitespace.replace(" ", "_")
-                    full_file_name = title_without_whitespace
-                    current_path = os.getcwd()
-                    temp_path = str(current_path)+'/music'
-                    os.chdir(temp_path)  # resets path
-                    os.rename(str(title_with_whitespace), str(title_without_whitespace))
-                    os.chdir(current_path)# resets path
-                build_list.append(full_file_name)
-                song_list_generate.append(build_list)
-                build_list.append(x)
-                print location_list[x]
-                print build_list[8]
-                print build_list
-                build_list = []
-                y = len(location_list) - x
-                # print "www.convergencejukebox.com Building your database " + str(full_file_name) + ". " + str(y) + \
-                # " files remaining to process."
-            delete_indicator = ""
-            print x
-            x += 1
-        song_list_save = open('song_list.pkl', 'wb')  # song_list saved as binary pickle file
-        pickle.dump(song_list_generate, song_list_save)
-        song_list_save.close()
-        song_list = song_list_generate
-    print "Exiting song_list_generator()"
-    return song_list'''
 
 
 def play_random_song():
@@ -1222,17 +902,10 @@ def database_indicator():
     print "All Done"
 
 
-#set_up_user_files_first_time()
-#write_jukebox_startup_to_log()  # Writes Jukebox start time to log.
 genre_read_and_select_engine()  # Invokes and builds lists for random play genre selection process.
 count_number_mp3_songs()  # Counts number of .mp3 files in /music.
-'''if not song_list:
-    song_list_generator()'''
 artist_list_generator()
-'''if sys.platform == 'win32':
-    gui_launch()
-if sys.platform.startswith('linux'):  # http://stackoverflow.com/questions/2954516/run-python-in-a-separate-process
-    subprocess.call(['./run_gui_py'])'''
+
 infinite_loop = 1  # Jukebox infinite loop.
 while infinite_loop == 1:  # This infinite loop is the mp3 playback engine for the Jukebox. http://bit.ly/1vHqVkJ
     play_list_loader()  # Loads paid play_list
