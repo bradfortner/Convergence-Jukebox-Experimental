@@ -49,6 +49,7 @@ computer_account_user_name = getpass.getuser()  # Used to write various log and 
 counter = 0
 credit_amount = 0
 current_directory = os.getcwd() # Gets current directory.
+current_file_count = 0
 cursor_position = 0
 delete_indicator = ""
 database_indicator = ""
@@ -91,6 +92,8 @@ full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
 print current_directory
 print full_path
 
+
+
 try:
     song_list_recover = open('song_list.pkl', 'rb')
     song_list = pickle.load(song_list_recover)
@@ -98,7 +101,6 @@ try:
     del song_list_recover
 except IOError:
     print song_list
-    #sys.exit()
     for i in range(0, 16):  # Adds blank songs to end of sont_list
         song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])
     print song_list
@@ -117,7 +119,6 @@ try:
     del song_list_recover
 except EOFError:
     print song_list
-    #sys.exit()
     for i in range(0, 16):  # Adds blank songs to end of sont_list
         song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])
     print song_list
@@ -128,8 +129,7 @@ except EOFError:
     file_count_update.write("-1")
     file_count_update.close()
     keyboard.press_and_release('o')
-'''for i in range(0, 16):  # Adds blank songs to end of sont_list
-    song_list.append([u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])'''
+
 song_list.sort(key=itemgetter(1), reverse=False)
 display_info_recover = open("output_list.txt", 'r+')
 output_list_read = display_info_recover.read()
@@ -476,7 +476,7 @@ class MyFinalApp(App):
                 else:
                     print "music directory does not exist."
                     os.makedirs(str(os.path.dirname(full_path)) + "/music")
-            if last_file_count == current_file_count:  # If matched the song_list is loaded from file
+            if last_file_count == current_file_count or last_file_count != 16:  # If matched the song_list is loaded from file
                 screen_message_update = screen_message + "Jukebox music files same as last startup.\n" \
                                                          "Using existing song database."
                 self.my_blackout.text = screen_message_update
@@ -686,12 +686,6 @@ class MyFinalApp(App):
                 song_list_save.close()
                 song_list = song_list_generate
                 song_list.sort(key=itemgetter(1), reverse=False)
-            '''print song_list
-            if not random_list:  # This code sets up random_list and random_list_with_year for all routines to use
-                basic_random_list_generator()
-                flag_printer()
-                genre_year_artist_random_sort_engine()
-            sys.exit()'''
 
             mp3_counter = len(
                 glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Counts number of MP3 files
@@ -1649,14 +1643,15 @@ def count_number_mp3_songs():
         mp3_counter = len(glob.glob1(str(os.path.dirname(full_path)) + "\music", "*.mp3"))  # Number of MP3 files in library
         current_file_count = int(mp3_counter)  # provides int output for later comparison
         if int(mp3_counter) == 0:
-            master = Tk()
+            '''master = Tk()
             screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
                          + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
             msg = Message(master, text=screen_message)
             msg.config(bg='white', font=('times', 24, 'italic'))
             msg.pack()
             mainloop()
-            sys.exit()
+            sys.exit()'''
+            pass
 
     if sys.platform.startswith('linux'):
         #mp3_counter = len(glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Number of MP3 files in library
