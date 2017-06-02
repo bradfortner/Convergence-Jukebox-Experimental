@@ -1,5 +1,5 @@
-# Convergence Jukebox is Python based codes that emulates a Jukebox and plays mp3 media.
-# Copyright (C) 2012 by Brad Fortner
+# Convergence Jukebox 2 is Python based codes that emulates a Jukebox and plays mp3 media.
+# Copyright (C) 2017 by Brad Fortner
 # This program is free software you can redistribute it and/or modify it under the terms
 # of the GNU General Public License as published by the Free Software Foundation;
 # either version 3 of the License, or (at your option) any later version.
