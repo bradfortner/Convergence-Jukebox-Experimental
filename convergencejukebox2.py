@@ -1,4 +1,4 @@
-from ctypes import *  # Used by playmp3.py windows based mp3 player.
+#from ctypes import *  # Used by playmp3.py windows based mp3 player.
 # http://www.mailsend-online.com/blog/play-mp3-files-with-python-on-windows.html
 from ctypes import *  # Used by playmp3.py windows based mp3 player http://bit.ly/1MgaGCh
 import datetime  # Used in RSS generation and to convert song duration in seconds to minutes/seconds.
@@ -12,10 +12,10 @@ from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.progressbar import ProgressBar
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.clock import Clock
-from kivy.graphics import *
 from operator import itemgetter
 import os
 import os.path, time
@@ -91,8 +91,6 @@ if current_directory == "/home/pi": # Changes home directory on Raspberry Pi
 full_path = os.path.realpath('__file__')  # http://bit.ly/1RQBZYF
 print current_directory
 print full_path
-
-
 
 try:
     song_list_recover = open('song_list.pkl', 'rb')
@@ -170,7 +168,6 @@ upcoming_list_recover.close()
 selections_available = len(song_list)
 del upcoming_list_recover
 
-
 Window.fullscreen = True  # does not force full screen
 Window.size = (1280, 720)  # sets 720p
 
@@ -239,6 +236,7 @@ class MyFinalApp(App):
             self.song_playing_artist.font_size = 35
         else:
             self.song_playing_artist.font_size = 50
+        self.my_pb = ProgressBar(value=50, max=100)
         self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
         self.opening_message = Label(text=" ",  color= (1,1,1,1), pos=(200, 205), font_size=50,width=500, halign="center", valign="middle")
         self.licence_message = Label(text=" ", color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500, halign="left", valign="top")
@@ -288,6 +286,7 @@ class MyFinalApp(App):
         self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
         self.my_blackout = Button(size_hint = (.547,.613),text=" ", background_color=(0,0,0,0),pos=(480, 56),valign="top")
         final_gui.add_widget(self.my_blackout)
+        final_gui.add_widget(self.my_pb)
         final_gui.add_widget(self.my_upcoming_selections)
         final_gui.add_widget(self.my_play_cost)
         final_gui.add_widget(self.song_playing_name)
@@ -356,7 +355,7 @@ class MyFinalApp(App):
             self.my_first_title.background_color = (160, 160, 160, .2)
             self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)
-        os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox GUI
+        os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox Player
         return final_gui
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
@@ -481,10 +480,6 @@ class MyFinalApp(App):
                                                          "Using existing song database."
                 self.my_blackout.text = screen_message_update
                 print "Jukebox music files same as last startup. Using existing song database."  # Message to console.
-                '''song_list_recover = open('song_list.pkl', 'rb')  # Loads song_list
-                song_list_open = pickle.load(song_list_recover)
-                song_list_recover.close()
-                song_list = song_list_open'''
             else:  # New song_list, filecount and location_list generated and saved.
                 song_list_generate = []
                 build_list = []
@@ -1724,22 +1719,6 @@ def flag_printer():
     print "flag_fourteen = " + str(flag_fourteen)
     print "flag_fourteen_change = " + str(flag_fourteen_change)
 
-'''def genre_file_change_detector():
-    global random_list
-    global computer_account_user_name
-    global file_time_old
-    global file_time_check
-    print "Entering genre_file_change_detector()"
-    # Below from http://stackoverflow.com/questions/237079/how-to-get-file-creation-modification-date-times-in-python
-    if os.path.exists(str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\genre_flags.txt"))):
-        file_time_check = d = modification_date("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\" + "genre_flags.txt")
-    else:
-        file_time_check = d = modification_date("genre_flags.txt")
-    if file_time_old != file_time_check:
-        file_time_old = file_time_check
-        print "A new genre flags file has been detected."
-        random_list = []'''
-
 def genre_only_random_sorter():
     genre_search_flag = []
     flag_one_remove_list = []
@@ -2212,7 +2191,6 @@ def player_launch():
             os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox GUI
         else:
             os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox GUI
-
 
 def mciSend(s):  # Function of playmp3.py
     if sys.platform == 'win32':
