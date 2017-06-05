@@ -328,7 +328,7 @@ class MyFinalApp(App):
         self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
         self.my_blackout = Button(size_hint = (.547,.613),text=" ", background_color=(0,0,0,0),pos=(480, 56),valign="top")
         final_gui.add_widget(self.my_blackout)
-        final_gui.add_widget(self.my_progress_bar)
+        #final_gui.add_widget(self.my_progress_bar)
         #final_gui.remove_widget(self.my_progress_bar)
         final_gui.add_widget(self.my_upcoming_selections)
         final_gui.add_widget(self.my_play_cost)
