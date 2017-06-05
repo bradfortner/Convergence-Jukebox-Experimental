@@ -30,6 +30,7 @@ import subprocess
 from subprocess import call
 from subprocess import Popen, PIPE #  requred for mpg321 mp3 player for Rasberry Pi version
 import sys  # Used to check and switch resolutions for convergence jukebox.
+import time, threading
 kivy.require("1.9.1")  # used to alert user if this code is run on an earlier version of Kivy.
 
 
@@ -243,6 +244,17 @@ class MyFinalApp(App):
     def process_button_click(self):
         # Open the pop up
         self.show_popup()
+        mythread = threading.Thread(target=self.something_that_takes_5_seconds_to_run)
+        mythread.start()
+
+    def something_that_takes_5_seconds_to_run(self):
+        thistime = time.time()
+        while thistime + 5 > time.time():  # 5 seconds
+            print "Hello, world!"
+            time.sleep(1)
+
+        # Once the long running task is done, close the pop up.
+        self.pop_up.dismiss()
 
 
     def build(self):
