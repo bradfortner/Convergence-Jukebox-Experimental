@@ -206,11 +206,14 @@ Builder.load_string('''
         pos: 390,292
 ''')
 
+class PopupBox(Popup):
+    pop_up_text = ObjectProperty()
+    def update_pop_up_text(self, p_message):
+        self.pop_up_text.text = p_message
 
 class JukeboxScreen(FloatLayout):
 
     pass
-
 
 class MyFinalApp(App):
 
