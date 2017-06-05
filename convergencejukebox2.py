@@ -206,15 +206,9 @@ Builder.load_string('''
         halign: 'center'
         size_hint: .7, 1
         pos: 390,292
-    Button:
-        height: 40
-        width: 100
-        size_hint: (None, None)
-        text: 'Click Me'
-        on_press: app.process_button_click()
 <PopupBox>:
     pop_up_text: _pop_up_text
-    size_hint: .5, .5
+    size_hint: 1, 1
     auto_dismiss: True
     title: 'Status'
 
