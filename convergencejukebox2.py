@@ -209,30 +209,7 @@ Builder.load_string('''
 
 class JukeboxScreen(FloatLayout):
 
-    progress_bar = ObjectProperty()
-
-    def __init__(self, **kwa):
-        super(JukeboxScreen, self).__init__(**kwa)
-
-        self.progress_bar = ProgressBar()
-        self.popup = Popup(
-            title='Download',
-            content=self.progress_bar
-        )
-        self.popup.bind(on_open=self.puopen)
-        self.add_widget(Button(text='Download', on_release=self.pop))
-
-    def pop(self, instance):
-        self.progress_bar.value = 1
-        self.popup.open()
-
-    def next(self, dt):
-        if self.progress_bar.value >= 100:
-            return False
-        self.progress_bar.value += 1
-
-    def puopen(self, instance):
-        Clock.schedule_interval(self.next, 1 / 25)
+    pass
 
 
 class MyFinalApp(App):
@@ -1463,47 +1440,6 @@ class MyFinalApp(App):
             upcoming_list = pickle.load(upcoming_list_recover)
             upcoming_list_recover.close()
             # selections_screen_updater(self)
-
-'''def my_old_infinite_loop():
-    global random_list
-    play_list_loader()  # Loads paid play_list
-
-    if len(play_list) > 0:  # Checks for any paid songs to play
-        play_list_player()  # Plays paid songs
-    genre_read_and_select_engine()
-    genre_file_change_detector()  # Looks for change to genre_flags.txt If file changed deletes existing random_list.
-    if len(random_list) > 0:  # Plays random song.
-        print "Proceeding to bottom of sequence."
-    if not random_list:  # This code sets up random_list and random_list_with_year for all routines to use
-        basic_random_list_generator()
-        flag_printer()
-        genre_year_artist_random_sort_engine()
-    print random_list
-    sys.exit()
-    norandom_song_number_test = random_list[0]  # Test for norandom song designation.
-    if "norandom" in str(song_list[norandom_song_number_test][7]):
-        print song_list[norandom_song_number_test][7]
-        del random_list[0]  # Deletes norandom song before playback.
-    x = random_list[0]
-    title = str(song_list[x][0])
-    artist = str(song_list[x][1])
-    album = str(song_list[x][2])
-    year = (song_list[x][3])
-    ptime = (song_list[x][6])
-    random_mode_playback()
-    if random_change_list == "yes":
-        random_list = []'''
-
-'''def artist_list_generator():
-    artist_list = []
-    x = 0
-    for i in song_list:
-        if song_list[x][1] not in artist_list:
-            artist_list.append(song_list[x][1])
-        x += 1
-    artist_list_file_populate = open('artist_list.pkl', 'wb')
-    pickle.dump(artist_list, artist_list_file_populate)
-    artist_list_file_populate.close()'''
 
 def basic_random_list_generator():
     global random_list_with_year
