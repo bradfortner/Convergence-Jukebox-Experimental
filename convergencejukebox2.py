@@ -11,6 +11,7 @@ from kivy.app import App
 from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.clock import Clock
+from kivy.factory import Factory
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
@@ -204,6 +205,23 @@ Builder.load_string('''
         halign: 'center'
         size_hint: .7, 1
         pos: 390,292
+    Button:
+        height: 40
+        width: 100
+        size_hint: (None, None)
+        text: 'Click Me'
+        on_press: app.process_button_click()
+<PopupBox>:
+    pop_up_text: _pop_up_text
+    size_hint: .5, .5
+    auto_dismiss: True
+    title: 'Status'
+
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            id: _pop_up_text
+            text: ''
 ''')
 
 class PopupBox(Popup):
@@ -216,6 +234,16 @@ class JukeboxScreen(FloatLayout):
     pass
 
 class MyFinalApp(App):
+
+    def show_popup(self):
+        self.pop_up = Factory.PopupBox()
+        self.pop_up.update_pop_up_text('Running some task...')
+        self.pop_up.open()
+
+    def process_button_click(self):
+        # Open the pop up
+        self.show_popup()
+
 
     def build(self):
         final_gui = JukeboxScreen()
