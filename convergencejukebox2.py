@@ -252,8 +252,6 @@ class MyFinalApp(App):
         while thistime + 5 > time.time():  # 5 seconds
             print "Hello, world!"
             time.sleep(1)
-
-        # Once the long running task is done, close the pop up.
         self.pop_up.dismiss()
 
 
@@ -424,6 +422,7 @@ class MyFinalApp(App):
             screen_message = "Welcome To Convergence Jukebox\nYour Jukebox Is Being Configured\nThis Could Take A Few Minutes\n\n"
             self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
             self.licence_message.text = str(licence)
+            self.process_button_click()
             #self.parent.remove_widget(self.my_progress_bar)
             #self.remove_widget(self.my_progress_bar)
             self.my_first_title.background_color = (160, 160, 160, 0)
