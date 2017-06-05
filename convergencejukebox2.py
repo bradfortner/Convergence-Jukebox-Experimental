@@ -7,15 +7,17 @@ import glob
 from hsaudiotag import auto  # Used to work with MP3 ID3 data https://pypi.python.org/pypi/hsaudiotag
 import keyboard  # Used to simulated keyboard events to call screen update functions http://bit.ly/2qwRrTh
 import kivy
-kivy.require("1.9.1")  # used to alert user if this code is run on an earlier version of Kivy.
 from kivy.app import App
-from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.progressbar import ProgressBar
 from kivy.lang import Builder
-from kivy.core.window import Window
 from kivy.clock import Clock
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.label import Label
+from kivy.properties import ObjectProperty
+from kivy.uix.popup import Popup
+from kivy.uix.progressbar import ProgressBar
+from kivy.uix.widget import Widget
+from kivy.core.window import Window
 from operator import itemgetter
 import os
 import os.path, time
@@ -27,10 +29,8 @@ import subprocess
 from subprocess import call
 from subprocess import Popen, PIPE #  requred for mpg321 mp3 player for Rasberry Pi version
 import sys  # Used to check and switch resolutions for convergence jukebox.
-'''from Tkinter import *  # Used as message to alert users to place MP3's in music folder
-import tkMessageBox
-import Tkinter
-import Tkinter as tk'''
+kivy.require("1.9.1")  # used to alert user if this code is run on an earlier version of Kivy.
+
 
 ###### Variables #####
 global title
@@ -208,7 +208,31 @@ Builder.load_string('''
 
 
 class JukeboxScreen(FloatLayout):
-    pass
+
+    progress_bar = ObjectProperty()
+
+    def __init__(self, **kwa):
+        super(JukeboxScreen, self).__init__(**kwa)
+
+        self.progress_bar = ProgressBar()
+        self.popup = Popup(
+            title='Download',
+            content=self.progress_bar
+        )
+        self.popup.bind(on_open=self.puopen)
+        self.add_widget(Button(text='Download', on_release=self.pop))
+
+    def pop(self, instance):
+        self.progress_bar.value = 1
+        self.popup.open()
+
+    def next(self, dt):
+        if self.progress_bar.value >= 100:
+            return False
+        self.progress_bar.value += 1
+
+    def puopen(self, instance):
+        Clock.schedule_interval(self.next, 1 / 25)
 
 
 class MyFinalApp(App):
@@ -236,7 +260,7 @@ class MyFinalApp(App):
             self.song_playing_artist.font_size = 35
         else:
             self.song_playing_artist.font_size = 50
-        self.my_pb = ProgressBar(value=50, max=100)
+        self.my_progress_bar = ProgressBar(value=50, max=100)
         self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
         self.opening_message = Label(text=" ",  color= (1,1,1,1), pos=(200, 205), font_size=50,width=500, halign="center", valign="middle")
         self.licence_message = Label(text=" ", color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500, halign="left", valign="top")
@@ -286,7 +310,8 @@ class MyFinalApp(App):
         self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
         self.my_blackout = Button(size_hint = (.547,.613),text=" ", background_color=(0,0,0,0),pos=(480, 56),valign="top")
         final_gui.add_widget(self.my_blackout)
-        final_gui.add_widget(self.my_pb)
+        final_gui.add_widget(self.my_progress_bar)
+        #final_gui.remove_widget(self.my_progress_bar)
         final_gui.add_widget(self.my_upcoming_selections)
         final_gui.add_widget(self.my_play_cost)
         final_gui.add_widget(self.song_playing_name)
@@ -379,6 +404,8 @@ class MyFinalApp(App):
             screen_message = "Welcome To Convergence Jukebox\nYour Jukebox Is Being Configured\nThis Could Take A Few Minutes\n\n"
             self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
             self.licence_message.text = str(licence)
+            #self.parent.remove_widget(self.my_progress_bar)
+            #self.remove_widget(self.my_progress_bar)
             self.my_first_title.background_color = (160, 160, 160, 0)
             self.my_first_artist.background_color = (160, 160, 160, 0)
             self.my_blackout.background_color = (0,0,0,1)
