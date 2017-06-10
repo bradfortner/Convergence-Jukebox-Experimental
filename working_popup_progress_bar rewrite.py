@@ -28,7 +28,7 @@ class MyPopupProgressBar(Widget):
         self.progress_bar.value += 1 # Updates progress_bar's progress
 
     def puopen(self, instance): # Called from bind.
-        Clock.schedule_interval(self.next, .0005) # Creates Clock event calling next() every 5-1000th of a second.
+        Clock.schedule_interval(self.next, .0005) # Creates Clock event scheduling next() every 5-1000th of a second.
 
 class MyApp(App):
     def build(self):
