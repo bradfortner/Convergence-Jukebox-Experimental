@@ -226,40 +226,20 @@ class PopupBox(Popup):
 
 class JukeboxScreen(FloatLayout):
 
-    pass
-
-class MyFinalApp(App):
-
-    def show_popup(self):
-        self.pop_up = Factory.PopupBox()
-        self.pop_up.update_pop_up_text('Running some task...')
-        self.pop_up.open()
-
-    def process_button_click(self):
-        # Open the pop up
-        self.show_popup()
-        mythread = threading.Thread(target=self.something_that_takes_5_seconds_to_run)
-        mythread.start()
-
-    def something_that_takes_5_seconds_to_run(self):
-        thistime = time.time()
-        while thistime + 5 > time.time():  # 5 seconds
-            print "Hello, world!"
-            time.sleep(1)
-        self.pop_up.dismiss()
-
-
-    def build(self):
-        final_gui = JukeboxScreen()
+    def __init__(self, **kwargs):
+        super(JukeboxScreen, self).__init__(**kwargs)
+        # final_gui = JukeboxScreen()
         Clock.schedule_interval(MyFinalApp.file_reader, 5)
-        event = Clock.schedule_interval(my_jukebox_play_function, 1) # Code To Use Later
+        event = Clock.schedule_interval(my_jukebox_play_function, 1)  # Code To Use Later
         Window.bind(on_key_down=self.key_action)
         set_up_user_files_first_time()
         write_jukebox_startup_to_log()
         genre_read_and_select_engine()
         count_number_mp3_songs()
-        self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),width=500)
-        self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,size_hint=(None, None), width=800, halign="center", valign="middle")
+        self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),
+                                        width=500)
+        self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,
+                                          size_hint=(None, None), width=800, halign="center", valign="middle")
         if len(display_info[0]) > 25:
             self.song_playing_name.font_size = 25
         elif len(display_info[0]) > 18:
@@ -274,8 +254,10 @@ class MyFinalApp(App):
             self.song_playing_artist.font_size = 50
         self.my_progress_bar = ProgressBar(value=50, max=100)
         self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
-        self.opening_message = Label(text=" ",  color= (1,1,1,1), pos=(200, 205), font_size=50,width=500, halign="center", valign="middle")
-        self.licence_message = Label(text=" ", color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500, halign="left", valign="top")
+        self.opening_message = Label(text=" ", color=(1, 1, 1, 1), pos=(200, 205), font_size=50, width=500,
+                                     halign="center", valign="middle")
+        self.licence_message = Label(text=" ", color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500,
+                                     halign="left", valign="top")
         self.my_first_title = Button(text=str(song_list[adder][0]), pos=(495, 456))
         self.my_first_artist = Button(text=str(song_list[adder][1]), pos=(495, 433))
         self.my_second_title = Button(text=str(song_list[adder + 1][0]), pos=(495, 403))
@@ -320,80 +302,1195 @@ class MyFinalApp(App):
         self.my_play_cost = Label(text="Twenty-Five Cents Per Selection", pos=(50, -265), font_size=22)
         self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
         self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
-        self.my_blackout = Button(size_hint = (.547,.613),text=" ", background_color=(0,0,0,0),pos=(480, 56),valign="top")
-        final_gui.add_widget(self.my_blackout)
-        #final_gui.add_widget(self.my_progress_bar)
-        #final_gui.remove_widget(self.my_progress_bar)
-        final_gui.add_widget(self.my_upcoming_selections)
-        final_gui.add_widget(self.my_play_cost)
-        final_gui.add_widget(self.song_playing_name)
-        final_gui.add_widget(self.song_playing_artist)
-        final_gui.add_widget(self.my_selection_one)
-        final_gui.add_widget(self.my_selection_two)
-        final_gui.add_widget(self.my_selection_three)
-        final_gui.add_widget(self.my_selection_four)
-        final_gui.add_widget(self.my_selection_five)
-        final_gui.add_widget(self.my_selection_six)
-        final_gui.add_widget(self.my_selection_seven)
-        final_gui.add_widget(self.my_selection_eight)
-        final_gui.add_widget(self.my_selection_nine)
-        final_gui.add_widget(self.my_selection_ten)
-        final_gui.add_widget(self.my_selection_eleven)
-        final_gui.add_widget(self.my_selection_twelve)
-        final_gui.add_widget(self.my_selection_thirteen)
-        final_gui.add_widget(self.my_selection_fourteen)
-        final_gui.add_widget(self.my_selection_fifteen)
-        final_gui.add_widget(self.my_selection_sixteen)
-        final_gui.add_widget(self.my_selection_seventeen)
-        final_gui.add_widget(self.my_credit_amount)
-        final_gui.add_widget(self.selections_available)
-        final_gui.add_widget(self.sort_mode)
-        final_gui.add_widget(self.my_play_mode)
-        final_gui.add_widget(self.my_title_song)
-        final_gui.add_widget(self.my_title_artist)
-        final_gui.add_widget(self.my_title_year)
-        final_gui.add_widget(self.my_title_length)
-        final_gui.add_widget(self.my_title_album)
-        final_gui.add_widget(self.my_first_title)
-        final_gui.add_widget(self.my_first_artist)
-        final_gui.add_widget(self.my_second_title)
-        final_gui.add_widget(self.my_second_artist)
-        final_gui.add_widget(self.my_third_title)
-        final_gui.add_widget(self.my_third_artist)
-        final_gui.add_widget(self.my_fourth_title)
-        final_gui.add_widget(self.my_fourth_artist)
-        final_gui.add_widget(self.my_fifth_title)
-        final_gui.add_widget(self.my_fifth_artist)
-        final_gui.add_widget(self.my_sixth_title)
-        final_gui.add_widget(self.my_sixth_artist)
-        final_gui.add_widget(self.my_seventh_title)
-        final_gui.add_widget(self.my_seventh_artist)
-        final_gui.add_widget(self.my_eigth_title)
-        final_gui.add_widget(self.my_eigth_artist)
-        final_gui.add_widget(self.my_ninth_title)
-        final_gui.add_widget(self.my_ninth_artist)
-        final_gui.add_widget(self.my_tenth_title)
-        final_gui.add_widget(self.my_tenth_artist)
-        final_gui.add_widget(self.my_eleventh_title)
-        final_gui.add_widget(self.my_eleventh_artist)
-        final_gui.add_widget(self.my_twelfth_title)
-        final_gui.add_widget(self.my_twelfth_artist)
-        final_gui.add_widget(self.my_thirteenth_title)
-        final_gui.add_widget(self.my_thirteenth_artist)
-        final_gui.add_widget(self.my_fourteenth_title)
-        final_gui.add_widget(self.my_fourteenth_artist)
-        final_gui.add_widget(self.my_fifteenth_title)
-        final_gui.add_widget(self.my_fifteenth_artist)
-        final_gui.add_widget(self.my_sixteenth_title)
-        final_gui.add_widget(self.my_sixteenth_artist)
-        final_gui.add_widget(self.opening_message)
-        final_gui.add_widget(self.licence_message)
-        if start_up !=0:
+        self.my_blackout = Button(size_hint=(.547, .613), text=" ", background_color=(0, 0, 0, 0), pos=(480, 56),
+                                  valign="top")
+        self.add_widget(self.my_blackout)
+        # self.add_widget(self.my_progress_bar)
+        # self.remove_widget(self.my_progress_bar)
+        self.add_widget(self.my_upcoming_selections)
+        self.add_widget(self.my_play_cost)
+        self.add_widget(self.song_playing_name)
+        self.add_widget(self.song_playing_artist)
+        self.add_widget(self.my_selection_one)
+        self.add_widget(self.my_selection_two)
+        self.add_widget(self.my_selection_three)
+        self.add_widget(self.my_selection_four)
+        self.add_widget(self.my_selection_five)
+        self.add_widget(self.my_selection_six)
+        self.add_widget(self.my_selection_seven)
+        self.add_widget(self.my_selection_eight)
+        self.add_widget(self.my_selection_nine)
+        self.add_widget(self.my_selection_ten)
+        self.add_widget(self.my_selection_eleven)
+        self.add_widget(self.my_selection_twelve)
+        self.add_widget(self.my_selection_thirteen)
+        self.add_widget(self.my_selection_fourteen)
+        self.add_widget(self.my_selection_fifteen)
+        self.add_widget(self.my_selection_sixteen)
+        self.add_widget(self.my_selection_seventeen)
+        self.add_widget(self.my_credit_amount)
+        self.add_widget(self.selections_available)
+        self.add_widget(self.sort_mode)
+        self.add_widget(self.my_play_mode)
+        self.add_widget(self.my_title_song)
+        self.add_widget(self.my_title_artist)
+        self.add_widget(self.my_title_year)
+        self.add_widget(self.my_title_length)
+        self.add_widget(self.my_title_album)
+        self.add_widget(self.my_first_title)
+        self.add_widget(self.my_first_artist)
+        self.add_widget(self.my_second_title)
+        self.add_widget(self.my_second_artist)
+        self.add_widget(self.my_third_title)
+        self.add_widget(self.my_third_artist)
+        self.add_widget(self.my_fourth_title)
+        self.add_widget(self.my_fourth_artist)
+        self.add_widget(self.my_fifth_title)
+        self.add_widget(self.my_fifth_artist)
+        self.add_widget(self.my_sixth_title)
+        self.add_widget(self.my_sixth_artist)
+        self.add_widget(self.my_seventh_title)
+        self.add_widget(self.my_seventh_artist)
+        self.add_widget(self.my_eigth_title)
+        self.add_widget(self.my_eigth_artist)
+        self.add_widget(self.my_ninth_title)
+        self.add_widget(self.my_ninth_artist)
+        self.add_widget(self.my_tenth_title)
+        self.add_widget(self.my_tenth_artist)
+        self.add_widget(self.my_eleventh_title)
+        self.add_widget(self.my_eleventh_artist)
+        self.add_widget(self.my_twelfth_title)
+        self.add_widget(self.my_twelfth_artist)
+        self.add_widget(self.my_thirteenth_title)
+        self.add_widget(self.my_thirteenth_artist)
+        self.add_widget(self.my_fourteenth_title)
+        self.add_widget(self.my_fourteenth_artist)
+        self.add_widget(self.my_fifteenth_title)
+        self.add_widget(self.my_fifteenth_artist)
+        self.add_widget(self.my_sixteenth_title)
+        self.add_widget(self.my_sixteenth_artist)
+        self.add_widget(self.opening_message)
+        self.add_widget(self.licence_message)
+        if start_up != 0:
             self.my_first_title.background_color = (160, 160, 160, .2)
             self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)
         os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox Player
-        return final_gui
+
+    def show_popup(self):
+        self.pop_up = Factory.PopupBox()
+        self.pop_up.update_pop_up_text('Running some task...')
+        self.pop_up.open()
+
+    def process_button_click(self):
+        # Open the pop up
+        self.show_popup()
+        mythread = threading.Thread(target=self.something_that_takes_5_seconds_to_run)
+        mythread.start()
+
+    def something_that_takes_5_seconds_to_run(self):
+        thistime = time.time()
+        while thistime + 5 > time.time():  # 5 seconds
+            print "Hello, world!"
+            time.sleep(1)
+        self.pop_up.dismiss()
+
+    def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
+        global adder
+        global screen_number
+        global cursor_position
+        global last_pressed
+        global song_selection_number
+        key_event = list(args)
+        global display_info
+        global upcoming_list
+        global start_up
+        global full_path
+        global current_file_count
+        global song_list
+        global delete_indicator
+        global random_list
+        print "Key Number Pressed Is: " + str(key_event[1])
+        if str(key_event[1]) == '111':  # Opening Screen
+            last_pressed = "o"
+            screen_message = "Welcome To Convergence Jukebox\nYour Jukebox Is Being Configured\nThis Could Take A Few Minutes\n\n"
+            self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
+            self.licence_message.text = str(licence)
+            self.process_button_click()
+            # self.parent.remove_widget(self.my_progress_bar)
+            # self.remove_widget(self.my_progress_bar)
+            self.my_first_title.background_color = (160, 160, 160, 0)
+            self.my_first_artist.background_color = (160, 160, 160, 0)
+            self.my_blackout.background_color = (0, 0, 0, 1)
+            self.my_blackout.text = screen_message
+            self.my_blackout.color = (1, 1, 1, 1)
+            self.my_blackout.font_size = 25
+            self.my_upcoming_selections.color = (0, .7, 0, 0)
+            self.my_play_cost.color = (0, .7, 0, 0)
+            self.my_credit_amount.color = (0, .7, 0, 0)
+            self.selections_available.color = (0, .7, 0, 0)
+            self.song_playing_name.color = (1, 1, 1, 0)
+            self.song_playing_artist.color = (1, 1, 1, 0)
+            self.my_play_mode.color = (0, .7, 0, 0)
+            self.my_title_song.color = (0, .7, 0, 0)
+            self.my_title_artist.color = (0, .7, 0, 0)
+            self.my_title_year.color = (0, .7, 0, 0)
+            self.my_title_length.color = (0, .7, 0, 0)
+            self.my_title_album.color = (0, .7, 0, 0)
+            self.sort_mode.color = (0, .7, 0, 0)
+            self.my_first_title.color = (1, 1, 1, 0)
+            self.my_first_artist.color = (1, 1, 1, 0)
+            self.my_second_title.color = (1, 1, 1, 0)
+            self.my_second_artist.color = (1, 1, 1, 0)
+            self.my_third_title.color = (1, 1, 1, 0)
+            self.my_third_artist.color = (1, 1, 1, 0)
+            self.my_fourth_title.color = (1, 1, 1, 0)
+            self.my_fourth_artist.color = (1, 1, 1, 0)
+            self.my_fifth_title.color = (1, 1, 1, 0)
+            self.my_fifth_artist.color = (1, 1, 1, 0)
+            self.my_sixth_title.color = (1, 1, 1, 0)
+            self.my_sixth_artist.color = (1, 1, 1, 0)
+            self.my_seventh_title.color = (1, 1, 1, 0)
+            self.my_seventh_artist.color = (1, 1, 1, 0)
+            self.my_eigth_title.color = (1, 1, 1, 0)
+            self.my_eigth_artist.color = (1, 1, 1, 0)
+            self.my_ninth_title.color = (1, 1, 1, 0)
+            self.my_ninth_artist.color = (1, 1, 1, 0)
+            self.my_tenth_title.color = (1, 1, 1, 0)
+            self.my_tenth_artist.color = (1, 1, 1, 0)
+            self.my_eleventh_title.color = (1, 1, 1, 0)
+            self.my_eleventh_artist.color = (1, 1, 1, 0)
+            self.my_twelfth_title.color = (1, 1, 1, 0)
+            self.my_twelfth_artist.color = (1, 1, 1, 0)
+            self.my_thirteenth_title.color = (1, 1, 1, 0)
+            self.my_thirteenth_artist.color = (1, 1, 1, 0)
+            self.my_fourteenth_title.color = (1, 1, 1, 0)
+            self.my_fourteenth_artist.color = (1, 1, 1, 0)
+            self.my_fifteenth_title.color = (1, 1, 1, 0)
+            self.my_fifteenth_artist.color = (1, 1, 1, 0)
+            self.my_sixteenth_title.color = (1, 1, 1, 0)
+            self.my_sixteenth_artist.color = (1, 1, 1, 0)
+            self.my_selection_one.text = " "
+            self.my_selection_two.text = " "
+            self.my_selection_three.text = " "
+            self.my_selection_four.text = " "
+            self.my_selection_five.text = " "
+            self.my_selection_six.text = " "
+            self.my_selection_seven.text = " "
+            self.my_selection_eight.text = " "
+            self.my_selection_nine.text = " "
+            self.my_selection_ten.text = " "
+            self.my_selection_eleven.text = " "
+            self.my_selection_twelve.text = " "
+            self.my_selection_thirteen.text = " "
+            self.my_selection_fourteen.text = " "
+            self.my_selection_fifteen.text = " "
+            self.my_selection_sixteen.text = " "
+            self.my_selection_seventeen.text = " "
+            if sys.platform.startswith('linux'):
+                # Needs to be written when testing on Raspberry Pi
+                # This needs to heck Raspberry Pi has 720p resolution.
+                pass
+            if sys.platform == 'win32':  # Checks if music directory exists. If not it creates it and advises of mp3 need.
+                if os.path.exists(str(os.path.dirname(full_path)) + "\music"):
+                    screen_message_update = screen_message + " Music directory exists at " \
+                                            + str(os.path.dirname(full_path)) + "\music.\nNothing to do here"
+                    self.my_blackout.text = screen_message_update
+                else:
+                    screen_message_update = screen_message + "Music directory does not exist\n" + " Program Stopped" \
+                                                                                                  " And Will Terminate In Ten Seconds.\nPlease place fifty mp3's in the\n" \
+                                                                                                  "Convergence Jukebox music directory at\n" + str(
+                        os.path.dirname(full_path)) + "\music\n" \
+                                                      "and then re-run the Convergence Jukebox software"
+                    self.my_blackout.background_color = (1, 0, 0, 1)
+                    self.my_blackout.text = screen_message_update
+                    os.makedirs(str(os.path.dirname(full_path)) + "\music")
+            if sys.platform.startswith('linux'):  # Needs to be rewritten during Raspberry Pi testing.
+                if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
+                    print "music directory exists at " + str(
+                        os.path.dirname(full_path)) + "Adding underscores to MP3 Files."
+                    current_path = os.getcwd()
+                    path = str(current_path) + "/music"
+                    os.chdir(path)  # sets path for mpg321
+                    [os.rename(f, f.replace(' ', '_')) for f in os.listdir('.') if not f.startswith('.')]
+                else:
+                    print "music directory does not exist."
+                    os.makedirs(str(os.path.dirname(full_path)) + "/music")
+            if last_file_count == current_file_count or last_file_count != 16:  # If matched the song_list is loaded from file
+                screen_message_update = screen_message + "Jukebox music files same as last startup.\n" \
+                                                         "Using existing song database."
+                self.my_blackout.text = screen_message_update
+                print "Jukebox music files same as last startup. Using existing song database."  # Message to console.
+            else:  # New song_list, filecount and location_list generated and saved.
+                song_list_generate = []
+                build_list = []
+                location_list = []
+                time_date_stamp = datetime.datetime.now().strftime(
+                    "%A. %d. %B %Y %I:%M%p")  # Timestamp generate bit.ly/1MKPl5x
+                log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                log_file_entry.write(str(time_date_stamp + ',' + 'New song_list generated' + ',' + '\n'))
+                log_file_entry.close()
+                # Code below writes log entry to computers dropbox public directory for remote log access
+                if os.path.exists(
+                        str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+                    log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                                           + computer_account_user_name.lower() + "log.txt", "a+")
+                    log_file_update.write(str(time_date_stamp + ',' + 'New song_list generated' + ',' + '\n'))
+                    log_file_update.close()
+                file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt.
+                s = str(current_file_count)
+                file_count_update.write(s)
+                file_count_update.close()
+                location_list = []  # Creates temporary location_list used for initial song file names for mp3 player.
+                # File names later inserted in song_list to be used to play mp3's
+                full_path = os.path.realpath('__file__')
+                if sys.platform == 'win32':
+                    for name in os.listdir(str(
+                            os.path.dirname(full_path)) + "\music" + "\\"):  # Reads files in the music dir.
+                        if name.endswith(".mp3"):  # If statement searching for files with mp3 designation
+                            title = name  # Name of mp3 transferred to title variable
+                            location_list.append(title)  # Name of song appended to location_list
+                if sys.platform.startswith('linux'):
+                    for name in os.listdir(
+                                    str(os.path.dirname(full_path)) + "/music"):  # Reads files in the music dir.
+                        if name.endswith(".mp3"):  # If statement searching for files with mp3 designation
+                            title = name  # Name of mp3 transferred to title variable
+                            location_list.append(title)  # Name of song appended to location_list
+                x = 0  # hsaudiotag 1.1.1 code begins here to pull out ID3 information
+                while x < len(
+                        location_list):  # Python List len function http://docs.python.org/2/library/functions.html#len
+                    if sys.platform == 'win32':
+                        myfile = auto.File(
+                            str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x] + "")
+                    if sys.platform.startswith('linux'):
+                        myfile = auto.File(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x] + "")
+                    # Note "" Quotes Required in above string.
+                    # hsaudiotag function that assigns mp3 song to myfile object
+                    screen_message_update = screen_message + "Building Song Database. Stand By.\n" \
+                                                             "This can take some time."
+                    self.my_blackout.text = screen_message_update
+                    print "Building Song Database. Stand By. This can take some time"
+                    albumorg = myfile.album  # Assigns above mp3 ID3 Album name to albumorg variable
+                    yearorg = myfile.year  # Assigns above mp3 ID3 Year info to yearorg variable
+                    durationorgseconds = myfile.duration  # Assigns mp3 Duration (in seconds) info to durationorgseconds var.
+                    genreorg = myfile.genre  # Assigns above mp3 Genre info to genreorg variable
+                    commentorg = myfile.comment  # Assigns above mp3 Comment info to commentorg variable
+                    build_list.append(myfile.title)  # Title of song appended to build_list
+                    try:  # http://www.pythonlovers.net/python-exceptions-handling
+                        unicode_crash_test = str(myfile.title)  # Causes crash if Unicode found in Artist Name
+                    except UnicodeEncodeError:
+                        print str(location_list[x])
+                        # bad_file_name = str(location_list[x])
+                        file_name_with_error = str(location_list[x])
+                        log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                        log_file_entry.write(str(
+                            file_name_with_error + ' was deleted because of a Unicode character in its ID3 Title data.' + '\n'))
+                        log_file_entry.close()
+                        print "Title Unicode Error"
+                        if sys.platform == 'win32':
+                            print "Removing " + str(location_list[x])
+                            os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                        if sys.platform.startswith('linux'):
+                            os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                        delete_indicator = "yes"
+                        if location_list[x] in build_list:
+                            print "We need to delete " + str(location_list[x]) + " here Unicode title."
+                    try:  # http://www.pythonlovers.net/python-exceptions-handling
+                        unicode_crash_test = str(myfile.artist)  # Causes crash if Unicode found in Artist Name
+                    except UnicodeEncodeError:
+                        print str(location_list[x])
+                        # bad_file_name = str(location_list[x])
+                        file_name_with_error = str(location_list[x])
+                        log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                        log_file_entry.write(str(
+                            file_name_with_error + ' was deleted because of a Unicode character in its ID3 Artist data.' + '\n'))
+                        log_file_entry.close()
+                        print "Artist Unicode Error"
+                        if sys.platform == 'win32':
+                            print "Removing " + str(location_list[x])
+                            os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                        if sys.platform.startswith('linux'):
+                            os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                        delete_indicator = "yes"
+                        if location_list[x] in build_list:
+                            print "We need to delete " + str(location_list[x]) + " here Unicode title."
+                    try:  # http://www.pythonlovers.net/python-exceptions-handling
+                        unicode_crash_test = str(myfile.comment)  # Causes crash if Unicode found in Artist Name
+                    except UnicodeEncodeError:
+                        print str(location_list[x])
+                        # bad_file_name = str(location_list[x])
+                        file_name_with_error = str(location_list[x])
+                        log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                        log_file_entry.write(str(
+                            file_name_with_error + ' was deleted because of a Unicode character in its ID3 Comment data.' + '\n'))
+                        log_file_entry.close()
+                        print "Comment Unicode Error"
+                        if sys.platform == 'win32':
+                            print "Removing " + str(location_list[x])
+                            os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                        if sys.platform.startswith('linux'):
+                            os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                        delete_indicator = "yes"
+                        if location_list[x] in build_list:
+                            print "We need to delete " + str(location_list[x]) + " here Unicode title."
+                    if myfile.artist == "":  # Check for invalid Artist mp3 ID tag
+                        print str(location_list[x])
+                        # bad_file_name = str(location_list[x])
+                        file_name_with_error = str(location_list[x])
+                        print str(location_list[
+                                      x]) + "'s Artist ID3 tag is not valid for Convergence Jukebox. Please correct or remove from media folder."
+                        log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                        log_file_entry.write(
+                            str(
+                                file_name_with_error + ' was deleted because its ID3 Artist data is not valid.' + '\n'))
+                        log_file_entry.close()
+                        if sys.platform == 'win32':
+                            print "Removing " + str(location_list[x])
+                            os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                        if sys.platform.startswith('linux'):
+                            os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                        delete_indicator = "yes"
+                        if location_list[x] in build_list:
+                            print "We need to delete " + str(location_list[x]) + " here Unicode title."
+                    if myfile.title == "":  # Check for invalid mp3 Title ID tag
+                        print str(location_list[x])
+                        # bad_file_name = str(location_list[x])
+                        file_name_with_error = str(location_list[x])
+                        print str(location_list[
+                                      x]) + "'s Title ID3 tag is not valid for Convergence Jukebox. Please correct or remove from media folder."
+                        log_file_entry = open("log.txt", "a+")  # new song_list added to log file.
+                        log_file_entry.write(
+                            str(
+                                file_name_with_error + ' was deleted because its ID3 Title data is not valid.' + '\n'))
+                        log_file_entry.close()
+                        if sys.platform == 'win32':
+                            print "Removing " + str(location_list[x])
+                            os.remove(str(os.path.dirname(full_path)) + "\music" + "\\" + location_list[x])
+                        if sys.platform.startswith('linux'):
+                            os.remove(str(os.path.dirname(full_path)) + "/music" + "/" + location_list[x])
+                        delete_indicator = "yes"
+                        if location_list[x] in build_list:
+                            print "We need to delete " + str(location_list[x]) + " here Unicode title."
+                    if x == 0:
+                        database_indicator()
+                    if delete_indicator == "yes":
+                        file_count_update = open("file_count.txt", "w+")  # Writes new filecount to filecount.txt.
+                        s = str(0)
+                        file_count_update.write(s)
+                        file_count_update.close()
+                    if delete_indicator != "yes":
+                        build_list.append(myfile.artist)  # Artist of song appended to build_list
+                        build_list.append(myfile.album)  # Album title of song appended to build_list
+                        build_list.append(myfile.year)  # Year of song appended to build_list
+                        build_list.append(myfile.duration)  # Duration of song in seconds appended to build_list
+                        build_list.append(myfile.genre)  # Genre of song appended to build_list
+                        durationtimefull = str(
+                            datetime.timedelta(seconds=durationorgseconds))  # Info at http://bit.ly/1L5pU9t
+                        durationtime = durationtimefull[
+                                       3:7]  # Slices string to minute:second notation. http://bit.ly/1QphhOW
+                        build_list.append(
+                            durationtime)  # Time of song in minutes/seconds of song appended to build_list
+                        build_list.append(myfile.comment)  # Comment in ID3 data appended to build_list
+                        full_file_name = str(location_list[x])
+                        if sys.platform.startswith('linux'):
+                            title_with_whitespace = full_file_name
+                            title_without_whitespace = title_with_whitespace.replace(" ", "_")
+                            full_file_name = title_without_whitespace
+                            current_path = os.getcwd()
+                            temp_path = str(current_path) + '/music'
+                            os.chdir(temp_path)  # resets path
+                            os.rename(str(title_with_whitespace), str(title_without_whitespace))
+                            os.chdir(current_path)  # resets path
+                        build_list.append(full_file_name)
+                        song_list_generate.append(build_list)
+                        build_list.append(x)
+                        print location_list[x]
+                        print "Name: " + str(build_list[8])
+                        print build_list
+                        screen_message_update = screen_message + "Building Song Database. Stand By.\n" \
+                                                                 "This can take some time.\nAdding: " + str(
+                            build_list[8])
+                        self.my_blackout.text = screen_message_update
+                        build_list = []
+                        y = len(location_list) - x
+                        # print "www.convergencejukebox.com Building your database " + str(full_file_name) + ". " + str(y) + \
+                        # " files remaining to process."
+                    delete_indicator = ""
+                    print x
+                    x += 1
+                for i in range(0, 16):  # Adds blank songs to end of sont_list
+                    song_list_generate.append(
+                        [u'zzzzz', u'zzzzz', u' ', u' ', u' ', u' ', u' ', u' ', 'zzzzz - zzzzz.mp3', u' '])
+
+                song_list_save = open('song_list.pkl', 'wb')  # song_list saved as binary pickle file
+                pickle.dump(song_list_generate, song_list_save)
+                song_list_save.close()
+                song_list = song_list_generate
+                song_list.sort(key=itemgetter(1), reverse=False)
+
+            mp3_counter = len(
+                glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Counts number of MP3 files
+            current_file_count = int(mp3_counter)  # provides int output for later comparison
+            screen_message_update = screen_message + " Number of songs at startup: " + str(current_file_count)
+            self.my_blackout.text = screen_message_update
+            Clock.schedule_interval(my_jukebox_play_function, 3)
+
+            if int(mp3_counter) < 50:
+                screen_message_update = screen_message + "Not Enough MP3's To Start Convergence Jukebox\n" \
+                                        + " Program Stopped" \
+                                          " And Will Terminate In Ten Seconds.\nPlease place fifty mp3's in the\n" \
+                                          "Convergence Jukebox music directory at\n" + str(
+                    os.path.dirname(full_path)) + "\music\n" \
+                                                  "and then re-run the Convergence Jukebox software"
+                self.my_blackout.background_color = (1, 0, 0, 1)
+                self.my_blackout.text = screen_message_update
+
+        if str(key_event[1]) == '114':
+            global song_status
+            global random_list
+            x = random_list[0]
+            print "About to randomly play: " + str(song_list[x][8])
+            print song_status
+            print "Letter r pressed. "
+
+            title = str(song_list[x][0])
+            artist = str(song_list[x][1])
+            album = str(song_list[x][2])
+            year = str(song_list[x][3])
+            time = str(song_list[x][4])
+
+            mode = "Mode: Playing Song"
+            print "Title: " + title
+            print "Artist: " + artist
+            print "Album: " + album
+            print "Year Released: " + year + " Time: " + time
+            output_prep = title + "," + artist + "," + album + "," + year + "," + time + "," + mode
+            output_list_save = open("output_list.txt", "w")
+            output_list_save.write(str(output_prep))
+            output_list_save.close()
+            time_date_stamp = datetime.datetime.now().strftime("%A. %d. %B %Y %I:%M%p")
+            log_file_entry = open("log.txt", "a+")
+            log_file_entry.write(
+                str(time_date_stamp + ',' + str(song_list[x][8]) + ',' + str(mode) + ',' + '0' + '\n'))
+            log_file_entry.close()
+            # Code below writes log entry to computers dropbox public directory for remote log access
+            if os.path.exists(
+                    str(os.path.dirname("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"))):
+                log_file_update = open("c:\\users\\" + computer_account_user_name + "\\Dropbox\\public\\"
+                                       + computer_account_user_name.lower() + "log.txt", "a+")
+                log_file_update.write(
+                    str(time_date_stamp + ',' + str(song_list[x][8]) + ',' + str(mode) + ',' + '0' + '\n'))
+                log_file_update.close()
+            full_path = os.path.realpath('__file__')
+            print "Now playing: " + str(x)
+
+            playMP3(
+                str(os.path.dirname(full_path)) + '\music' + '\\\\' + song_list[x][8])  # Plays song using mp3Play.
+            del random_list[0]
+            song_status = "finished"
+            print song_status
+
+        if str(key_event[1]) == '47':  # Changes sort mode to title
+            last_pressed = "forward slash"
+            if self.sort_mode.text != "Sort Mode By Title":
+                print "Sorting by Title"
+                song_list.sort(key=itemgetter(0), reverse=False)
+                self.sort_mode.text = "Sort Mode By Title"
+            else:
+                print "Sorting by Artist"
+                song_list.sort(key=itemgetter(1), reverse=False)
+                self.sort_mode.text = "Sort Mode By Artist"
+            screen_number_base = .9  # This triggers a reset of the title/artist display
+        try:
+            if str(key_event[1]) == '97':
+                print 'a'
+                if self.sort_mode.text == "Sort Mode By Title":
+                    if last_pressed == "aa":
+                        print "I should be b"
+                        last_pressed = "aaa"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "B":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "aaa":
+                        print "I should be c"
+                        last_pressed = "a"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "C":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be a"
+                        last_pressed = "aa"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "A":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                else:
+                    if last_pressed == "aa":
+                        print "I should be b"
+                        last_pressed = "aaa"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "B":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "aaa":
+                        print "I should be c"
+                        last_pressed = "a"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "C":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be the letter a"
+                        print adder
+                        print cursor_position
+                        last_pressed = "aa"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "A":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+        except IndexError:
+            return
+        if str(key_event[1]) == '98':  # b keyboard key updates display on song change
+            print upcoming_list
+            # my_old_infinite_loop()
+            self.my_blackout.color = (1, 1, 1, 0)
+            self.my_first_title.color = (1, 1, 1, 1)
+            self.my_first_artist.color = (1, 1, 1, 1)
+            self.my_second_title.color = (1, 1, 1, 1)
+            self.my_second_artist.color = (1, 1, 1, 1)
+            self.my_third_title.color = (1, 1, 1, 1)
+            self.my_third_artist.color = (1, 1, 1, 1)
+            self.my_fourth_title.color = (1, 1, 1, 1)
+            self.my_fourth_artist.color = (1, 1, 1, 1)
+            self.my_fifth_title.color = (1, 1, 1, 1)
+            self.my_fifth_artist.color = (1, 1, 1, 1)
+            self.my_sixth_title.color = (1, 1, 1, 1)
+            self.my_sixth_artist.color = (1, 1, 1, 1)
+            self.my_seventh_title.color = (1, 1, 1, 1)
+            self.my_seventh_artist.color = (1, 1, 1, 1)
+            self.my_eigth_title.color = (1, 1, 1, 1)
+            self.my_eigth_artist.color = (1, 1, 1, 1)
+            self.my_ninth_title.color = (1, 1, 1, 1)
+            self.my_ninth_artist.color = (1, 1, 1, 1)
+            self.my_tenth_title.color = (1, 1, 1, 1)
+            self.my_tenth_artist.color = (1, 1, 1, 1)
+            self.my_eleventh_title.color = (1, 1, 1, 1)
+            self.my_eleventh_artist.color = (1, 1, 1, 1)
+            self.my_twelfth_title.color = (1, 1, 1, 1)
+            self.my_twelfth_artist.color = (1, 1, 1, 1)
+            self.my_thirteenth_title.color = (1, 1, 1, 1)
+            self.my_thirteenth_artist.color = (1, 1, 1, 1)
+            self.my_fourteenth_title.color = (1, 1, 1, 1)
+            self.my_fourteenth_artist.color = (1, 1, 1, 1)
+            self.my_fifteenth_title.color = (1, 1, 1, 1)
+            self.my_fifteenth_artist.color = (1, 1, 1, 1)
+            self.my_sixteenth_title.color = (1, 1, 1, 1)
+            self.my_sixteenth_artist.color = (1, 1, 1, 1)
+            self.my_blackout.background_color = (0, 0, 0, 0)
+            self.my_upcoming_selections.color = (0, .7, 0, 1)
+            self.my_play_cost.color = (0, .7, 0, 1)
+            self.my_credit_amount.color = (0, .7, 0, 1)
+            self.selections_available.color = (0, .7, 0, 1)
+            self.song_playing_name.color = (1, 1, 1, 1)
+            self.song_playing_artist.color = (1, 1, 1, 1)
+            self.my_play_mode.color = (0, .7, 0, 1)
+            self.my_title_song.color = (0, .7, 0, 1)
+            self.my_title_artist.color = (0, .7, 0, 1)
+            self.my_title_year.color = (0, .7, 0, 1)
+            self.my_title_length.color = (0, .7, 0, 1)
+            self.my_title_album.color = (0, .7, 0, 1)
+            self.sort_mode.color = (0, .7, 0, 1)
+            self.opening_message.text = " "
+            self.licence_message.text = " "
+            self.my_selection_one.text = " "
+            self.my_selection_two.text = " "
+            self.my_selection_three.text = " "
+            self.my_selection_four.text = " "
+            self.my_selection_five.text = " "
+            self.my_selection_six.text = " "
+            self.my_selection_seven.text = " "
+            self.my_selection_eight.text = " "
+            self.my_selection_nine.text = " "
+            self.my_selection_ten.text = " "
+            self.my_selection_eleven.text = " "
+            self.my_selection_twelve.text = " "
+            self.my_selection_thirteen.text = " "
+            self.my_selection_fourteen.text = " "
+            self.my_selection_fifteen.text = " "
+            self.my_selection_sixteen.text = " "
+            self.my_selection_seventeen.text = " "
+            try:
+                if upcoming_list:
+                    if upcoming_list[0]:
+                        self.my_selection_one.text = upcoming_list[0]
+                    if upcoming_list[1]:
+                        self.my_selection_two.text = upcoming_list[1]
+                    if upcoming_list[2]:
+                        self.my_selection_three.text = upcoming_list[2]
+                    if upcoming_list[3]:
+                        self.my_selection_four.text = upcoming_list[3]
+                    if upcoming_list[4]:
+                        self.my_selection_five.text = upcoming_list[4]
+                    if upcoming_list[5]:
+                        self.my_selection_six.text = upcoming_list[5]
+                    if upcoming_list[6]:
+                        self.my_selection_seven.text = upcoming_list[6]
+                    if upcoming_list[7]:
+                        self.my_selection_eight.text = upcoming_list[7]
+                    if upcoming_list[8]:
+                        self.my_selection_nine.text = upcoming_list[8]
+                    if upcoming_list[9]:
+                        self.my_selection_ten.text = upcoming_list[9]
+                    if upcoming_list[10]:
+                        self.my_selection_eleven.text = upcoming_list[10]
+                    if upcoming_list[11]:
+                        self.my_selection_twelve.text = upcoming_list[11]
+                    if upcoming_list[12]:
+                        self.my_selection_thirteen.text = upcoming_list[12]
+                    if upcoming_list[13]:
+                        self.my_selection_fourteen.text = upcoming_list[13]
+                    if upcoming_list[14]:
+                        self.my_selection_fifteen.text = upcoming_list[14]
+                    if upcoming_list[15]:
+                        self.my_selection_sixteen.text = upcoming_list[15]
+                    if upcoming_list[16]:
+                        self.my_selection_seventeen.text = upcoming_list[16]
+            except IndexError:
+                pass
+            display_info_recover = open("output_list.txt", 'r+')
+            output_list_read = display_info_recover.read()
+            display_info_recover.close()
+            display_info = output_list_read.split(",")
+            print display_info
+            self.song_playing_name.text = str(display_info[0])
+            self.song_playing_artist.text = str(display_info[1])
+            if len(display_info[0]) > 25:
+                self.song_playing_name.font_size = 25
+            elif len(display_info[0]) > 18:
+                self.song_playing_name.font_size = 35
+            else:
+                self.song_playing_name.font_size = 50
+            if len(display_info[1]) > 25:
+                self.song_playing_artist.font_size = 25
+            elif len(display_info[1]) > 18:
+                self.song_playing_artist.font_size = 35
+            else:
+                self.song_playing_artist.font_size = 50
+
+            x = self.song_playing_artist.text
+            if x.lower() in the_bands_list_lower_case:
+                x = "The " + str(x)
+                self.song_playing_artist.text = str(x)
+
+            self.my_title_song.text = "Title: " + str(display_info[0])
+            self.my_title_artist.text = "Artist: " + str(display_info[1])
+            self.my_title_album.text = "Release: " + str(display_info[2])
+            self.my_title_year.text = "Year: " + str(display_info[3])
+            self.my_title_length.text = "Length: " + str(display_info[4])
+            self.my_play_mode.text = str(display_info[5])
+
+        try:
+            if str(key_event[1]) == '100':
+                print 'd'
+                if self.sort_mode.text == "Sort Mode By Title":
+                    if last_pressed == "dd":
+                        print "I should be e"
+                        last_pressed = "ddd"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "E":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "ddd":
+                        print "I should be f"
+                        last_pressed = "d"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "F":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be d"
+                        last_pressed = "dd"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "D":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                else:
+                    if last_pressed == "dd":
+                        print "I should be e"
+                        last_pressed = "ddd"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "E":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "ddd":
+                        print "I should be f"
+                        last_pressed = "d"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "F":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be the letter d"
+                        print adder
+                        print cursor_position
+                        last_pressed = "dd"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "D":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+            if str(key_event[1]) == '103':
+                print 'g'
+                if self.sort_mode.text == "Sort Mode By Title":
+                    if last_pressed == "gg":
+                        print "I should be h"
+                        last_pressed = "ggg"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "H":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "ggg":
+                        print "I should be i"
+                        last_pressed = "g"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "I":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be g"
+                        last_pressed = "gg"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "G":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                else:
+                    if last_pressed == "gg":
+                        print "I should be h"
+                        last_pressed = "ggg"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "H":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "ggg":
+                        print "I should be i"
+                        last_pressed = "d"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "I":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be the letter g"
+                        print adder
+                        print cursor_position
+                        last_pressed = "gg"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "G":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+            if str(key_event[1]) == '106':
+                print 'j'
+                if self.sort_mode.text == "Sort Mode By Title":
+                    if last_pressed == "jj":
+                        print "I should be k"
+                        last_pressed = "jjj"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "K":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "jjj":
+                        print "I should be l"
+                        last_pressed = "j"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "L":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be j"
+                        last_pressed = "jj"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "J":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                else:
+                    if last_pressed == "jj":
+                        print "I should be k"
+                        last_pressed = "jjj"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "K":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "jjj":
+                        print "I should be l"
+                        last_pressed = "j"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "L":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be the letter j"
+                        print adder
+                        print cursor_position
+                        last_pressed = "jj"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "J":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+            if str(key_event[1]) == '109':
+                print 'm'
+                if self.sort_mode.text == "Sort Mode By Title":
+                    if last_pressed == "mm":
+                        print "I should be n"
+                        last_pressed = "mmm"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "N":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "mmm":
+                        print "I should be o"
+                        last_pressed = "m"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "O":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be m"
+                        last_pressed = "mm"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "M":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                else:
+                    if last_pressed == "mm":
+                        print "I should be n"
+                        last_pressed = "mmm"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "N":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "mmm":
+                        print "I should be o"
+                        last_pressed = "m"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "O":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be the letter m"
+                        print adder
+                        print cursor_position
+                        last_pressed = "mm"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "M":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+            if str(key_event[1]) == '112':
+                print 'p'
+                if self.sort_mode.text == "Sort Mode By Title":
+                    if last_pressed == "pp":
+                        print "I should be q"
+                        last_pressed = "ppp"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "Q":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "ppp":
+                        print "I should be r"
+                        last_pressed = "p"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "R":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be p"
+                        last_pressed = "pp"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "P":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                else:
+                    if last_pressed == "pp":
+                        print "I should be q"
+                        last_pressed = "ppp"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "Q":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "ppp":
+                        print "I should be r"
+                        last_pressed = "p"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "R":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be the letter p"
+                        print adder
+                        print cursor_position
+                        last_pressed = "pp"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "P":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+            if str(key_event[1]) == '115':
+                print 'p'
+                if self.sort_mode.text == "Sort Mode By Title":
+                    print "I should be s"
+                    last_pressed = "s"
+                    first_index_of_letter = []
+                    for x in range(0, len(song_list)):
+                        if song_list[x][0][0] == "S":
+                            first_index_of_letter.append(x)
+                    adder = first_index_of_letter[0]
+                else:
+                    print "I should be the letter s"
+                    print adder
+                    print cursor_position
+                    last_pressed = "s"
+                    first_index_of_letter = []
+                    for x in range(0, len(song_list)):
+                        if song_list[x][1][0] == "S":
+                            first_index_of_letter.append(x)
+                    adder = first_index_of_letter[0]
+            if str(key_event[1]) == '116':
+                print 't'
+                if self.sort_mode.text == "Sort Mode By Title":
+                    if last_pressed == "tt":
+                        print "I should be u"
+                        last_pressed = "ttt"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "U":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "ttt":
+                        print "I should be v"
+                        last_pressed = "t"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "V":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be t"
+                        last_pressed = "tt"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "T":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                else:
+                    if last_pressed == "tt":
+                        print "I should be u"
+                        last_pressed = "ttt"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "U":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "ttt":
+                        print "I should be v"
+                        last_pressed = "t"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "V":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be the letter t"
+                        print adder
+                        print cursor_position
+                        last_pressed = "tt"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "T":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+            if str(key_event[1]) == '119':
+                print 'w'
+                if self.sort_mode.text == "Sort Mode By Title":
+                    if last_pressed == "ww":
+                        print "I should be x"
+                        last_pressed = "www"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "X":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "www":
+                        print "I should be y"
+                        last_pressed = "wwww"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "Y":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "wwww":
+                        print "I should be z"
+                        last_pressed = "w"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "Z":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be w"
+                        last_pressed = "ww"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][0][0] == "W":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                else:
+                    if last_pressed == "ww":
+                        print "I should be x"
+                        last_pressed = "www"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "X":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "www":
+                        print "I should be y"
+                        last_pressed = "wwww"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "Y":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    elif last_pressed == "wwww":
+                        print "I should be z"
+                        last_pressed = "w"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "Z":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+                    else:
+                        print "I should be the letter w"
+                        print adder
+                        print cursor_position
+                        last_pressed = "ww"
+                        first_index_of_letter = []
+                        for x in range(0, len(song_list)):
+                            if song_list[x][1][0] == "W":
+                                first_index_of_letter.append(x)
+                        adder = first_index_of_letter[0]
+        except IndexError:
+            return
+        if str(key_event[1]) == '120':
+            print 'x'
+            credit_calculator()
+            last_pressed = "x"
+            print credit_amount
+            self.my_credit_amount.text = "CREDITS " + str(credit_amount)
+        if str(key_event[1]) == '273':
+            print 'up'
+            adder -= 1
+            if adder < 0:
+                adder = 0
+            last_pressed = "up"
+        if str(key_event[1]) == '274':
+            print 'down'
+            adder += 1
+            if adder >= len(song_list) - 16:
+                adder = len(song_list)
+            last_pressed = "down"
+        if str(key_event[1]) == '275':
+            print 'right'
+            adder += 8
+            if adder > len(song_list) - 16:
+                adder = len(song_list)
+            last_pressed = "right"
+        if str(key_event[1]) == '276':
+            print 'left'
+            adder -= 8
+            if adder < 0:
+                adder = 0
+            last_pressed = "left"
+        screen_cursor_positioner(adder)  # Determines Screen Number and Cursor Position
+        selection_screen(self)  # Updates selection screen.
+        highlighted_selection_generator(self)  # Updates cursor location on selection screen.
+        clear_last_selections(self)
+        if str(key_event[1]) == '13':
+            print 'return'
+            print "song selection number = " + str(song_selection_number)
+            song_entry(song_selection_number)
+            selections_screen_updater(self)
+            self.my_credit_amount.text = "CREDITS " + str(credit_amount)
+            '''random_generated_song_number = randint(0,len(song_list)-1)
+            song_entry(random_generated_song_number)
+            selections_screen_updater(self)'''
+            last_pressed = "return"
+
+    def file_reader(self, *args):
+            global file_time_old
+            global upcoming_list
+            global start_up
+            file_time_check = str(time.ctime(os.path.getmtime("output_list.txt")))  # http://bit.ly/22zKqLS
+
+            if file_time_old != file_time_check:
+                global start_up
+                # screen_display()  # Updates screen based on file change.
+                keyboard.press_and_release('b')  # Updates Selection Screen
+
+                if start_up == 0:
+                    keyboard.press_and_release('o')  # Updates Selection Screen
+                    # time.sleep(3)
+                    start_up += 1
+
+                rss_writer()
+
+                file_time_old = file_time_check
+            else:
+                print "Same"
+                upcoming_list_recover = open('upcoming_list.pkl', 'rb')
+                upcoming_list = pickle.load(upcoming_list_recover)
+                upcoming_list_recover.close()
+                # selections_screen_updater(self)
+
+
+class MyFinalApp(App):
+
+    def build(self):
+
+        return JukeboxScreen()
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
         global adder
