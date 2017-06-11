@@ -252,7 +252,6 @@ class JukeboxScreen(FloatLayout):
             self.song_playing_artist.font_size = 35
         else:
             self.song_playing_artist.font_size = 50
-        self.my_progress_bar = ProgressBar(value=50, max=100)
         self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
         self.opening_message = Label(text=" ", color=(1, 1, 1, 1), pos=(200, 205), font_size=50, width=500,
                                      halign="center", valign="middle")
@@ -305,8 +304,6 @@ class JukeboxScreen(FloatLayout):
         self.my_blackout = Button(size_hint=(.547, .613), text=" ", background_color=(0, 0, 0, 0), pos=(480, 56),
                                   valign="top")
         self.add_widget(self.my_blackout)
-        # self.add_widget(self.my_progress_bar)
-        # self.remove_widget(self.my_progress_bar)
         self.add_widget(self.my_upcoming_selections)
         self.add_widget(self.my_play_cost)
         self.add_widget(self.song_playing_name)
