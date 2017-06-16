@@ -11,6 +11,7 @@ from kivy.app import App
 from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.clock import Clock
+Clock.max_iteration = 20
 from kivy.factory import Factory
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
@@ -219,10 +220,10 @@ Builder.load_string('''
             text: ''
 ''')
 
-class PopupBox(Popup):
+'''class PopupBox(Popup):
     pop_up_text = ObjectProperty()
     def update_pop_up_text(self, p_message):
-        self.pop_up_text.text = p_message
+        self.pop_up_text.text = p_message'''
 
 class JukeboxScreen(FloatLayout):
 
@@ -234,6 +235,12 @@ class JukeboxScreen(FloatLayout):
         write_jukebox_startup_to_log()
         genre_read_and_select_engine()
         count_number_mp3_songs()
+        '''progress_bar = ObjectProperty()  # Kivy properties classes are used when you create an EventDispatcher.
+        self.progress_bar = ProgressBar()  # instance of ProgressBar created.
+        self.popup = Popup(title='New Songs Detected: Updating Song Library',
+                           content=self.progress_bar)  # progress bar assigned to popup
+        self.popup.bind(on_open=self.puopen)  # Binds super widget to on_open.
+        Clock.schedule_once(self.progress_bar_start)  # Uses clock to call progress_bar_start() (callback) one time only'''
         self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),
                                         width=500)
         self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,
@@ -372,12 +379,12 @@ class JukeboxScreen(FloatLayout):
         selection_font_size(self)
         os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox Player
 
-    def show_popup(self):
+    '''def show_popup(self):
         self.pop_up = Factory.PopupBox()
         self.pop_up.update_pop_up_text('Running some task...')
-        self.pop_up.open()
+        self.pop_up.open()'''
 
-    def process_button_click(self):
+    '''def process_button_click(self):
         # Open the pop up
         self.show_popup()
         mythread = threading.Thread(target=self.something_that_takes_5_seconds_to_run)
@@ -388,7 +395,19 @@ class JukeboxScreen(FloatLayout):
         while thistime + 5 > time.time():  # 5 seconds
             print "Hello, world!"
             time.sleep(1)
-        self.pop_up.dismiss()
+        self.pop_up.dismiss()'''
+
+    ''' def progress_bar_start(self, instance):  # Provides initial value of of progress bar and lanches popup
+        self.progress_bar.value = 1  # Initial value of progress_bar
+        self.popup.open()  # starts puopen()
+
+    def next(self, dt):  # Updates Project Bar
+        if self.progress_bar.value >= 100:  # Checks to see if progress_bar.value has met 100
+            return False  # Returning False schedule is canceled and won't repeat
+        self.progress_bar.value += 1  # Updates progress_bar's progress
+
+    def puopen(self, instance):  # Called from bind.
+        Clock.schedule_interval(self.next, 1)  # Creates Clock event scheduling next() every 5-1000th of a second.'''
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
         global adder
@@ -406,12 +425,16 @@ class JukeboxScreen(FloatLayout):
         global delete_indicator
         global random_list
         print "Key Number Pressed Is: " + str(key_event[1])
+        if str(key_event[1]) == '122':  # test
+            Clock.schedule_once(
+                self.progress_bar_start)  # Uses clock to call progress_bar_start() (callback) one time only
+
         if str(key_event[1]) == '111':  # Opening Screen
             last_pressed = "o"
             screen_message = "Welcome To Convergence Jukebox\nYour Jukebox Is Being Configured\nThis Could Take A Few Minutes\n\n"
             self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
             self.licence_message.text = str(licence)
-            self.process_button_click()
+            # self.process_button_click()
             # self.parent.remove_widget(self.my_progress_bar)
             # self.remove_widget(self.my_progress_bar)
             self.my_first_title.background_color = (160, 160, 160, 0)
@@ -511,12 +534,21 @@ class JukeboxScreen(FloatLayout):
                 else:
                     print "music directory does not exist."
                     os.makedirs(str(os.path.dirname(full_path)) + "/music")
-            if last_file_count == current_file_count or last_file_count != 16:  # If matched the song_list is loaded from file
+            print "last_file_count = " + str(last_file_count)
+            print "current_file_count  " + str(current_file_count)
+            print "len song_list = " + str(len(song_list))
+            # sys.exit()
+
+            '''if len(song_list) == 16:
+                sys.exit()'''
+            if last_file_count == current_file_count or len(song_list) != 16:  # If matched the song_list is loaded from file
                 screen_message_update = screen_message + "Jukebox music files same as last startup.\n" \
                                                          "Using existing song database."
                 self.my_blackout.text = screen_message_update
                 print "Jukebox music files same as last startup. Using existing song database."  # Message to console.
             else:  # New song_list, filecount and location_list generated and saved.
+                print "I'm here."
+                #sys.exit()
                 song_list_generate = []
                 build_list = []
                 location_list = []
@@ -1638,22 +1670,11 @@ def count_number_mp3_songs():
     global current_file_count
     global last_file_count
     mp3_counter = 0
-    #full_path = os.path.realpath('__file__')
     print full_path
 
     if sys.platform == 'win32':
         mp3_counter = len(glob.glob1(str(os.path.dirname(full_path)) + "\music", "*.mp3"))  # Number of MP3 files in library
         current_file_count = int(mp3_counter)  # provides int output for later comparison
-        if int(mp3_counter) == 0:
-            '''master = Tk()
-            screen_message = "Program Stopped. Please place fifty mp3's in the Convergence Jukebox music directory at " \
-                         + str(os.path.dirname(full_path)) + "\music and then re-run the Convergence Jukebox software"
-            msg = Message(master, text=screen_message)
-            msg.config(bg='white', font=('times', 24, 'italic'))
-            msg.pack()
-            mainloop()
-            sys.exit()'''
-            pass
 
     if sys.platform.startswith('linux'):
         #mp3_counter = len(glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Number of MP3 files in library
