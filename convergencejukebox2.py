@@ -241,6 +241,8 @@ class JukeboxScreen(FloatLayout):
                            content=self.progress_bar)  # progress bar assigned to popup
         self.popup.bind(on_open=self.puopen)  # Binds super widget to on_open.
         Clock.schedule_once(self.progress_bar_start)  # Uses clock to call progress_bar_start() (callback) one time only'''
+        #popup = Popup(title='Test popup',content=Label(text='Hello world'),size_hint=(None, None), size=(400, 400))
+        #popup.open()
         self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),
                                         width=500)
         self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,
@@ -426,8 +428,9 @@ class JukeboxScreen(FloatLayout):
         global random_list
         print "Key Number Pressed Is: " + str(key_event[1])
         if str(key_event[1]) == '122':  # test
-            Clock.schedule_once(
-                self.progress_bar_start)  # Uses clock to call progress_bar_start() (callback) one time only
+            popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
+                          size=(400, 400))
+            popup.open()
 
         if str(key_event[1]) == '111':  # Opening Screen
             last_pressed = "o"
@@ -538,6 +541,8 @@ class JukeboxScreen(FloatLayout):
             print "current_file_count  " + str(current_file_count)
             print "len song_list = " + str(len(song_list))
             # sys.exit()
+            #popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None), size=(400, 400))
+            #popup.open()
 
             '''if len(song_list) == 16:
                 sys.exit()'''
