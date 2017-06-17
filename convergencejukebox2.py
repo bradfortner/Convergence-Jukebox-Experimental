@@ -36,6 +36,7 @@ kivy.require("1.9.1")  # used to alert user if this code is run on an earlier ve
 
 
 ###### Variables #####
+Clock.max_iteration = 20
 global title
 global artist
 global album
@@ -379,6 +380,7 @@ class JukeboxScreen(FloatLayout):
             self.my_first_title.background_color = (160, 160, 160, .2)
             self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)
+        #threading.Thread(target=loop1_10).start() # Test Thread
         os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox Player
 
     '''def show_popup(self):
@@ -411,6 +413,8 @@ class JukeboxScreen(FloatLayout):
     def puopen(self, instance):  # Called from bind.
         Clock.schedule_interval(self.next, 1)  # Creates Clock event scheduling next() every 5-1000th of a second.'''
 
+
+
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
         global adder
         global screen_number
@@ -428,9 +432,10 @@ class JukeboxScreen(FloatLayout):
         global random_list
         print "Key Number Pressed Is: " + str(key_event[1])
         if str(key_event[1]) == '122':  # test
-            popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
+            '''popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
                           size=(400, 400))
-            popup.open()
+            popup.open()'''
+            threading.Thread(target=loop1_10).start()  # Test Thread
 
         if str(key_event[1]) == '111':  # Opening Screen
             last_pressed = "o"
@@ -1521,6 +1526,20 @@ class MyFinalApp(App):
     def build(self):
 
         return JukeboxScreen()
+
+def loop1_10(): # Test Thread
+    '''for i in range(1, 11):
+        time.sleep(1)
+        print(i)'''
+    for i in range(1, 2):
+        popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
+                      size=(400, 400))
+        popup.open()
+        time.sleep(1)
+        print(i)
+    popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
+                  size=(400, 400))
+    popup.open()
 
 def basic_random_list_generator():
     global random_list_with_year
