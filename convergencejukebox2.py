@@ -36,7 +36,7 @@ kivy.require("1.9.1")  # used to alert user if this code is run on an earlier ve
 
 
 ###### Variables #####
-Clock.max_iteration = 20
+Clock.max_iteration = 1500
 global title
 global artist
 global album
@@ -208,23 +208,8 @@ Builder.load_string('''
         halign: 'center'
         size_hint: .7, 1
         pos: 390,292
-<PopupBox>:
-    pop_up_text: _pop_up_text
-    size_hint: 1, 1
-    auto_dismiss: True
-    title: 'Status'
 
-    BoxLayout:
-        orientation: "vertical"
-        Label:
-            id: _pop_up_text
-            text: ''
 ''')
-
-'''class PopupBox(Popup):
-    pop_up_text = ObjectProperty()
-    def update_pop_up_text(self, p_message):
-        self.pop_up_text.text = p_message'''
 
 class JukeboxScreen(FloatLayout):
 
@@ -236,14 +221,6 @@ class JukeboxScreen(FloatLayout):
         write_jukebox_startup_to_log()
         genre_read_and_select_engine()
         count_number_mp3_songs()
-        '''progress_bar = ObjectProperty()  # Kivy properties classes are used when you create an EventDispatcher.
-        self.progress_bar = ProgressBar()  # instance of ProgressBar created.
-        self.popup = Popup(title='New Songs Detected: Updating Song Library',
-                           content=self.progress_bar)  # progress bar assigned to popup
-        self.popup.bind(on_open=self.puopen)  # Binds super widget to on_open.
-        Clock.schedule_once(self.progress_bar_start)  # Uses clock to call progress_bar_start() (callback) one time only'''
-        #popup = Popup(title='Test popup',content=Label(text='Hello world'),size_hint=(None, None), size=(400, 400))
-        #popup.open()
         self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),
                                         width=500)
         self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,
@@ -435,13 +412,14 @@ class JukeboxScreen(FloatLayout):
             '''popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
                           size=(400, 400))
             popup.open()'''
-            threading.Thread(target=loop1_10).start()  # Test Thread
+            threading.Thread(target=threaded_popup).start()  # Test Thread
 
         if str(key_event[1]) == '111':  # Opening Screen
             last_pressed = "o"
             screen_message = "Welcome To Convergence Jukebox\nYour Jukebox Is Being Configured\nThis Could Take A Few Minutes\n\n"
             self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
             self.licence_message.text = str(licence)
+            
             # self.process_button_click()
             # self.parent.remove_widget(self.my_progress_bar)
             # self.remove_widget(self.my_progress_bar)
@@ -1527,16 +1505,16 @@ class MyFinalApp(App):
 
         return JukeboxScreen()
 
-def loop1_10(): # Test Thread
+def threaded_popup(): # Test Thread
     '''for i in range(1, 11):
         time.sleep(1)
         print(i)'''
-    for i in range(1, 2):
+    '''for i in range(1, 5):
         popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
                       size=(400, 400))
         popup.open()
         time.sleep(1)
-        print(i)
+        print(i)'''
     popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
                   size=(400, 400))
     popup.open()
