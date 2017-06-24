@@ -215,7 +215,7 @@ class JukeboxScreen(FloatLayout):
 
     def __init__(self, **kwargs):
         super(JukeboxScreen, self).__init__(**kwargs)
-        Clock.schedule_interval(self.file_reader, 5)
+        #Clock.schedule_interval(self.file_reader, 5)
         Window.bind(on_key_down=self.key_action)
         set_up_user_files_first_time()
         write_jukebox_startup_to_log()
@@ -360,38 +360,6 @@ class JukeboxScreen(FloatLayout):
         #threading.Thread(target=loop1_10).start() # Test Thread
         os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox Player
 
-    '''def show_popup(self):
-        self.pop_up = Factory.PopupBox()
-        self.pop_up.update_pop_up_text('Running some task...')
-        self.pop_up.open()'''
-
-    '''def process_button_click(self):
-        # Open the pop up
-        self.show_popup()
-        mythread = threading.Thread(target=self.something_that_takes_5_seconds_to_run)
-        mythread.start()
-
-    def something_that_takes_5_seconds_to_run(self):
-        thistime = time.time()
-        while thistime + 5 > time.time():  # 5 seconds
-            print "Hello, world!"
-            time.sleep(1)
-        self.pop_up.dismiss()'''
-
-    ''' def progress_bar_start(self, instance):  # Provides initial value of of progress bar and lanches popup
-        self.progress_bar.value = 1  # Initial value of progress_bar
-        self.popup.open()  # starts puopen()
-
-    def next(self, dt):  # Updates Project Bar
-        if self.progress_bar.value >= 100:  # Checks to see if progress_bar.value has met 100
-            return False  # Returning False schedule is canceled and won't repeat
-        self.progress_bar.value += 1  # Updates progress_bar's progress
-
-    def puopen(self, instance):  # Called from bind.
-        Clock.schedule_interval(self.next, 1)  # Creates Clock event scheduling next() every 5-1000th of a second.'''
-
-
-
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
         global adder
         global screen_number
@@ -523,20 +491,12 @@ class JukeboxScreen(FloatLayout):
             print "last_file_count = " + str(last_file_count)
             print "current_file_count  " + str(current_file_count)
             print "len song_list = " + str(len(song_list))
-            # sys.exit()
-            #popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None), size=(400, 400))
-            #popup.open()
-
-            '''if len(song_list) == 16:
-                sys.exit()'''
             if last_file_count == current_file_count or len(song_list) != 16:  # If matched the song_list is loaded from file
                 screen_message_update = screen_message + "Jukebox music files same as last startup.\n" \
                                                          "Using existing song database."
                 self.my_blackout.text = screen_message_update
                 print "Jukebox music files same as last startup. Using existing song database."  # Message to console.
             else:  # New song_list, filecount and location_list generated and saved.
-                print "I'm here."
-                #sys.exit()
                 song_list_generate = []
                 build_list = []
                 location_list = []
