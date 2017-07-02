@@ -208,6 +208,13 @@ Builder.load_string('''
         halign: 'center'
         size_hint: .7, 1
         pos: 390,292
+    Label:
+        id: sort_mode
+        text: "Sort Mode By Artist"
+        font_size: 38
+        bold: True
+        size_hint: .7, 1
+        pos: 42, 278
 
 ''')
 
@@ -240,7 +247,7 @@ class JukeboxScreen(FloatLayout):
             self.song_playing_artist.font_size = 35
         else:
             self.song_playing_artist.font_size = 50
-        self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
+        # self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
         self.opening_message = Label(text=" ", color=(1, 1, 1, 1), pos=(200, 205), font_size=50, width=500,
                                      halign="center", valign="middle")
         self.licence_message = Label(text=" ", color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500,
@@ -315,7 +322,7 @@ class JukeboxScreen(FloatLayout):
         self.add_widget(self.my_selection_seventeen)
         self.add_widget(self.my_credit_amount)
         self.add_widget(self.selections_available)
-        self.add_widget(self.sort_mode)
+        # self.add_widget(self.sort_mode)
         self.add_widget(self.my_play_mode)
         self.add_widget(self.my_title_song)
         self.add_widget(self.my_title_artist)
@@ -412,7 +419,7 @@ class JukeboxScreen(FloatLayout):
             self.my_title_year.color = (0, .7, 0, 0)
             self.my_title_length.color = (0, .7, 0, 0)
             self.my_title_album.color = (0, .7, 0, 0)
-            self.sort_mode.color = (0, .7, 0, 0)
+            self.ids.sort_mode.color = (0, .7, 0, 0)
             self.my_first_title.color = (1, 1, 1, 0)
             self.my_first_artist.color = (1, 1, 1, 0)
             self.my_second_title.color = (1, 1, 1, 0)
@@ -769,19 +776,19 @@ class JukeboxScreen(FloatLayout):
 
         if str(key_event[1]) == '47':  # Changes sort mode to title
             last_pressed = "forward slash"
-            if self.sort_mode.text != "Sort Mode By Title":
+            if self.ids.sort_mode.text != "Sort Mode By Title":
                 print "Sorting by Title"
                 song_list.sort(key=itemgetter(0), reverse=False)
-                self.sort_mode.text = "Sort Mode By Title"
+                self.ids.sort_mode.text = "Sort Mode By Title"
             else:
                 print "Sorting by Artist"
                 song_list.sort(key=itemgetter(1), reverse=False)
-                self.sort_mode.text = "Sort Mode By Artist"
+                self.ids.sort_mode.text = "Sort Mode By Artist"
             screen_number_base = .9  # This triggers a reset of the title/artist display
         try:
             if str(key_event[1]) == '97':
                 print 'a'
-                if self.sort_mode.text == "Sort Mode By Title":
+                if self.ids.sort_mode.text == "Sort Mode By Title":
                     if last_pressed == "aa":
                         print "I should be b"
                         last_pressed = "aaa"
@@ -884,7 +891,7 @@ class JukeboxScreen(FloatLayout):
             self.my_title_year.color = (0, .7, 0, 1)
             self.my_title_length.color = (0, .7, 0, 1)
             self.my_title_album.color = (0, .7, 0, 1)
-            self.sort_mode.color = (0, .7, 0, 1)
+            self.ids.sort_mode.color = (0, .7, 0, 1)
             self.opening_message.text = " "
             self.licence_message.text = " "
             self.my_selection_one.text = " "
@@ -977,7 +984,7 @@ class JukeboxScreen(FloatLayout):
         try:
             if str(key_event[1]) == '100':
                 print 'd'
-                if self.sort_mode.text == "Sort Mode By Title":
+                if self.ids.sort_mode.text == "Sort Mode By Title":
                     if last_pressed == "dd":
                         print "I should be e"
                         last_pressed = "ddd"
@@ -1031,7 +1038,7 @@ class JukeboxScreen(FloatLayout):
                         adder = first_index_of_letter[0]
             if str(key_event[1]) == '103':
                 print 'g'
-                if self.sort_mode.text == "Sort Mode By Title":
+                if self.ids.sort_mode.text == "Sort Mode By Title":
                     if last_pressed == "gg":
                         print "I should be h"
                         last_pressed = "ggg"
@@ -1085,7 +1092,7 @@ class JukeboxScreen(FloatLayout):
                         adder = first_index_of_letter[0]
             if str(key_event[1]) == '106':
                 print 'j'
-                if self.sort_mode.text == "Sort Mode By Title":
+                if self.ids.sort_mode.text == "Sort Mode By Title":
                     if last_pressed == "jj":
                         print "I should be k"
                         last_pressed = "jjj"
@@ -1139,7 +1146,7 @@ class JukeboxScreen(FloatLayout):
                         adder = first_index_of_letter[0]
             if str(key_event[1]) == '109':
                 print 'm'
-                if self.sort_mode.text == "Sort Mode By Title":
+                if self.ids.sort_mode.text == "Sort Mode By Title":
                     if last_pressed == "mm":
                         print "I should be n"
                         last_pressed = "mmm"
@@ -1193,7 +1200,7 @@ class JukeboxScreen(FloatLayout):
                         adder = first_index_of_letter[0]
             if str(key_event[1]) == '112':
                 print 'p'
-                if self.sort_mode.text == "Sort Mode By Title":
+                if self.ids.sort_mode.text == "Sort Mode By Title":
                     if last_pressed == "pp":
                         print "I should be q"
                         last_pressed = "ppp"
@@ -1247,7 +1254,7 @@ class JukeboxScreen(FloatLayout):
                         adder = first_index_of_letter[0]
             if str(key_event[1]) == '115':
                 print 'p'
-                if self.sort_mode.text == "Sort Mode By Title":
+                if self.ids.sort_mode.text == "Sort Mode By Title":
                     print "I should be s"
                     last_pressed = "s"
                     first_index_of_letter = []
@@ -1267,7 +1274,7 @@ class JukeboxScreen(FloatLayout):
                     adder = first_index_of_letter[0]
             if str(key_event[1]) == '116':
                 print 't'
-                if self.sort_mode.text == "Sort Mode By Title":
+                if self.ids.sort_mode.text == "Sort Mode By Title":
                     if last_pressed == "tt":
                         print "I should be u"
                         last_pressed = "ttt"
@@ -1321,7 +1328,7 @@ class JukeboxScreen(FloatLayout):
                         adder = first_index_of_letter[0]
             if str(key_event[1]) == '119':
                 print 'w'
-                if self.sort_mode.text == "Sort Mode By Title":
+                if self.ids.sort_mode.text == "Sort Mode By Title":
                     if last_pressed == "ww":
                         print "I should be x"
                         last_pressed = "www"
