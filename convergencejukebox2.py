@@ -199,6 +199,22 @@ Builder.load_string('''
             source: 'jukebox.png'
             pos: self.pos
             size: self.size
+    Button:
+        id: song_playing_name
+        text: ' '
+        pos: 580, 540
+        font_size: 30
+        size_hint: None, None
+        width: 500
+    Button:
+        id: song_playing_artist
+        text: ' '
+        pos: 430, 490
+        font_size: 30
+        size_hint: None, None
+        halign: 'center'
+        valign: 'middle'
+        width: 800
     Label:
         id: jukebox_name
         text: "Convergence Music System 2.0"
@@ -209,12 +225,96 @@ Builder.load_string('''
         size_hint: .7, 1
         pos: 390,292
     Label:
+        id: opening_message
+        text: " "
+        color: 1,1,1,1 # Sets text colour to white.
+        font_size: 50
+        bold: True
+        width: 500
+        halign: 'center'
+        valign: 'middle'
+        pos: 200, 205
+    Label:
+        id: licence_message
+        text: " "
+        color: 1,1,1,1 # Sets text colour to white.
+        font_size: 20
+        bold: True
+        width: 500
+        halign: 'left'
+        valign: 'top'
+        pos: 40, -66
+    Label:
         id: sort_mode
         text: "Sort Mode By Artist"
         font_size: 38
         bold: True
         size_hint: .7, 1
         pos: 42, 278
+    Button:
+        id: my_first_title
+        text: ' '
+        pos: 495, 456
+    Button:
+        id: my_first_artist
+        text: ' '
+        pos: 495, 433
+    Button:
+        id: my_second_title
+        text: ' '
+        pos: 495, 403
+    Button:
+        id: my_second_artist
+        text: ' '
+        pos: 495, 380
+    Button:
+        id: my_third_title
+        text: ' '
+        pos: 495, 348
+    Button:
+        id: my_third_artist
+        text: ' '
+        pos: 495, 325
+    Button:
+        id: my_fourth_title
+        text: ' '
+        pos: 495, 293
+    Button:
+        id: my_fourth_artist
+        text: ' '
+        pos: 495, 270
+    Button:
+        id: my_fifth_title
+        text: ' '
+        pos: 495, 238
+    Button:
+        id: my_fifth_artist
+        text: ' '
+        pos: 495, 216
+    Button:
+        id: my_sixth_title
+        text: ' '
+        pos: 495, 185
+    Button:
+        id: my_sixth_artist
+        text: ' '
+        pos: 495, 162
+    Button:
+        id: my_seventh_title
+        text: ' '
+        pos: 495, 132
+    Button:
+        id: my_seventh_artist
+        text: ' '
+        pos: 495, 109
+    Button:
+        id: my_eigth_title
+        text: ' '
+        pos: 495, 77
+    Button:
+        id: my_eigth_artist
+        text: ' '
+        pos: 495, 54
 
 ''')
 
@@ -229,45 +329,40 @@ class JukeboxScreen(FloatLayout):
         write_jukebox_startup_to_log()
         genre_read_and_select_engine()
         count_number_mp3_songs()
-        self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),
-                                        width=500)
-        self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,
-                                          size_hint=(None, None), width=800, halign="center", valign="middle")
+        #self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),width=500)
+        #self.ids.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,size_hint=(None, None), width=800, halign="center", valign="middle")
 
-        self.ids.jukebox_name.text = "Hello, World!"
-        if len(display_info[0]) > 25:
-            self.song_playing_name.font_size = 25
+        '''if len(display_info[0]) > 25:
+            self.ids.song_playing_name.font_size = 25
         elif len(display_info[0]) > 18:
-            self.song_playing_name.font_size = 35
+            self.ids.song_playing_name.font_size = 35
         else:
-            self.song_playing_name.font_size = 50
+            self.ids.song_playing_name.font_size = 50
         if len(display_info[1]) > 25:
-            self.song_playing_artist.font_size = 25
+            self.ids.song_playing_artist.font_size = 25
         elif len(display_info[1]) > 18:
-            self.song_playing_artist.font_size = 35
+            self.ids.song_playing_artist.font_size = 35
         else:
-            self.song_playing_artist.font_size = 50
+            self.ids.song_playing_artist.font_size = 50'''
         # self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
-        self.opening_message = Label(text=" ", color=(1, 1, 1, 1), pos=(200, 205), font_size=50, width=500,
-                                     halign="center", valign="middle")
-        self.licence_message = Label(text=" ", color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500,
-                                     halign="left", valign="top")
-        self.my_first_title = Button(text=str(song_list[adder][0]), pos=(495, 456))
-        self.my_first_artist = Button(text=str(song_list[adder][1]), pos=(495, 433))
-        self.my_second_title = Button(text=str(song_list[adder + 1][0]), pos=(495, 403))
-        self.my_second_artist = Button(text=str(song_list[adder + 1][1]), pos=(495, 380))
-        self.my_third_title = Button(text=str(song_list[adder + 2][0]), pos=(495, 348))
-        self.my_third_artist = Button(text=str(song_list[adder + 2][1]), pos=(495, 325))
-        self.my_fourth_title = Button(text=str(song_list[adder + 3][0]), pos=(495, 293))
-        self.my_fourth_artist = Button(text=str(song_list[adder + 3][1]), pos=(495, 270))
-        self.my_fifth_title = Button(text=str(song_list[adder + 4][0]), pos=(495, 238))
-        self.my_fifth_artist = Button(text=str(song_list[adder + 4][1]), pos=(495, 216))
-        self.my_sixth_title = Button(text=str(song_list[adder + 5][0]), pos=(495, 185))
-        self.my_sixth_artist = Button(text=str(song_list[adder + 5][1]), pos=(495, 162))
-        self.my_seventh_title = Button(text=str(song_list[adder + 6][0]), pos=(495, 132))
-        self.my_seventh_artist = Button(text=str(song_list[adder + 6][1]), pos=(495, 109))
-        self.my_eigth_title = Button(text=str(song_list[adder + 7][0]), pos=(495, 77))
-        self.my_eigth_artist = Button(text=str(song_list[adder + 7][1]), pos=(495, 54))
+        #self.opening_message = Label(text=" ", color=(1, 1, 1, 1), pos=(200, 205), font_size=50, width=500,halign="center", valign="middle")
+        #self.licence_message = Label(text=" ", color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500,halign="left", valign="top")
+        #self.my_first_title = Button(text=str(song_list[adder][0]), pos=(495, 456))
+        #self.ids.my_first_artist = Button(text=str(song_list[adder][1]), pos=(495, 433))
+        '''self.ids.my_second_title = Button(text=str(song_list[adder + 1][0]), pos=(495, 403))
+        self.ids.my_second_artist = Button(text=str(song_list[adder + 1][1]), pos=(495, 380))
+        self.ids.my_third_title = Button(text=str(song_list[adder + 2][0]), pos=(495, 348))
+        self.ids.my_third_artist = Button(text=str(song_list[adder + 2][1]), pos=(495, 325))
+        self.ids.my_fourth_title = Button(text=str(song_list[adder + 3][0]), pos=(495, 293))
+        self.ids.my_fourth_artist = Button(text=str(song_list[adder + 3][1]), pos=(495, 270))
+        self.ids.my_fifth_title = Button(text=str(song_list[adder + 4][0]), pos=(495, 238))
+        self.ids.my_fifth_artist = Button(text=str(song_list[adder + 4][1]), pos=(495, 216))
+        self.ids.my_sixth_title = Button(text=str(song_list[adder + 5][0]), pos=(495, 185))
+        self.ids.my_sixth_artist = Button(text=str(song_list[adder + 5][1]), pos=(495, 162))
+        self.ids.my_seventh_title = Button(text=str(song_list[adder + 6][0]), pos=(495, 132))
+        self.ids.my_seventh_artist = Button(text=str(song_list[adder + 6][1]), pos=(495, 109))
+        self.ids.my_eigth_title = Button(text=str(song_list[adder + 7][0]), pos=(495, 77))
+        self.ids.my_eigth_artist = Button(text=str(song_list[adder + 7][1]), pos=(495, 54))'''
         self.my_ninth_title = Button(text=str(song_list[adder + 8][0]), pos=(835, 456))
         self.my_ninth_artist = Button(text=str(song_list[adder + 8][1]), pos=(835, 433))
         self.my_tenth_title = Button(text=str(song_list[adder + 9][0]), pos=(835, 403))
@@ -301,8 +396,8 @@ class JukeboxScreen(FloatLayout):
         self.add_widget(self.my_blackout)
         self.add_widget(self.my_upcoming_selections)
         self.add_widget(self.my_play_cost)
-        self.add_widget(self.song_playing_name)
-        self.add_widget(self.song_playing_artist)
+        #self.add_widget(self.song_playing_name)
+        #self.add_widget(self.song_playing_artist)
         self.add_widget(self.my_selection_one)
         self.add_widget(self.my_selection_two)
         self.add_widget(self.my_selection_three)
@@ -329,22 +424,22 @@ class JukeboxScreen(FloatLayout):
         self.add_widget(self.my_title_year)
         self.add_widget(self.my_title_length)
         self.add_widget(self.my_title_album)
-        self.add_widget(self.my_first_title)
-        self.add_widget(self.my_first_artist)
-        self.add_widget(self.my_second_title)
-        self.add_widget(self.my_second_artist)
-        self.add_widget(self.my_third_title)
-        self.add_widget(self.my_third_artist)
-        self.add_widget(self.my_fourth_title)
-        self.add_widget(self.my_fourth_artist)
-        self.add_widget(self.my_fifth_title)
-        self.add_widget(self.my_fifth_artist)
-        self.add_widget(self.my_sixth_title)
-        self.add_widget(self.my_sixth_artist)
-        self.add_widget(self.my_seventh_title)
-        self.add_widget(self.my_seventh_artist)
-        self.add_widget(self.my_eigth_title)
-        self.add_widget(self.my_eigth_artist)
+        #self.add_widget(self.my_first_title)
+        #self.add_widget(self.ids.my_first_artist)
+        '''self.add_widget(self.ids.my_second_title)
+        self.add_widget(self.ids.my_second_artist)
+        self.add_widget(self.ids.my_third_title)
+        self.add_widget(self.ids.my_third_artist)
+        self.add_widget(self.ids.my_fourth_title)
+        self.add_widget(self.ids.my_fourth_artist)
+        self.add_widget(self.ids.my_fifth_title)
+        self.add_widget(self.ids.my_fifth_artist)
+        self.add_widget(self.ids.my_sixth_title)
+        self.add_widget(self.ids.my_sixth_artist)'''
+        '''self.add_widget(self.ids.my_seventh_title)
+        self.add_widget(self.ids.my_seventh_artist)
+        self.add_widget(self.ids.my_eigth_title)
+        self.add_widget(self.ids.my_eigth_artist)'''
         self.add_widget(self.my_ninth_title)
         self.add_widget(self.my_ninth_artist)
         self.add_widget(self.my_tenth_title)
@@ -361,11 +456,11 @@ class JukeboxScreen(FloatLayout):
         self.add_widget(self.my_fifteenth_artist)
         self.add_widget(self.my_sixteenth_title)
         self.add_widget(self.my_sixteenth_artist)
-        self.add_widget(self.opening_message)
-        self.add_widget(self.licence_message)
+        #self.add_widget(self.opening_message)
+        #self.add_widget(self.licence_message)
         if start_up != 0:
             self.my_first_title.background_color = (160, 160, 160, .2)
-            self.my_first_artist.background_color = (160, 160, 160, .2)
+            self.ids.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)
 
         os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox Player
@@ -395,14 +490,14 @@ class JukeboxScreen(FloatLayout):
         if str(key_event[1]) == '111':  # Opening Screen
             last_pressed = "o"
             screen_message = "Welcome To Convergence Jukebox\nYour Jukebox Is Being Configured\nThis Could Take A Few Minutes\n\n"
-            self.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
-            self.licence_message.text = str(licence)
+            self.ids.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
+            self.ids.licence_message.text = str(licence)
             
             # self.process_button_click()
             # self.parent.remove_widget(self.my_progress_bar)
             # self.remove_widget(self.my_progress_bar)
-            self.my_first_title.background_color = (160, 160, 160, 0)
-            self.my_first_artist.background_color = (160, 160, 160, 0)
+            self.ids.my_first_title.background_color = (160, 160, 160, 0)
+            self.ids.my_first_artist.background_color = (160, 160, 160, 0)
             self.my_blackout.background_color = (0, 0, 0, 1)
             self.my_blackout.text = screen_message
             self.my_blackout.color = (1, 1, 1, 1)
@@ -411,8 +506,8 @@ class JukeboxScreen(FloatLayout):
             self.my_play_cost.color = (0, .7, 0, 0)
             self.my_credit_amount.color = (0, .7, 0, 0)
             self.selections_available.color = (0, .7, 0, 0)
-            self.song_playing_name.color = (1, 1, 1, 0)
-            self.song_playing_artist.color = (1, 1, 1, 0)
+            self.ids.song_playing_name.color = (1, 1, 1, 0)
+            self.ids.song_playing_artist.color = (1, 1, 1, 0)
             self.my_play_mode.color = (0, .7, 0, 0)
             self.my_title_song.color = (0, .7, 0, 0)
             self.my_title_artist.color = (0, .7, 0, 0)
@@ -420,22 +515,22 @@ class JukeboxScreen(FloatLayout):
             self.my_title_length.color = (0, .7, 0, 0)
             self.my_title_album.color = (0, .7, 0, 0)
             self.ids.sort_mode.color = (0, .7, 0, 0)
-            self.my_first_title.color = (1, 1, 1, 0)
-            self.my_first_artist.color = (1, 1, 1, 0)
-            self.my_second_title.color = (1, 1, 1, 0)
-            self.my_second_artist.color = (1, 1, 1, 0)
-            self.my_third_title.color = (1, 1, 1, 0)
-            self.my_third_artist.color = (1, 1, 1, 0)
-            self.my_fourth_title.color = (1, 1, 1, 0)
-            self.my_fourth_artist.color = (1, 1, 1, 0)
-            self.my_fifth_title.color = (1, 1, 1, 0)
-            self.my_fifth_artist.color = (1, 1, 1, 0)
-            self.my_sixth_title.color = (1, 1, 1, 0)
-            self.my_sixth_artist.color = (1, 1, 1, 0)
-            self.my_seventh_title.color = (1, 1, 1, 0)
-            self.my_seventh_artist.color = (1, 1, 1, 0)
-            self.my_eigth_title.color = (1, 1, 1, 0)
-            self.my_eigth_artist.color = (1, 1, 1, 0)
+            self.ids.my_first_title.color = (1, 1, 1, 0)
+            self.ids.my_first_artist.color = (1, 1, 1, 0)
+            self.ids.my_second_title.color = (1, 1, 1, 0)
+            self.ids.my_second_artist.color = (1, 1, 1, 0)
+            self.ids.my_third_title.color = (1, 1, 1, 0)
+            self.ids.my_third_artist.color = (1, 1, 1, 0)
+            self.ids.my_fourth_title.color = (1, 1, 1, 0)
+            self.ids.my_fourth_artist.color = (1, 1, 1, 0)
+            self.ids.my_fifth_title.color = (1, 1, 1, 0)
+            self.ids.my_fifth_artist.color = (1, 1, 1, 0)
+            self.ids.my_sixth_title.color = (1, 1, 1, 0)
+            self.ids.my_sixth_artist.color = (1, 1, 1, 0)
+            self.ids.my_seventh_title.color = (1, 1, 1, 0)
+            self.ids.my_seventh_artist.color = (1, 1, 1, 0)
+            self.ids.my_eigth_title.color = (1, 1, 1, 0)
+            self.ids.my_eigth_artist.color = (1, 1, 1, 0)
             self.my_ninth_title.color = (1, 1, 1, 0)
             self.my_ninth_artist.color = (1, 1, 1, 0)
             self.my_tenth_title.color = (1, 1, 1, 0)
@@ -846,22 +941,22 @@ class JukeboxScreen(FloatLayout):
             print upcoming_list
             # my_old_infinite_loop()
             self.my_blackout.color = (1, 1, 1, 0)
-            self.my_first_title.color = (1, 1, 1, 1)
-            self.my_first_artist.color = (1, 1, 1, 1)
-            self.my_second_title.color = (1, 1, 1, 1)
-            self.my_second_artist.color = (1, 1, 1, 1)
-            self.my_third_title.color = (1, 1, 1, 1)
-            self.my_third_artist.color = (1, 1, 1, 1)
-            self.my_fourth_title.color = (1, 1, 1, 1)
-            self.my_fourth_artist.color = (1, 1, 1, 1)
-            self.my_fifth_title.color = (1, 1, 1, 1)
-            self.my_fifth_artist.color = (1, 1, 1, 1)
-            self.my_sixth_title.color = (1, 1, 1, 1)
-            self.my_sixth_artist.color = (1, 1, 1, 1)
-            self.my_seventh_title.color = (1, 1, 1, 1)
-            self.my_seventh_artist.color = (1, 1, 1, 1)
-            self.my_eigth_title.color = (1, 1, 1, 1)
-            self.my_eigth_artist.color = (1, 1, 1, 1)
+            self.ids.my_first_title.color = (1, 1, 1, 1)
+            self.ids.my_first_artist.color = (1, 1, 1, 1)
+            self.ids.my_second_title.color = (1, 1, 1, 1)
+            self.ids.my_second_artist.color = (1, 1, 1, 1)
+            self.ids.my_third_title.color = (1, 1, 1, 1)
+            self.ids.my_third_artist.color = (1, 1, 1, 1)
+            self.ids.my_fourth_title.color = (1, 1, 1, 1)
+            self.ids.my_fourth_artist.color = (1, 1, 1, 1)
+            self.ids.my_fifth_title.color = (1, 1, 1, 1)
+            self.ids.my_fifth_artist.color = (1, 1, 1, 1)
+            self.ids.my_sixth_title.color = (1, 1, 1, 1)
+            self.ids.my_sixth_artist.color = (1, 1, 1, 1)
+            self.ids.my_seventh_title.color = (1, 1, 1, 1)
+            self.ids.my_seventh_artist.color = (1, 1, 1, 1)
+            self.ids.my_eigth_title.color = (1, 1, 1, 1)
+            self.ids.my_eigth_artist.color = (1, 1, 1, 1)
             self.my_ninth_title.color = (1, 1, 1, 1)
             self.my_ninth_artist.color = (1, 1, 1, 1)
             self.my_tenth_title.color = (1, 1, 1, 1)
@@ -883,8 +978,8 @@ class JukeboxScreen(FloatLayout):
             self.my_play_cost.color = (0, .7, 0, 1)
             self.my_credit_amount.color = (0, .7, 0, 1)
             self.selections_available.color = (0, .7, 0, 1)
-            self.song_playing_name.color = (1, 1, 1, 1)
-            self.song_playing_artist.color = (1, 1, 1, 1)
+            self.ids.song_playing_name.color = (1, 1, 1, 1)
+            self.ids.song_playing_artist.color = (1, 1, 1, 1)
             self.my_play_mode.color = (0, .7, 0, 1)
             self.my_title_song.color = (0, .7, 0, 1)
             self.my_title_artist.color = (0, .7, 0, 1)
@@ -892,8 +987,8 @@ class JukeboxScreen(FloatLayout):
             self.my_title_length.color = (0, .7, 0, 1)
             self.my_title_album.color = (0, .7, 0, 1)
             self.ids.sort_mode.color = (0, .7, 0, 1)
-            self.opening_message.text = " "
-            self.licence_message.text = " "
+            self.ids.opening_message.text = " "
+            self.ids.licence_message.text = " "
             self.my_selection_one.text = " "
             self.my_selection_two.text = " "
             self.my_selection_three.text = " "
@@ -954,25 +1049,25 @@ class JukeboxScreen(FloatLayout):
             display_info_recover.close()
             display_info = output_list_read.split(",")
             print display_info
-            self.song_playing_name.text = str(display_info[0])
-            self.song_playing_artist.text = str(display_info[1])
+            self.ids.song_playing_name.text = str(display_info[0])
+            self.ids.song_playing_artist.text = str(display_info[1])
             if len(display_info[0]) > 25:
-                self.song_playing_name.font_size = 25
+                self.ids.song_playing_name.font_size = 25
             elif len(display_info[0]) > 18:
-                self.song_playing_name.font_size = 35
+                self.ids.song_playing_name.font_size = 35
             else:
-                self.song_playing_name.font_size = 50
+                self.ids.song_playing_name.font_size = 50
             if len(display_info[1]) > 25:
-                self.song_playing_artist.font_size = 25
+                self.ids.song_playing_artist.font_size = 25
             elif len(display_info[1]) > 18:
-                self.song_playing_artist.font_size = 35
+                self.ids.song_playing_artist.font_size = 35
             else:
-                self.song_playing_artist.font_size = 50
+                self.ids.song_playing_artist.font_size = 50
 
-            x = self.song_playing_artist.text
+            x = self.ids.song_playing_artist.text
             if x.lower() in the_bands_list_lower_case:
                 x = "The " + str(x)
-                self.song_playing_artist.text = str(x)
+                self.ids.song_playing_artist.text = str(x)
 
             self.my_title_song.text = "Title: " + str(display_info[0])
             self.my_title_artist.text = "Artist: " + str(display_info[1])
@@ -1556,22 +1651,22 @@ def clear_alpha_keys(event=None):
     t_key_press = 0
 
 def clear_button_color(self):
-    self.my_first_title.background_color = (0, 0, 0, 0)
-    self.my_first_artist.background_color = (0, 0, 0, 0)
-    self.my_second_title.background_color = (0, 0, 0, 0)
-    self.my_second_artist.background_color = (0, 0, 0, 0)
-    self.my_third_title.background_color = (0, 0, 0, 0)
-    self.my_third_artist.background_color = (0, 0, 0, 0)
-    self.my_fourth_title.background_color = (0, 0, 0, 0)
-    self.my_fourth_artist.background_color = (0, 0, 0, 0)
-    self.my_fifth_title.background_color = (0, 0, 0, 0)
-    self.my_fifth_artist.background_color = (0, 0, 0, 0)
-    self.my_sixth_title.background_color = (0, 0, 0, 0)
-    self.my_sixth_artist.background_color = (0, 0, 0, 0)
-    self.my_seventh_title.background_color = (0, 0, 0, 0)
-    self.my_seventh_artist.background_color = (0, 0, 0, 0)
-    self.my_eigth_title.background_color = (0, 0, 0, 0)
-    self.my_eigth_artist.background_color = (0, 0, 0, 0)
+    self.ids.my_first_title.background_color = (0, 0, 0, 0)
+    self.ids.my_first_artist.background_color = (0, 0, 0, 0)
+    self.ids.my_second_title.background_color = (0, 0, 0, 0)
+    self.ids.my_second_artist.background_color = (0, 0, 0, 0)
+    self.ids.my_third_title.background_color = (0, 0, 0, 0)
+    self.ids.my_third_artist.background_color = (0, 0, 0, 0)
+    self.ids.my_fourth_title.background_color = (0, 0, 0, 0)
+    self.ids.my_fourth_artist.background_color = (0, 0, 0, 0)
+    self.ids.my_fifth_title.background_color = (0, 0, 0, 0)
+    self.ids.my_fifth_artist.background_color = (0, 0, 0, 0)
+    self.ids.my_sixth_title.background_color = (0, 0, 0, 0)
+    self.ids.my_sixth_artist.background_color = (0, 0, 0, 0)
+    self.ids.my_seventh_title.background_color = (0, 0, 0, 0)
+    self.ids.my_seventh_artist.background_color = (0, 0, 0, 0)
+    self.ids.my_eigth_title.background_color = (0, 0, 0, 0)
+    self.ids.my_eigth_artist.background_color = (0, 0, 0, 0)
     self.my_ninth_title.background_color = (0, 0, 0, 0)
     self.my_ninth_artist.background_color = (0, 0, 0, 0)
     self.my_tenth_title.background_color = (0, 0, 0, 0)
@@ -1590,30 +1685,30 @@ def clear_button_color(self):
     self.my_sixteenth_artist.background_color = (0, 0, 0, 0)
 
 def clear_last_selections(self):
-    if self.my_first_title.text == "zzzzz":
+    if self.ids.my_first_title.text == "zzzzz":
         self.my_first_title.font_size = 0
-        self.my_first_artist.font_size = 0
-    if self.my_second_title.text == "zzzzz":
-        self.my_second_title.font_size = 0
-        self.my_second_artist.font_size = 0
-    if self.my_third_title.text == "zzzzz":
-        self.my_third_title.font_size = 0
-        self.my_third_artist.font_size = 0
-    if self.my_fourth_title.text == "zzzzz":
-        self.my_fourth_title.font_size = 0
-        self.my_fourth_artist.font_size = 0
-    if self.my_fifth_title.text == "zzzzz":
-        self.my_fifth_title.font_size = 0
-        self.my_fifth_artist.font_size = 0
-    if self.my_sixth_title.text == "zzzzz":
-        self.my_sixth_title.font_size = 0
-        self.my_sixth_artist.font_size = 0
-    if self.my_seventh_title.text == "zzzzz":
-        self.my_seventh_title.font_size = 0
-        self.my_seventh_artist.font_size = 0
-    if self.my_eigth_title.text == "zzzzz":
-        self.my_eigth_title.font_size = 0
-        self.my_eigth_artist.font_size = 0
+        self.ids.my_first_artist.font_size = 0
+    if self.ids.my_second_title.text == "zzzzz":
+        self.ids.my_second_title.font_size = 0
+        self.ids.my_second_artist.font_size = 0
+    if self.ids.my_third_title.text == "zzzzz":
+        self.ids.my_third_title.font_size = 0
+        self.ids.my_third_artist.font_size = 0
+    if self.ids.my_fourth_title.text == "zzzzz":
+        self.ids.my_fourth_title.font_size = 0
+        self.ids.my_fourth_artist.font_size = 0
+    if self.ids.my_fifth_title.text == "zzzzz":
+        self.ids.my_fifth_title.font_size = 0
+        self.ids.my_fifth_artist.font_size = 0
+    if self.ids.my_sixth_title.text == "zzzzz":
+        self.ids.my_sixth_title.font_size = 0
+        self.ids.my_sixth_artist.font_size = 0
+    if self.ids.my_seventh_title.text == "zzzzz":
+        self.ids.my_seventh_title.font_size = 0
+        self.ids.my_seventh_artist.font_size = 0
+    if self.ids.my_eigth_title.text == "zzzzz":
+        self.ids.my_eigth_title.font_size = 0
+        self.ids.my_eigth_artist.font_size = 0
     if self.my_ninth_title.text == "zzzzz":
         self.my_ninth_title.font_size = 0
         self.my_ninth_artist.font_size = 0
@@ -2043,75 +2138,75 @@ def highlighted_selection_generator(self):  # Updates cursor location on selecti
     if cursor_position == 0:
         clear_button_color(self)
         if start_up != 0:
-            self.my_first_title.background_color = (160, 160, 160, .2)
-            self.my_first_artist.background_color = (160, 160, 160, .2)
-        if self.my_first_artist.text[0:4] == "The ":
-            self.my_first_artist.text = self.my_first_artist.text[4:]
+            self.ids.my_first_title.background_color = (160, 160, 160, .2)
+            self.ids.my_first_artist.background_color = (160, 160, 160, .2)
+        if self.ids.my_first_artist.text[0:4] == "The ":
+            self.ids.my_first_artist.text = self.ids.my_first_artist.text[4:]
         for i in range(0, len(song_list) - 1):  # Identifies song number from song_list
-            if song_list[i][0] == self.my_first_title.text and song_list[i][1] == self.my_first_artist.text:
+            if song_list[i][0] == self.ids.my_first_title.text and song_list[i][1] == self.ids.my_first_artist.text:
                 song_selection_number = song_list[i][9]
     if cursor_position == 1:
         clear_button_color(self)
-        self.my_second_title.background_color = (160, 160, 160, .2)
-        self.my_second_artist.background_color = (160, 160, 160, .2)
-        if self.my_second_artist.text[0:4] == "The ":
-            self.my_second_artist.text = self.my_second_artist.text[4:]
+        self.ids.my_second_title.background_color = (160, 160, 160, .2)
+        self.ids.my_second_artist.background_color = (160, 160, 160, .2)
+        if self.ids.my_second_artist.text[0:4] == "The ":
+            self.ids.my_second_artist.text = self.ids.my_second_artist.text[4:]
         for i in range(0, len(song_list) - 1):
-            if song_list[i][0] == self.my_second_title.text and song_list[i][1] == self.my_second_artist.text:
+            if song_list[i][0] == self.ids.my_second_title.text and song_list[i][1] == self.ids.my_second_artist.text:
                 song_selection_number = song_list[i][9]
     if cursor_position == 2:
         clear_button_color(self)
-        self.my_third_title.background_color = (160, 160, 160, .2)
-        self.my_third_artist.background_color = (160, 160, 160, .2)
-        if self.my_third_artist.text[0:4] == "The ":
-            self.my_third_artist.text = self.my_third_artist.text[4:]
+        self.ids.my_third_title.background_color = (160, 160, 160, .2)
+        self.ids.my_third_artist.background_color = (160, 160, 160, .2)
+        if self.ids.my_third_artist.text[0:4] == "The ":
+            self.ids.my_third_artist.text = self.ids.my_third_artist.text[4:]
         for i in range(0, len(song_list) - 1):
-            if song_list[i][0] == self.my_third_title.text and song_list[i][1] == self.my_third_artist.text:
+            if song_list[i][0] == self.ids.my_third_title.text and song_list[i][1] == self.ids.my_third_artist.text:
                 song_selection_number = song_list[i][9]
     if cursor_position == 3:
         clear_button_color(self)
-        self.my_fourth_title.background_color = (160, 160, 160, .2)
-        self.my_fourth_artist.background_color = (160, 160, 160, .2)
-        if self.my_fourth_artist.text[0:4] == "The ":
-            self.my_fourth_artist.text = self.my_fourth_artist.text[4:]
+        self.ids.my_fourth_title.background_color = (160, 160, 160, .2)
+        self.ids.my_fourth_artist.background_color = (160, 160, 160, .2)
+        if self.ids.my_fourth_artist.text[0:4] == "The ":
+            self.ids.my_fourth_artist.text = self.ids.my_fourth_artist.text[4:]
         for i in range(0, len(song_list) - 1):
-            if song_list[i][0] == self.my_fourth_title.text and song_list[i][1] == self.my_fourth_artist.text:
+            if song_list[i][0] == self.ids.my_fourth_title.text and song_list[i][1] == self.ids.my_fourth_artist.text:
                 song_selection_number = song_list[i][9]
     if cursor_position == 4:
         clear_button_color(self)
-        self.my_fifth_title.background_color = (160, 160, 160, .2)
-        self.my_fifth_artist.background_color = (160, 160, 160, .2)
-        if self.my_fifth_artist.text[0:4] == "The ":
-            self.my_fifth_artist.text = self.my_fifth_artist.text[4:]
+        self.ids.my_fifth_title.background_color = (160, 160, 160, .2)
+        self.ids.my_fifth_artist.background_color = (160, 160, 160, .2)
+        if self.ids.my_fifth_artist.text[0:4] == "The ":
+            self.ids.my_fifth_artist.text = self.ids.my_fifth_artist.text[4:]
         for i in range(0, len(song_list) - 1):
-            if song_list[i][0] == self.my_fifth_title.text and song_list[i][1] == self.my_fifth_artist.text:
+            if song_list[i][0] == self.ids.my_fifth_title.text and song_list[i][1] == self.ids.my_fifth_artist.text:
                 song_selection_number = song_list[i][9]
     if cursor_position == 5:
         clear_button_color(self)
-        self.my_sixth_title.background_color = (160, 160, 160, .2)
-        self.my_sixth_artist.background_color = (160, 160, 160, .2)
-        if self.my_sixth_artist.text[0:4] == "The ":
-            self.my_sixth_artist.text = self.my_sixth_artist.text[4:]
+        self.ids.my_sixth_title.background_color = (160, 160, 160, .2)
+        self.ids.my_sixth_artist.background_color = (160, 160, 160, .2)
+        if self.ids.my_sixth_artist.text[0:4] == "The ":
+            self.ids.my_sixth_artist.text = self.ids.my_sixth_artist.text[4:]
         for i in range(0, len(song_list) - 1):
-            if song_list[i][0] == self.my_sixth_title.text and song_list[i][1] == self.my_sixth_artist.text:
+            if song_list[i][0] == self.ids.my_sixth_title.text and song_list[i][1] == self.ids.my_sixth_artist.text:
                 song_selection_number = song_list[i][9]
     if cursor_position == 6:
         clear_button_color(self)
-        self.my_seventh_title.background_color = (160, 160, 160, .2)
-        self.my_seventh_artist.background_color = (160, 160, 160, .2)
-        if self.my_seventh_artist.text[0:4] == "The ":
-            self.my_seventh_artist.text = self.my_seventh_artist.text[4:]
+        self.ids.my_seventh_title.background_color = (160, 160, 160, .2)
+        self.ids.my_seventh_artist.background_color = (160, 160, 160, .2)
+        if self.ids.my_seventh_artist.text[0:4] == "The ":
+            self.ids.my_seventh_artist.text = self.ids.my_seventh_artist.text[4:]
         for i in range(0, len(song_list) - 1):
-            if song_list[i][0] == self.my_seventh_title.text and song_list[i][1] == self.my_seventh_artist.text:
+            if song_list[i][0] == self.ids.my_seventh_title.text and song_list[i][1] == self.ids.my_seventh_artist.text:
                 song_selection_number = song_list[i][9]
     if cursor_position == 7:
         clear_button_color(self)
-        self.my_eigth_title.background_color = (160, 160, 160, .2)
-        self.my_eigth_artist.background_color = (160, 160, 160, .2)
-        if self.my_eigth_artist.text[0:4] == "The ":
-            self.my_eigth_artist.text = self.my_eigth_artist.text[4:]
+        self.ids.my_eigth_title.background_color = (160, 160, 160, .2)
+        self.ids.my_eigth_artist.background_color = (160, 160, 160, .2)
+        if self.ids.my_eigth_artist.text[0:4] == "The ":
+            self.ids.my_eigth_artist.text = self.ids.my_eigth_artist.text[4:]
         for i in range(0, len(song_list) - 1):
-            if song_list[i][0] == self.my_eigth_title.text and song_list[i][1] == self.my_eigth_artist.text:
+            if song_list[i][0] == self.ids.my_eigth_title.text and song_list[i][1] == self.ids.my_eigth_artist.text:
                 song_selection_number = song_list[i][9]
     if cursor_position == 8:
         clear_button_color(self)
@@ -2369,22 +2464,22 @@ def play_random_song():
         print path
 
 def resize_button_text(self):
-    self.my_first_title.font_size = 16
-    self.my_first_artist.font_size = 16
-    self.my_second_title.font_size = 16
-    self.my_second_artist.font_size = 16
-    self.my_third_title.font_size = 16
-    self.my_third_artist.font_size = 16
-    self.my_fourth_title.font_size = 16
-    self.my_fourth_artist.font_size = 16
-    self.my_fifth_title.font_size = 16
-    self.my_fifth_artist.font_size = 16
-    self.my_sixth_title.font_size = 16
-    self.my_sixth_artist.font_size = 16
-    self.my_seventh_title.font_size = 16
-    self.my_seventh_artist.font_size = 16
-    self.my_eigth_title.font_size = 16
-    self.my_eigth_artist.font_size = 16
+    self.ids.my_first_title.font_size = 16
+    self.ids.my_first_artist.font_size = 16
+    self.ids.my_second_title.font_size = 16
+    self.ids.my_second_artist.font_size = 16
+    self.ids.my_third_title.font_size = 16
+    self.ids.my_third_artist.font_size = 16
+    self.ids.my_fourth_title.font_size = 16
+    self.ids.my_fourth_artist.font_size = 16
+    self.ids.my_fifth_title.font_size = 16
+    self.ids.my_fifth_artist.font_size = 16
+    self.ids.my_sixth_title.font_size = 16
+    self.ids.my_sixth_artist.font_size = 16
+    self.ids.my_seventh_title.font_size = 16
+    self.ids.my_seventh_artist.font_size = 16
+    self.ids.my_eigth_title.font_size = 16
+    self.ids.my_eigth_artist.font_size = 16
     self.my_ninth_title.font_size = 16
     self.my_ninth_artist.font_size = 16
     self.my_tenth_title.font_size = 16
@@ -2521,125 +2616,125 @@ def selection_screen(self):  # Updates selection screen.
             self.my_first_title.font_size = 14
     if len(str(song_list[selection_start][1])) > 36:
         if len(str(song_list[selection_start][0])) >= 48:
-            self.my_first_artist.font_size = 12
+            self.ids.my_first_artist.font_size = 12
         elif len(str(song_list[selection_start][0])) > 44:
-            self.my_first_artist.font_size = 13
+            self.ids.my_first_artist.font_size = 13
         else:
-            self.my_first_artist.font_size = 14
-    self.my_first_title.text = str(song_list[selection_start][0])
-    self.my_first_artist.text = str(song_list[selection_start][1])
+            self.ids.my_first_artist.font_size = 14
+    self.ids.my_first_title.text = str(song_list[selection_start][0])
+    self.ids.my_first_artist.text = str(song_list[selection_start][1])
     if len(str(song_list[selection_start + 1][0])) > 36:
         if len(str(song_list[selection_start + 1][0])) >= 48:
-            self.my_second_title.font_size = 12
+            self.ids.my_second_title.font_size = 12
         elif len(str(song_list[selection_start + 1][0])) > 44:
-            self.my_second_title.font_size = 13
+            self.ids.my_second_title.font_size = 13
         else:
-            self.my_second_title.font_size = 14
+            self.ids.my_second_title.font_size = 14
     if len(str(song_list[selection_start + 1][1])) > 36:
         if len(str(song_list[selection_start + 1][0])) >= 48:
-            self.my_second_artist.font_size = 12
+            self.ids.my_second_artist.font_size = 12
         elif len(str(song_list[selection_start + 1][0])) > 44:
-            self.my_second_artist.font_size = 13
+            self.ids.my_second_artist.font_size = 13
         else:
-            self.my_second_artist.font_size = 14
-    self.my_second_title.text = str(song_list[selection_start + 1][0])
-    self.my_second_artist.text = str(song_list[selection_start + 1][1])
+            self.ids.my_second_artist.font_size = 14
+    self.ids.my_second_title.text = str(song_list[selection_start + 1][0])
+    self.ids.my_second_artist.text = str(song_list[selection_start + 1][1])
     if len(str(song_list[selection_start + 2][0])) > 36:
         if len(str(song_list[selection_start + 2][0])) >= 48:
-            self.my_third_title.font_size = 12
+            self.ids.my_third_title.font_size = 12
         elif len(str(song_list[selection_start + 2][0])) > 44:
-            self.my_third_title.font_size = 13
+            self.ids.my_third_title.font_size = 13
         else:
-            self.my_third_title.font_size = 14
+            self.ids.my_third_title.font_size = 14
     if len(str(song_list[selection_start + 2][1])) > 36:
         if len(str(song_list[selection_start + 2][0])) >= 48:
-            self.my_third_artist.font_size = 12
+            self.ids.my_third_artist.font_size = 12
         elif len(str(song_list[selection_start + 2][0])) > 44:
-            self.my_third_artist.font_size = 13
+            self.ids.my_third_artist.font_size = 13
         else:
-            self.my_third_artist.font_size = 14
-    self.my_third_title.text = str(song_list[selection_start + 2][0])
-    self.my_third_artist.text = str(song_list[selection_start + 2][1])
+            self.ids.my_third_artist.font_size = 14
+    self.ids.my_third_title.text = str(song_list[selection_start + 2][0])
+    self.ids.my_third_artist.text = str(song_list[selection_start + 2][1])
     if len(str(song_list[selection_start + 3][0])) > 36:
         if len(str(song_list[selection_start + 3][0])) >= 48:
-            self.my_fourth_title.font_size = 12
+            self.ids.my_fourth_title.font_size = 12
         elif len(str(song_list[selection_start + 3][0])) > 44:
-            self.my_fourth_title.font_size = 13
+            self.ids.my_fourth_title.font_size = 13
         else:
-            self.my_fourth_title.font_size = 14
+            self.ids.my_fourth_title.font_size = 14
     if len(str(song_list[selection_start + 3][1])) > 36:
         if len(str(song_list[selection_start + 3][0])) >= 48:
-            self.my_fourth_artist.font_size = 12
+            self.ids.my_fourth_artist.font_size = 12
         elif len(str(song_list[selection_start + 3][0])) > 44:
-            self.my_fourth_artist.font_size = 13
+            self.ids.my_fourth_artist.font_size = 13
         else:
-            self.my_fourth_artist.font_size = 14
-    self.my_fourth_title.text = str(song_list[selection_start + 3][0])
-    self.my_fourth_artist.text = str(song_list[selection_start + 3][1])
+            self.ids.my_fourth_artist.font_size = 14
+    self.ids.my_fourth_title.text = str(song_list[selection_start + 3][0])
+    self.ids.my_fourth_artist.text = str(song_list[selection_start + 3][1])
     if len(str(song_list[selection_start + 4][0])) > 36:
         if len(str(song_list[selection_start + 4][0])) >= 48:
-            self.my_fifth_title.font_size = 12
+            self.ids.my_fifth_title.font_size = 12
         elif len(str(song_list[selection_start + 4][0])) > 44:
-            self.my_fifth_title.font_size = 13
+            self.ids.my_fifth_title.font_size = 13
         else:
-            self.my_fifth_title.font_size = 14
+            self.ids.my_fifth_title.font_size = 14
     if len(str(song_list[selection_start + 4][1])) > 36:
         if len(str(song_list[selection_start + 4][0])) >= 48:
-            self.my_fifth_artist.font_size = 12
+            self.ids.my_fifth_artist.font_size = 12
         elif len(str(song_list[selection_start + 4][0])) > 44:
-            self.my_fifth_artist.font_size = 13
+            self.ids.my_fifth_artist.font_size = 13
         else:
-            self.my_fifth_artist.font_size = 14
-    self.my_fifth_title.text = str(song_list[selection_start + 4][0])
-    self.my_fifth_artist.text = str(song_list[selection_start + 4][1])
+            self.ids.my_fifth_artist.font_size = 14
+    self.ids.my_fifth_title.text = str(song_list[selection_start + 4][0])
+    self.ids.my_fifth_artist.text = str(song_list[selection_start + 4][1])
     if len(str(song_list[selection_start + 5][0])) > 36:
         if len(str(song_list[selection_start + 5][0])) >= 48:
-            self.my_sixth_title.font_size = 12
+            self.ids.my_sixth_title.font_size = 12
         elif len(str(song_list[selection_start + 5][0])) > 44:
-            self.my_sixth_title.font_size = 13
+            self.ids.my_sixth_title.font_size = 13
         else:
-            self.my_sixth_title.font_size = 14
+            self.ids.my_sixth_title.font_size = 14
     if len(str(song_list[selection_start + 5][1])) > 36:
         if len(str(song_list[selection_start + 5][0])) >= 48:
-            self.my_sixth_artist.font_size = 12
+            self.ids.my_sixth_artist.font_size = 12
         elif len(str(song_list[selection_start + 5][0])) > 44:
-            self.my_sixth_artist.font_size = 13
+            self.ids.my_sixth_artist.font_size = 13
         else:
-            self.my_sixth_artist.font_size = 14
-    self.my_sixth_title.text = str(song_list[selection_start + 5][0])
-    self.my_sixth_artist.text = str(song_list[selection_start + 5][1])
+            self.ids.my_sixth_artist.font_size = 14
+    self.ids.my_sixth_title.text = str(song_list[selection_start + 5][0])
+    self.ids.my_sixth_artist.text = str(song_list[selection_start + 5][1])
     if len(str(song_list[selection_start + 6][0])) > 36:
         if len(str(song_list[selection_start + 6][0])) >= 48:
-            self.my_seventh_title.font_size = 12
+            self.ids.my_seventh_title.font_size = 12
         elif len(str(song_list[selection_start + 6][0])) > 44:
-            self.my_seventh_title.font_size = 13
+            self.ids.my_seventh_title.font_size = 13
         else:
-            self.my_seventh_title.font_size = 14
+            self.ids.my_seventh_title.font_size = 14
     if len(str(song_list[selection_start + 6][1])) > 36:
         if len(str(song_list[selection_start + 6][0])) >= 48:
-            self.my_seventh_artist.font_size = 12
+            self.ids.my_seventh_artist.font_size = 12
         elif len(str(song_list[selection_start + 6][0])) > 44:
-            self.my_seventh_artist.font_size = 13
+            self.ids.my_seventh_artist.font_size = 13
         else:
-            self.my_seventh_artist.font_size = 14
-    self.my_seventh_title.text = str(song_list[selection_start + 6][0])
-    self.my_seventh_artist.text = str(song_list[selection_start + 6][1])
+            self.ids.my_seventh_artist.font_size = 14
+    self.ids.my_seventh_title.text = str(song_list[selection_start + 6][0])
+    self.ids.my_seventh_artist.text = str(song_list[selection_start + 6][1])
     if len(str(song_list[selection_start + 7][0])) > 36:
         if len(str(song_list[selection_start + 7][0])) >= 48:
-            self.my_eigth_title.font_size = 12
+            self.ids.my_eigth_title.font_size = 12
         elif len(str(song_list[selection_start + 7][0])) > 44:
-            self.my_eigth_title.font_size = 13
+            self.ids.my_eigth_title.font_size = 13
         else:
-            self.my_eigth_title.font_size = 14
+            self.ids.my_eigth_title.font_size = 14
     if len(str(song_list[selection_start + 7][1])) > 36:
         if len(str(song_list[selection_start + 7][0])) >= 48:
-            self.my_eigth_artist.font_size = 12
+            self.ids.my_eigth_artist.font_size = 12
         elif len(str(song_list[selection_start + 7][0])) > 44:
-            self.my_eigth_artist.font_size = 13
+            self.ids.my_eigth_artist.font_size = 13
         else:
-            self.my_eigth_artist.font_size = 14
-    self.my_eigth_title.text = str(song_list[selection_start + 7][0])
-    self.my_eigth_artist.text = str(song_list[selection_start + 7][1])
+            self.ids.my_eigth_artist.font_size = 14
+    self.ids.my_eigth_title.text = str(song_list[selection_start + 7][0])
+    self.ids.my_eigth_artist.text = str(song_list[selection_start + 7][1])
     if len(str(song_list[selection_start + 8][0])) > 36:
         if len(str(song_list[selection_start + 8][0])) >= 48:
             self.my_ninth_title.font_size = 12
@@ -2769,45 +2864,45 @@ def selection_screen(self):  # Updates selection screen.
     self.my_sixteenth_title.text = str(song_list[selection_start + 15][0])
     self.my_sixteenth_artist.text = str(song_list[selection_start + 15][1])
 
-    x = self.my_first_artist.text
+    x = self.ids.my_first_artist.text
     if x.lower() in the_bands_list_lower_case:
         x = "The " + str(x)
-        self.my_first_artist.text = str(x)
+        self.ids.my_first_artist.text = str(x)
 
-    x = self.my_second_artist.text
+    x = self.ids.my_second_artist.text
     if x.lower() in the_bands_list_lower_case:
         x = "The " + str(x)
-        self.my_second_artist.text = str(x)
+        self.ids.my_second_artist.text = str(x)
 
-    x = self.my_third_artist.text
+    x = self.ids.my_third_artist.text
     if x.lower() in the_bands_list_lower_case:
         x = "The " + str(x)
-        self.my_third_artist.text = str(x)
+        self.ids.my_third_artist.text = str(x)
 
-    x = self.my_fourth_artist.text
+    x = self.ids.my_fourth_artist.text
     if x.lower() in the_bands_list_lower_case:
         x = "The " + str(x)
-        self.my_fourth_artist.text = str(x)
+        self.ids.my_fourth_artist.text = str(x)
 
-    x = self.my_fifth_artist.text
+    x = self.ids.my_fifth_artist.text
     if x.lower() in the_bands_list_lower_case:
         x = "The " + str(x)
-        self.my_fifth_artist.text = str(x)
+        self.ids.my_fifth_artist.text = str(x)
 
-    x = self.my_sixth_artist.text
+    x = self.ids.my_sixth_artist.text
     if x.lower() in the_bands_list_lower_case:
         x = "The " + str(x)
-        self.my_sixth_artist.text = str(x)
+        self.ids.my_sixth_artist.text = str(x)
 
-    x = self.my_seventh_artist.text
+    x = self.ids.my_seventh_artist.text
     if x.lower() in the_bands_list_lower_case:
         x = "The " + str(x)
-        self.my_seventh_artist.text = str(x)
+        self.ids.my_seventh_artist.text = str(x)
 
-    x = self.my_eigth_artist.text
+    x = self.ids.my_eigth_artist.text
     if x.lower() in the_bands_list_lower_case:
         x = "The " + str(x)
-        self.my_eigth_artist.text = str(x)
+        self.ids.my_eigth_artist.text = str(x)
 
     x = self.my_ninth_artist.text
     if x.lower() in the_bands_list_lower_case:
