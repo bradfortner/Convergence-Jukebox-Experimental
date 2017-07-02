@@ -214,8 +214,9 @@ Builder.load_string('''
 class JukeboxScreen(FloatLayout):
 
     def __init__(self, **kwargs):
+
         super(JukeboxScreen, self).__init__(**kwargs)
-        #Clock.schedule_interval(self.file_reader, 5)
+        Clock.schedule_interval(self.file_reader, 5)
         Window.bind(on_key_down=self.key_action)
         set_up_user_files_first_time()
         write_jukebox_startup_to_log()
@@ -225,6 +226,8 @@ class JukeboxScreen(FloatLayout):
                                         width=500)
         self.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,
                                           size_hint=(None, None), width=800, halign="center", valign="middle")
+
+        self.ids.jukebox_name.text = "Hello, World!"
         if len(display_info[0]) > 25:
             self.song_playing_name.font_size = 25
         elif len(display_info[0]) > 18:
@@ -357,7 +360,7 @@ class JukeboxScreen(FloatLayout):
             self.my_first_title.background_color = (160, 160, 160, .2)
             self.my_first_artist.background_color = (160, 160, 160, .2)
         selection_font_size(self)
-        #threading.Thread(target=loop1_10).start() # Test Thread
+
         os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox Player
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
@@ -1466,6 +1469,7 @@ class MyFinalApp(App):
         return JukeboxScreen()
 
 def threaded_popup(): # Test Thread
+    MyText ="Hi"
     '''for i in range(1, 11):
         time.sleep(1)
         print(i)'''
@@ -1475,9 +1479,11 @@ def threaded_popup(): # Test Thread
         popup.open()
         time.sleep(1)
         print(i)'''
-    popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
+    popup = Popup(title='Test popup', content=Label(text=str(MyText)), size_hint=(None, None),
                   size=(400, 400))
+
     popup.open()
+
 
 def basic_random_list_generator():
     global random_list_with_year
