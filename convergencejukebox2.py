@@ -248,9 +248,58 @@ Builder.load_string('''
         id: sort_mode
         text: "Sort Mode By Artist"
         font_size: 38
+        color: 0,.7,0,0
         bold: True
         size_hint: .7, 1
         pos: 42, 278
+    Label:
+        id: my_upcoming_selections
+        text: "UPCOMING SELECTIONS"
+        font_size: 28
+        color: 0,.7,0,0
+        pos: 48, 132
+    Label:
+        id: my_play_cost
+        text: "Twenty-Five Cents Per Selection"
+        font_size: 22
+        color: 0,.7,0,0
+        pos: 50, -265
+    Label:
+        id: my_credit_amount
+        text: " "
+        font_size: 35
+        color: 0,.7,0,0
+        pos: 117, -236
+    Label:
+        id: selections_available
+        text: " "
+        color: 0,.7,0,0
+        pos: 97, -287
+    Label:
+        id: my_play_mode
+        text: " "
+        pos: 40, 245
+    Label:
+        id: my_title_song
+        text: " "
+        pos: 40, 225
+    Label:
+        id: my_title_artist
+        text: " "
+        pos: 40, 205
+    Label:
+        id: my_title_year
+        text: " "
+        pos: 40, 185
+    Label:
+        id: my_title_length
+        text: " "
+        pos: 135, 185
+    Label:
+        id: my_title_album
+        text: " "
+        pos: 40, 165
+    
     Button:
         id: my_first_title
         text: ' '
@@ -393,75 +442,18 @@ class JukeboxScreen(FloatLayout):
         write_jukebox_startup_to_log()
         genre_read_and_select_engine()
         count_number_mp3_songs()
-        #self.song_playing_name = Button(text=str(display_info[0]), pos=(580, 540), font_size=30, size_hint=(None, None),width=500)
-        #self.ids.song_playing_artist = Button(text=str(display_info[1]), pos=(430, 490), font_size=30,size_hint=(None, None), width=800, halign="center", valign="middle")
 
-        '''if len(display_info[0]) > 25:
-            self.ids.song_playing_name.font_size = 25
-        elif len(display_info[0]) > 18:
-            self.ids.song_playing_name.font_size = 35
-        else:
-            self.ids.song_playing_name.font_size = 50
-        if len(display_info[1]) > 25:
-            self.ids.song_playing_artist.font_size = 25
-        elif len(display_info[1]) > 18:
-            self.ids.song_playing_artist.font_size = 35
-        else:
-            self.ids.song_playing_artist.font_size = 50'''
-        # self.sort_mode = Label(text="Sort Mode By Artist", pos=(42, 278), font_size=38)
-        #self.opening_message = Label(text=" ", color=(1, 1, 1, 1), pos=(200, 205), font_size=50, width=500,halign="center", valign="middle")
-        #self.licence_message = Label(text=" ", color=(1, 1, 1, 1), pos=(40, -66), font_size=20, width=500,halign="left", valign="top")
-        #self.my_first_title = Button(text=str(song_list[adder][0]), pos=(495, 456))
-        #self.ids.my_first_artist = Button(text=str(song_list[adder][1]), pos=(495, 433))
-        '''self.ids.my_second_title = Button(text=str(song_list[adder + 1][0]), pos=(495, 403))
-        self.ids.my_second_artist = Button(text=str(song_list[adder + 1][1]), pos=(495, 380))
-        self.ids.my_third_title = Button(text=str(song_list[adder + 2][0]), pos=(495, 348))
-        self.ids.my_third_artist = Button(text=str(song_list[adder + 2][1]), pos=(495, 325))
-        self.ids.my_fourth_title = Button(text=str(song_list[adder + 3][0]), pos=(495, 293))
-        self.ids.my_fourth_artist = Button(text=str(song_list[adder + 3][1]), pos=(495, 270))
-        self.ids.my_fifth_title = Button(text=str(song_list[adder + 4][0]), pos=(495, 238))
-        self.ids.my_fifth_artist = Button(text=str(song_list[adder + 4][1]), pos=(495, 216))
-        self.ids.my_sixth_title = Button(text=str(song_list[adder + 5][0]), pos=(495, 185))
-        self.ids.my_sixth_artist = Button(text=str(song_list[adder + 5][1]), pos=(495, 162))
-        self.ids.my_seventh_title = Button(text=str(song_list[adder + 6][0]), pos=(495, 132))
-        self.ids.my_seventh_artist = Button(text=str(song_list[adder + 6][1]), pos=(495, 109))
-        self.ids.my_eigth_title = Button(text=str(song_list[adder + 7][0]), pos=(495, 77))
-        self.ids.my_eigth_artist = Button(text=str(song_list[adder + 7][1]), pos=(495, 54))'''
-        #self.ids.my_ninth_title = Button(text=str(song_list[adder + 8][0]), pos=(835, 456))
-        #self.ids.my_ninth_artist = Button(text=str(song_list[adder + 8][1]), pos=(835, 433))
-        '''self.ids.my_tenth_title = Button(text=str(song_list[adder + 9][0]), pos=(835, 403))
-        self.ids.my_tenth_artist = Button(text=str(song_list[adder + 9][1]), pos=(835, 380))'''
-        '''self.ids.my_eleventh_title = Button(text=str(song_list[adder + 10][0]), pos=(835, 348))
-        self.ids.my_eleventh_artist = Button(text=str(song_list[adder + 10][1]), pos=(835, 325))'''
-        '''self.ids.my_twelfth_title = Button(text=str(song_list[adder + 11][0]), pos=(835, 293))
-        self.ids.my_twelfth_artist = Button(text=str(song_list[adder + 11][1]), pos=(835, 270))'''
-        '''self.ids.my_thirteenth_title = Button(text=str(song_list[adder + 12][0]), pos=(835, 238))
-        self.ids.my_thirteenth_artist = Button(text=str(song_list[adder + 12][1]), pos=(835, 216))'''
-        #self.ids.my_fourteenth_title = Button(text=str(song_list[adder + 13][0]), pos=(835, 185))
-        #self.ids.my_fourteenth_artist = Button(text=str(song_list[adder + 13][1]), pos=(835, 162))
-        #self.ids.my_fifteenth_title = Button(text=str(song_list[adder + 14][0]), pos=(835, 132))
-        #self.ids.my_fifteenth_artist = Button(text=str(song_list[adder + 14][1]), pos=(835, 109))
-        #self.ids.my_sixteenth_title = Button(text=str(song_list[adder + 15][0]), pos=(835, 77))
-        #self.ids.my_sixteenth_artist = Button(text=str(song_list[adder + 15][1]), pos=(835, 54))
-        self.my_play_mode = Label(text=str(display_info[5]), pos=(40, 245))
-        self.my_title_song = Label(text="Title: " + str(display_info[0]), pos=(40, 225))
-        self.my_title_artist = Label(text="Artist: " + str(display_info[1]), pos=(40, 205))
-        self.my_title_year = Label(text="Year: " + str(display_info[3]), pos=(40, 185))
-        self.my_title_length = Label(text="Length: " + str(display_info[4]), pos=(135, 185))
-        self.my_title_album = Label(text="Album: " + str(display_info[2]), pos=(40, 165))
         selections_screen_starter(self)
         selections_screen_updater(self)
-        self.my_upcoming_selections = Label(text="UPCOMING SELECTIONS", font_size=28, pos=(48, 132))
-        self.my_play_cost = Label(text="Twenty-Five Cents Per Selection", pos=(50, -265), font_size=22)
-        self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
-        self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
+        #self.ids.my_upcoming_selections = Label(text="UPCOMING SELECTIONS", font_size=28, pos=(48, 132))
+        #self.my_play_cost = Label(text="Twenty-Five Cents Per Selection", pos=(50, -265), font_size=22)
+        #self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
+        #self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
         self.my_blackout = Button(size_hint=(.547, .613), text=" ", background_color=(0, 0, 0, 0), pos=(480, 56),
                                   valign="top")
         self.add_widget(self.my_blackout)
-        self.add_widget(self.my_upcoming_selections)
-        self.add_widget(self.my_play_cost)
-        #self.add_widget(self.song_playing_name)
-        #self.add_widget(self.song_playing_artist)
+        #self.add_widget(self.ids.my_upcoming_selections)
+        #self.add_widget(self.my_play_cost)
         self.add_widget(self.my_selection_one)
         self.add_widget(self.my_selection_two)
         self.add_widget(self.my_selection_three)
@@ -479,49 +471,8 @@ class JukeboxScreen(FloatLayout):
         self.add_widget(self.my_selection_fifteen)
         self.add_widget(self.my_selection_sixteen)
         self.add_widget(self.my_selection_seventeen)
-        self.add_widget(self.my_credit_amount)
-        self.add_widget(self.selections_available)
-        # self.add_widget(self.sort_mode)
-        self.add_widget(self.my_play_mode)
-        self.add_widget(self.my_title_song)
-        self.add_widget(self.my_title_artist)
-        self.add_widget(self.my_title_year)
-        self.add_widget(self.my_title_length)
-        self.add_widget(self.my_title_album)
-        #self.add_widget(self.my_first_title)
-        #self.add_widget(self.ids.my_first_artist)
-        '''self.add_widget(self.ids.my_second_title)
-        self.add_widget(self.ids.my_second_artist)
-        self.add_widget(self.ids.my_third_title)
-        self.add_widget(self.ids.my_third_artist)
-        self.add_widget(self.ids.my_fourth_title)
-        self.add_widget(self.ids.my_fourth_artist)
-        self.add_widget(self.ids.my_fifth_title)
-        self.add_widget(self.ids.my_fifth_artist)
-        self.add_widget(self.ids.my_sixth_title)
-        self.add_widget(self.ids.my_sixth_artist)'''
-        '''self.add_widget(self.ids.my_seventh_title)
-        self.add_widget(self.ids.my_seventh_artist)
-        self.add_widget(self.ids.my_eigth_title)
-        self.add_widget(self.ids.my_eigth_artist)'''
-        #self.add_widget(self.ids.my_ninth_title)
-        #self.add_widget(self.ids.my_ninth_artist)
-        '''self.add_widget(self.ids.my_tenth_title)
-        self.add_widget(self.ids.my_tenth_artist)'''
-        '''self.add_widget(self.ids.my_eleventh_title)
-        self.add_widget(self.ids.my_eleventh_artist)'''
-        '''self.add_widget(self.ids.my_twelfth_title)
-        self.add_widget(self.ids.my_twelfth_artist)'''
-        #self.add_widget(self.ids.my_thirteenth_title)
-        #self.add_widget(self.ids.my_thirteenth_artist)
-        '''self.add_widget(self.ids.my_fourteenth_title)
-        self.add_widget(self.ids.my_fourteenth_artist)'''
-        '''self.add_widget(self.ids.my_fifteenth_title)
-        self.add_widget(self.ids.my_fifteenth_artist)'''
-        '''self.add_widget(self.ids.my_sixteenth_title)
-        self.add_widget(self.ids.my_sixteenth_artist)'''
-        #self.add_widget(self.opening_message)
-        #self.add_widget(self.licence_message)
+        #self.add_widget(self.my_credit_amount)
+        #self.add_widget(self.selections_available)
         if start_up != 0:
             self.my_first_title.background_color = (160, 160, 160, .2)
             self.ids.my_first_artist.background_color = (160, 160, 160, .2)
@@ -566,18 +517,18 @@ class JukeboxScreen(FloatLayout):
             self.my_blackout.text = screen_message
             self.my_blackout.color = (1, 1, 1, 1)
             self.my_blackout.font_size = 25
-            self.my_upcoming_selections.color = (0, .7, 0, 0)
-            self.my_play_cost.color = (0, .7, 0, 0)
-            self.my_credit_amount.color = (0, .7, 0, 0)
-            self.selections_available.color = (0, .7, 0, 0)
+            self.ids.my_upcoming_selections.color = (0, .7, 0, 0)
+            self.ids.my_play_cost.color = (0, .7, 0, 0)
+            self.ids.my_credit_amount.color = (0, .7, 0, 0)
+            self.ids.selections_available.color = (0, .7, 0, 0)
             self.ids.song_playing_name.color = (1, 1, 1, 0)
             self.ids.song_playing_artist.color = (1, 1, 1, 0)
-            self.my_play_mode.color = (0, .7, 0, 0)
-            self.my_title_song.color = (0, .7, 0, 0)
-            self.my_title_artist.color = (0, .7, 0, 0)
-            self.my_title_year.color = (0, .7, 0, 0)
-            self.my_title_length.color = (0, .7, 0, 0)
-            self.my_title_album.color = (0, .7, 0, 0)
+            self.ids.my_play_mode.color = (0, .7, 0, 0)
+            self.ids.my_title_song.color = (0, .7, 0, 0)
+            self.ids.my_title_artist.color = (0, .7, 0, 0)
+            self.ids.my_title_year.color = (0, .7, 0, 0)
+            self.ids.my_title_length.color = (0, .7, 0, 0)
+            self.ids.my_title_album.color = (0, .7, 0, 0)
             self.ids.sort_mode.color = (0, .7, 0, 0)
             self.ids.my_first_title.color = (1, 1, 1, 0)
             self.ids.my_first_artist.color = (1, 1, 1, 0)
@@ -1005,6 +956,9 @@ class JukeboxScreen(FloatLayout):
             print upcoming_list
             # my_old_infinite_loop()
             self.my_blackout.color = (1, 1, 1, 0)
+            self.ids.my_credit_amount.text = "CREDITS " + str(credit_amount)
+            self.ids.selections_available.text = "Selections Available: " + str(selections_available)
+            self.ids.sort_mode.color = (0, .7, 0, 1)
             self.ids.my_first_title.color = (1, 1, 1, 1)
             self.ids.my_first_artist.color = (1, 1, 1, 1)
             self.ids.my_second_title.color = (1, 1, 1, 1)
@@ -1038,18 +992,18 @@ class JukeboxScreen(FloatLayout):
             self.ids.my_sixteenth_title.color = (1, 1, 1, 1)
             self.ids.my_sixteenth_artist.color = (1, 1, 1, 1)
             self.my_blackout.background_color = (0, 0, 0, 0)
-            self.my_upcoming_selections.color = (0, .7, 0, 1)
-            self.my_play_cost.color = (0, .7, 0, 1)
-            self.my_credit_amount.color = (0, .7, 0, 1)
-            self.selections_available.color = (0, .7, 0, 1)
+            self.ids.my_upcoming_selections.color = (0, .7, 0, 1)
+            self.ids.my_play_cost.color = (0, .7, 0, 1)
+            self.ids.my_credit_amount.color = (0, .7, 0, 1)
+            self.ids.selections_available.color = (0, .7, 0, 1)
             self.ids.song_playing_name.color = (1, 1, 1, 1)
             self.ids.song_playing_artist.color = (1, 1, 1, 1)
-            self.my_play_mode.color = (0, .7, 0, 1)
-            self.my_title_song.color = (0, .7, 0, 1)
-            self.my_title_artist.color = (0, .7, 0, 1)
-            self.my_title_year.color = (0, .7, 0, 1)
-            self.my_title_length.color = (0, .7, 0, 1)
-            self.my_title_album.color = (0, .7, 0, 1)
+            self.ids.my_play_mode.color = (0, .7, 0, 1)
+            self.ids.my_title_song.color = (0, .7, 0, 1)
+            self.ids.my_title_artist.color = (0, .7, 0, 1)
+            self.ids.my_title_year.color = (0, .7, 0, 1)
+            self.ids.my_title_length.color = (0, .7, 0, 1)
+            self.ids.my_title_album.color = (0, .7, 0, 1)
             self.ids.sort_mode.color = (0, .7, 0, 1)
             self.ids.opening_message.text = " "
             self.ids.licence_message.text = " "
@@ -1133,12 +1087,12 @@ class JukeboxScreen(FloatLayout):
                 x = "The " + str(x)
                 self.ids.song_playing_artist.text = str(x)
 
-            self.my_title_song.text = "Title: " + str(display_info[0])
-            self.my_title_artist.text = "Artist: " + str(display_info[1])
-            self.my_title_album.text = "Release: " + str(display_info[2])
-            self.my_title_year.text = "Year: " + str(display_info[3])
-            self.my_title_length.text = "Length: " + str(display_info[4])
-            self.my_play_mode.text = str(display_info[5])
+            self.ids.my_title_song.text = "Title: " + str(display_info[0])
+            self.ids.my_title_artist.text = "Artist: " + str(display_info[1])
+            self.ids.my_title_album.text = "Release: " + str(display_info[2])
+            self.ids.my_title_year.text = "Year: " + str(display_info[3])
+            self.ids.my_title_length.text = "Length: " + str(display_info[4])
+            self.ids.my_play_mode.text = str(display_info[5])
 
         try:
             if str(key_event[1]) == '100':
@@ -1562,7 +1516,7 @@ class JukeboxScreen(FloatLayout):
             credit_calculator()
             last_pressed = "x"
             print credit_amount
-            self.my_credit_amount.text = "CREDITS " + str(credit_amount)
+            self.ids.my_credit_amount.text = "CREDITS " + str(credit_amount)
         if str(key_event[1]) == '273':
             print 'up'
             adder -= 1
