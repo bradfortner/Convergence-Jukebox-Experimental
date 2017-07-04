@@ -215,6 +215,13 @@ Builder.load_string('''
         halign: 'center'
         valign: 'middle'
         width: 800
+    Button:
+        id: my_blackout
+        text: ' '
+        pos: 480, 56
+        size_hint: .547, .613
+        valign: 'top'
+        background_color: 0,0,0,0
     Label:
         id: jukebox_name
         text: "Convergence Music System 2.0"
@@ -298,8 +305,7 @@ Builder.load_string('''
     Label:
         id: my_title_album
         text: " "
-        pos: 40, 165
-    
+        pos: 40, 165 
     Button:
         id: my_first_title
         text: ' '
@@ -428,6 +434,74 @@ Builder.load_string('''
         id: my_sixteenth_artist
         text: ' '
         pos: 835, 54
+    Label:
+        id: my_selection_one
+        text: " "
+        pos: 40, 107
+    Label:
+        id: my_selection_two
+        text: " "
+        pos: 40, 88
+    Label:
+        id: my_selection_three
+        text: " "
+        pos: 40, 69
+    Label:
+        id: my_selection_four
+        text: " "
+        pos: 40, 50
+    Label:
+        id: my_selection_five
+        text: " "
+        pos: 40, 31
+    Label:
+        id: my_selection_six
+        text: " "
+        pos: 40, 12
+    Label:
+        id: my_selection_seven
+        text: " "
+        pos: 40, -7
+    Label:
+        id: my_selection_eight
+        text: " "
+        pos: 40, -26
+    Label:
+        id: my_selection_nine
+        text: " "
+        pos: 40, -47
+    Label:
+        id: my_selection_ten
+        text: " "
+        pos: 40, -66
+    Label:
+        id: my_selection_eleven
+        text: " "
+        pos: 40, -85
+    Label:
+        id: my_selection_twelve
+        text: " "
+        pos: 40, -104
+    Label:
+        id: my_selection_thirteen
+        text: " "
+        pos: 40, -123
+    Label:
+        id: my_selection_fourteen
+        text: " "
+        pos: 40, -142
+    Label:
+        id: my_selection_fifteen
+        text: " "
+        pos: 40, -161
+    Label:
+        id: my_selection_sixteen
+        text: " "
+        pos: 40, -180
+    Label:
+        id: my_selection_seventeen
+        text: " "
+        pos: 40, -199
 
 ''')
 
@@ -442,35 +516,33 @@ class JukeboxScreen(FloatLayout):
         write_jukebox_startup_to_log()
         genre_read_and_select_engine()
         count_number_mp3_songs()
-
         selections_screen_starter(self)
         selections_screen_updater(self)
         #self.ids.my_upcoming_selections = Label(text="UPCOMING SELECTIONS", font_size=28, pos=(48, 132))
         #self.my_play_cost = Label(text="Twenty-Five Cents Per Selection", pos=(50, -265), font_size=22)
         #self.my_credit_amount = Label(text="CREDITS " + str(credit_amount), pos=(117, -236), font_size=35)
         #self.selections_available = Label(text="Selections Available: " + str(selections_available), pos=(97, -287))
-        self.my_blackout = Button(size_hint=(.547, .613), text=" ", background_color=(0, 0, 0, 0), pos=(480, 56),
-                                  valign="top")
-        self.add_widget(self.my_blackout)
+        #self.ids.my_blackout = Button(size_hint=(.547, .613), text=" ", background_color=(0, 0, 0, 0), pos=(480, 56),valign="top")
+        #self.add_widget(self.ids.my_blackout)
         #self.add_widget(self.ids.my_upcoming_selections)
         #self.add_widget(self.my_play_cost)
-        self.add_widget(self.my_selection_one)
-        self.add_widget(self.my_selection_two)
-        self.add_widget(self.my_selection_three)
-        self.add_widget(self.my_selection_four)
-        self.add_widget(self.my_selection_five)
-        self.add_widget(self.my_selection_six)
-        self.add_widget(self.my_selection_seven)
-        self.add_widget(self.my_selection_eight)
-        self.add_widget(self.my_selection_nine)
-        self.add_widget(self.my_selection_ten)
-        self.add_widget(self.my_selection_eleven)
-        self.add_widget(self.my_selection_twelve)
-        self.add_widget(self.my_selection_thirteen)
-        self.add_widget(self.my_selection_fourteen)
-        self.add_widget(self.my_selection_fifteen)
-        self.add_widget(self.my_selection_sixteen)
-        self.add_widget(self.my_selection_seventeen)
+        #self.add_widget(self.my_selection_one)
+        #self.add_widget(self.my_selection_two)
+        #self.add_widget(self.ids.my_selection_three)
+        #self.add_widget(self.ids.my_selection_four)
+        #self.add_widget(self.ids.my_selection_five)
+        #self.add_widget(self.ids.my_selection_six)
+        #self.add_widget(self.my_selection_seven)
+        #self.add_widget(self.my_selection_eight)
+        #self.add_widget(self.my_selection_nine)
+        #self.add_widget(self.my_selection_ten)
+        #self.add_widget(self.my_selection_eleven)
+        #self.add_widget(self.my_selection_twelve)
+        #self.add_widget(self.my_selection_thirteen)
+        #self.add_widget(self.ids.my_selection_fourteen)
+        #self.add_widget(self.my_selection_fifteen)
+        #self.add_widget(self.ids.my_selection_sixteen)
+        #self.add_widget(self.my_selection_seventeen)
         #self.add_widget(self.my_credit_amount)
         #self.add_widget(self.selections_available)
         if start_up != 0:
@@ -507,16 +579,16 @@ class JukeboxScreen(FloatLayout):
             screen_message = "Welcome To Convergence Jukebox\nYour Jukebox Is Being Configured\nThis Could Take A Few Minutes\n\n"
             self.ids.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
             self.ids.licence_message.text = str(licence)
-            
+
             # self.process_button_click()
             # self.parent.remove_widget(self.my_progress_bar)
             # self.remove_widget(self.my_progress_bar)
             self.ids.my_first_title.background_color = (160, 160, 160, 0)
             self.ids.my_first_artist.background_color = (160, 160, 160, 0)
-            self.my_blackout.background_color = (0, 0, 0, 1)
-            self.my_blackout.text = screen_message
-            self.my_blackout.color = (1, 1, 1, 1)
-            self.my_blackout.font_size = 25
+            self.ids.my_blackout.background_color = (0, 0, 0, 1)
+            self.ids.my_blackout.text = screen_message
+            self.ids.my_blackout.color = (1, 1, 1, 1)
+            self.ids.my_blackout.font_size = 25
             self.ids.my_upcoming_selections.color = (0, .7, 0, 0)
             self.ids.my_play_cost.color = (0, .7, 0, 0)
             self.ids.my_credit_amount.color = (0, .7, 0, 0)
@@ -562,23 +634,23 @@ class JukeboxScreen(FloatLayout):
             self.ids.my_fifteenth_artist.color = (1, 1, 1, 0)
             self.ids.my_sixteenth_title.color = (1, 1, 1, 0)
             self.ids.my_sixteenth_artist.color = (1, 1, 1, 0)
-            self.my_selection_one.text = " "
-            self.my_selection_two.text = " "
-            self.my_selection_three.text = " "
-            self.my_selection_four.text = " "
-            self.my_selection_five.text = " "
-            self.my_selection_six.text = " "
-            self.my_selection_seven.text = " "
-            self.my_selection_eight.text = " "
-            self.my_selection_nine.text = " "
-            self.my_selection_ten.text = " "
-            self.my_selection_eleven.text = " "
-            self.my_selection_twelve.text = " "
-            self.my_selection_thirteen.text = " "
-            self.my_selection_fourteen.text = " "
-            self.my_selection_fifteen.text = " "
-            self.my_selection_sixteen.text = " "
-            self.my_selection_seventeen.text = " "
+            self.ids.my_selection_one.text = " "
+            self.ids.my_selection_two.text = " "
+            self.ids.my_selection_three.text = " "
+            self.ids.my_selection_four.text = " "
+            self.ids.my_selection_five.text = " "
+            self.ids.my_selection_six.text = " "
+            self.ids.my_selection_seven.text = " "
+            self.ids.my_selection_eight.text = " "
+            self.ids.my_selection_nine.text = " "
+            self.ids.my_selection_ten.text = " "
+            self.ids.my_selection_eleven.text = " "
+            self.ids.my_selection_twelve.text = " "
+            self.ids.my_selection_thirteen.text = " "
+            self.ids.my_selection_fourteen.text = " "
+            self.ids.my_selection_fifteen.text = " "
+            self.ids.my_selection_sixteen.text = " "
+            self.ids.my_selection_seventeen.text = " "
             if sys.platform.startswith('linux'):
                 # Needs to be written when testing on Raspberry Pi
                 # This needs to heck Raspberry Pi has 720p resolution.
@@ -587,15 +659,15 @@ class JukeboxScreen(FloatLayout):
                 if os.path.exists(str(os.path.dirname(full_path)) + "\music"):
                     screen_message_update = screen_message + " Music directory exists at " \
                                             + str(os.path.dirname(full_path)) + "\music.\nNothing to do here"
-                    self.my_blackout.text = screen_message_update
+                    self.ids.my_blackout.text = screen_message_update
                 else:
                     screen_message_update = screen_message + "Music directory does not exist\n" + " Program Stopped" \
                                                                                                   " And Will Terminate In Ten Seconds.\nPlease place fifty mp3's in the\n" \
                                                                                                   "Convergence Jukebox music directory at\n" + str(
                         os.path.dirname(full_path)) + "\music\n" \
                                                       "and then re-run the Convergence Jukebox software"
-                    self.my_blackout.background_color = (1, 0, 0, 1)
-                    self.my_blackout.text = screen_message_update
+                    self.ids.my_blackout.background_color = (1, 0, 0, 1)
+                    self.ids.my_blackout.text = screen_message_update
                     os.makedirs(str(os.path.dirname(full_path)) + "\music")
             if sys.platform.startswith('linux'):  # Needs to be rewritten during Raspberry Pi testing.
                 if os.path.exists(str(os.path.dirname(full_path)) + "/music"):
@@ -614,7 +686,7 @@ class JukeboxScreen(FloatLayout):
             if last_file_count == current_file_count or len(song_list) != 16:  # If matched the song_list is loaded from file
                 screen_message_update = screen_message + "Jukebox music files same as last startup.\n" \
                                                          "Using existing song database."
-                self.my_blackout.text = screen_message_update
+                self.ids.my_blackout.text = screen_message_update
                 print "Jukebox music files same as last startup. Using existing song database."  # Message to console.
             else:  # New song_list, filecount and location_list generated and saved.
                 song_list_generate = []
@@ -663,7 +735,7 @@ class JukeboxScreen(FloatLayout):
                     # hsaudiotag function that assigns mp3 song to myfile object
                     screen_message_update = screen_message + "Building Song Database. Stand By.\n" \
                                                              "This can take some time."
-                    self.my_blackout.text = screen_message_update
+                    self.ids.my_blackout.text = screen_message_update
                     print "Building Song Database. Stand By. This can take some time"
                     albumorg = myfile.album  # Assigns above mp3 ID3 Album name to albumorg variable
                     yearorg = myfile.year  # Assigns above mp3 ID3 Year info to yearorg variable
@@ -805,7 +877,7 @@ class JukeboxScreen(FloatLayout):
                         screen_message_update = screen_message + "Building Song Database. Stand By.\n" \
                                                                  "This can take some time.\nAdding: " + str(
                             build_list[8])
-                        self.my_blackout.text = screen_message_update
+                        self.ids.my_blackout.text = screen_message_update
                         build_list = []
                         y = len(location_list) - x
                         # print "www.convergencejukebox.com Building your database " + str(full_file_name) + ". " + str(y) + \
@@ -827,7 +899,7 @@ class JukeboxScreen(FloatLayout):
                 glob.glob1(str(os.path.dirname(full_path)) + "/music", "*.mp3"))  # Counts number of MP3 files
             current_file_count = int(mp3_counter)  # provides int output for later comparison
             screen_message_update = screen_message + " Number of songs at startup: " + str(current_file_count)
-            self.my_blackout.text = screen_message_update
+            self.ids.my_blackout.text = screen_message_update
 
             if int(mp3_counter) < 50:
                 screen_message_update = screen_message + "Not Enough MP3's To Start Convergence Jukebox\n" \
@@ -836,8 +908,8 @@ class JukeboxScreen(FloatLayout):
                                           "Convergence Jukebox music directory at\n" + str(
                     os.path.dirname(full_path)) + "\music\n" \
                                                   "and then re-run the Convergence Jukebox software"
-                self.my_blackout.background_color = (1, 0, 0, 1)
-                self.my_blackout.text = screen_message_update
+                self.ids.my_blackout.background_color = (1, 0, 0, 1)
+                self.ids.my_blackout.text = screen_message_update
 
         if str(key_event[1]) == '114':
             global song_status
@@ -955,7 +1027,7 @@ class JukeboxScreen(FloatLayout):
         if str(key_event[1]) == '98':  # b keyboard key updates display on song change
             print upcoming_list
             # my_old_infinite_loop()
-            self.my_blackout.color = (1, 1, 1, 0)
+            self.ids.my_blackout.color = (1, 1, 1, 0)
             self.ids.my_credit_amount.text = "CREDITS " + str(credit_amount)
             self.ids.selections_available.text = "Selections Available: " + str(selections_available)
             self.ids.sort_mode.color = (0, .7, 0, 1)
@@ -991,7 +1063,7 @@ class JukeboxScreen(FloatLayout):
             self.ids.my_fifteenth_artist.color = (1, 1, 1, 1)
             self.ids.my_sixteenth_title.color = (1, 1, 1, 1)
             self.ids.my_sixteenth_artist.color = (1, 1, 1, 1)
-            self.my_blackout.background_color = (0, 0, 0, 0)
+            self.ids.my_blackout.background_color = (0, 0, 0, 0)
             self.ids.my_upcoming_selections.color = (0, .7, 0, 1)
             self.ids.my_play_cost.color = (0, .7, 0, 1)
             self.ids.my_credit_amount.color = (0, .7, 0, 1)
@@ -1007,59 +1079,59 @@ class JukeboxScreen(FloatLayout):
             self.ids.sort_mode.color = (0, .7, 0, 1)
             self.ids.opening_message.text = " "
             self.ids.licence_message.text = " "
-            self.my_selection_one.text = " "
-            self.my_selection_two.text = " "
-            self.my_selection_three.text = " "
-            self.my_selection_four.text = " "
-            self.my_selection_five.text = " "
-            self.my_selection_six.text = " "
-            self.my_selection_seven.text = " "
-            self.my_selection_eight.text = " "
-            self.my_selection_nine.text = " "
-            self.my_selection_ten.text = " "
-            self.my_selection_eleven.text = " "
-            self.my_selection_twelve.text = " "
-            self.my_selection_thirteen.text = " "
-            self.my_selection_fourteen.text = " "
-            self.my_selection_fifteen.text = " "
-            self.my_selection_sixteen.text = " "
-            self.my_selection_seventeen.text = " "
+            self.ids.my_selection_one.text = " "
+            self.ids.my_selection_two.text = " "
+            self.ids.my_selection_three.text = " "
+            self.ids.my_selection_four.text = " "
+            self.ids.my_selection_five.text = " "
+            self.ids.my_selection_six.text = " "
+            self.ids.my_selection_seven.text = " "
+            self.ids.my_selection_eight.text = " "
+            self.ids.my_selection_nine.text = " "
+            self.ids.my_selection_ten.text = " "
+            self.ids.my_selection_eleven.text = " "
+            self.ids.my_selection_twelve.text = " "
+            self.ids.my_selection_thirteen.text = " "
+            self.ids.my_selection_fourteen.text = " "
+            self.ids.my_selection_fifteen.text = " "
+            self.ids.my_selection_sixteen.text = " "
+            self.ids.my_selection_seventeen.text = " "
             try:
                 if upcoming_list:
                     if upcoming_list[0]:
-                        self.my_selection_one.text = upcoming_list[0]
+                        self.ids.my_selection_one.text = upcoming_list[0]
                     if upcoming_list[1]:
-                        self.my_selection_two.text = upcoming_list[1]
+                        self.ids.my_selection_two.text = upcoming_list[1]
                     if upcoming_list[2]:
-                        self.my_selection_three.text = upcoming_list[2]
+                        self.ids.my_selection_three.text = upcoming_list[2]
                     if upcoming_list[3]:
-                        self.my_selection_four.text = upcoming_list[3]
+                        self.ids.my_selection_four.text = upcoming_list[3]
                     if upcoming_list[4]:
-                        self.my_selection_five.text = upcoming_list[4]
+                        self.ids.my_selection_five.text = upcoming_list[4]
                     if upcoming_list[5]:
-                        self.my_selection_six.text = upcoming_list[5]
+                        self.ids.my_selection_six.text = upcoming_list[5]
                     if upcoming_list[6]:
-                        self.my_selection_seven.text = upcoming_list[6]
+                        self.ids.my_selection_seven.text = upcoming_list[6]
                     if upcoming_list[7]:
-                        self.my_selection_eight.text = upcoming_list[7]
+                        self.ids.my_selection_eight.text = upcoming_list[7]
                     if upcoming_list[8]:
-                        self.my_selection_nine.text = upcoming_list[8]
+                        self.ids.my_selection_nine.text = upcoming_list[8]
                     if upcoming_list[9]:
-                        self.my_selection_ten.text = upcoming_list[9]
+                        self.ids.my_selection_ten.text = upcoming_list[9]
                     if upcoming_list[10]:
-                        self.my_selection_eleven.text = upcoming_list[10]
+                        self.ids.my_selection_eleven.text = upcoming_list[10]
                     if upcoming_list[11]:
-                        self.my_selection_twelve.text = upcoming_list[11]
+                        self.ids.my_selection_twelve.text = upcoming_list[11]
                     if upcoming_list[12]:
-                        self.my_selection_thirteen.text = upcoming_list[12]
+                        self.ids.my_selection_thirteen.text = upcoming_list[12]
                     if upcoming_list[13]:
-                        self.my_selection_fourteen.text = upcoming_list[13]
+                        self.ids.my_selection_fourteen.text = upcoming_list[13]
                     if upcoming_list[14]:
-                        self.my_selection_fifteen.text = upcoming_list[14]
+                        self.ids.my_selection_fifteen.text = upcoming_list[14]
                     if upcoming_list[15]:
-                        self.my_selection_sixteen.text = upcoming_list[15]
+                        self.ids.my_selection_sixteen.text = upcoming_list[15]
                     if upcoming_list[16]:
-                        self.my_selection_seventeen.text = upcoming_list[16]
+                        self.ids.my_selection_seventeen.text = upcoming_list[16]
             except IndexError:
                 pass
             display_info_recover = open("output_list.txt", 'r+')
@@ -1550,7 +1622,7 @@ class JukeboxScreen(FloatLayout):
             print "song selection number = " + str(song_selection_number)
             song_entry(song_selection_number)
             selections_screen_updater(self)
-            self.my_credit_amount.text = "CREDITS " + str(credit_amount)
+            self.ids.my_credit_amount.text = "CREDITS " + str(credit_amount)
             '''random_generated_song_number = randint(0,len(song_list)-1)
             song_entry(random_generated_song_number)
             selections_screen_updater(self)'''
@@ -2599,23 +2671,23 @@ def screen_cursor_positioner(adder):  # Determines Screen Number And Cursor Posi
     return adder
 
 def selection_font_size(self):
-    self.my_selection_one.font_size = 16
-    self.my_selection_two.font_size = 16
-    self.my_selection_three.font_size = 16
-    self.my_selection_four.font_size = 16
-    self.my_selection_five.font_size = 16
-    self.my_selection_six.font_size = 16
-    self.my_selection_seven.font_size = 16
-    self.my_selection_eight.font_size = 16
-    self.my_selection_nine.font_size = 16
-    self.my_selection_ten.font_size = 16
-    self.my_selection_eleven.font_size = 16
-    self.my_selection_twelve.font_size = 16
-    self.my_selection_thirteen.font_size = 16
-    self.my_selection_fourteen.font_size = 16
-    self.my_selection_fifteen.font_size = 16
-    self.my_selection_sixteen.font_size = 16
-    self.my_selection_seventeen.font_size = 16
+    self.ids.my_selection_one.font_size = 16
+    self.ids.my_selection_two.font_size = 16
+    self.ids.my_selection_three.font_size = 16
+    self.ids.my_selection_four.font_size = 16
+    self.ids.my_selection_five.font_size = 16
+    self.ids.my_selection_six.font_size = 16
+    self.ids.my_selection_seven.font_size = 16
+    self.ids.my_selection_eight.font_size = 16
+    self.ids.my_selection_nine.font_size = 16
+    self.ids.my_selection_ten.font_size = 16
+    self.ids.my_selection_eleven.font_size = 16
+    self.ids.my_selection_twelve.font_size = 16
+    self.ids.my_selection_thirteen.font_size = 16
+    self.ids.my_selection_fourteen.font_size = 16
+    self.ids.my_selection_fifteen.font_size = 16
+    self.ids.my_selection_sixteen.font_size = 16
+    self.ids.my_selection_seventeen.font_size = 16
 
 def selection_screen(self):  # Updates selection screen.
     global cursor_position
@@ -2967,109 +3039,109 @@ def selection_screen(self):  # Updates selection screen.
 def selections_screen_starter(self):
     global upcoming_list
     if len(upcoming_list) >= 1:
-        self.my_selection_one = Label(text=str(upcoming_list[0]), pos=(40, 107))
+        self.ids.my_selection_one.text = str(upcoming_list[0])
     else:
-        self.my_selection_one = Label(text=' ', pos=(40, 107))
+        self.ids.my_selection_one.text = ' '
     if len(upcoming_list) >= 2:
-        self.my_selection_two = Label(text=str(upcoming_list[1]), pos=(40, 88))
+        self.ids.my_selection_two.text = str(upcoming_list[1])
     else:
-        self.my_selection_two = Label(text=' ', pos=(40, 88))
+        self.ids.my_selection_two.text = ' '
     if len(upcoming_list) >= 3:
-        self.my_selection_three = Label(text=str(upcoming_list[2]), pos=(40, 69))
+        self.ids.my_selection_three.text = str(upcoming_list[2])
     else:
-        self.my_selection_three = Label(text=' ', pos=(40, 69))
+        self.ids.my_selection_three.text = ' '
     if len(upcoming_list) >= 4:
-        self.my_selection_four = Label(text=str(upcoming_list[3]), pos=(40, 50))
+        self.ids.my_selection_four.text = str(upcoming_list[3])
     else:
-        self.my_selection_four = Label(text=' ', pos=(40, 50))
+        self.ids.my_selection_four.text = ' '
     if len(upcoming_list) >= 5:
-        self.my_selection_five = Label(text=str(upcoming_list[4]), pos=(40, 31))
+        self.ids.my_selection_five.text=str(upcoming_list[4])
     else:
-        self.my_selection_five = Label(text=' ', pos=(40, 31))
+        self.ids.my_selection_five.text=' '
     if len(upcoming_list) >= 6:
-        self.my_selection_six = Label(text=str(upcoming_list[5]), pos=(40, 12))
+        self.ids.my_selection_six.text = str(upcoming_list[5])
     else:
-        self.my_selection_six = Label(text=' ', pos=(40, 12))
+        self.ids.my_selection_six.text=' '
     if len(upcoming_list) >= 7:
-        self.my_selection_seven = Label(text=str(upcoming_list[6]), pos=(40, -7))
+        self.ids.my_selection_seven.text=str(upcoming_list[6])
     else:
-        self.my_selection_seven = Label(text=' ', pos=(40, -7))
+        self.ids.my_selection_seven.text=' '
     if len(upcoming_list) >= 8:
-        self.my_selection_eight = Label(text=str(upcoming_list[7]), pos=(40, -26))
+        self.ids.my_selection_eight.text=str(upcoming_list[7])
     else:
-        self.my_selection_eight = Label(text=' ', pos=(40, -26))
+        self.ids.my_selection_eight.text=' '
     if len(upcoming_list) >= 9:
-        self.my_selection_nine = Label(text=str(upcoming_list[8]), pos=(40, -47))
+        self.ids.my_selection_nine.text=str(upcoming_list[8])
     else:
-        self.my_selection_nine = Label(text=' ', pos=(40, -47))
+        self.ids.my_selection_nine.text=' '
     if len(upcoming_list) >= 10:
-        self.my_selection_ten = Label(text=str(upcoming_list[9]), pos=(40, -66))
+        self.ids.my_selection_ten.text=str(upcoming_list[9])
     else:
-        self.my_selection_ten = Label(text=' ', pos=(40, -66))
+        self.ids.my_selection_ten.text=' '
     if len(upcoming_list) >= 11:
-        self.my_selection_eleven = Label(text=str(upcoming_list[10]), pos=(40, -85))
+        self.ids.my_selection_eleven.text=str(upcoming_list[10])
     else:
-        self.my_selection_eleven = Label(text=' ', pos=(40, -85))
+        self.ids.my_selection_eleven.text=' '
     if len(upcoming_list) >= 12:
-        self.my_selection_twelve = Label(text=str(upcoming_list[11]), pos=(40, -104))
+        self.ids.my_selection_twelve.text=str(upcoming_list[11])
     else:
-        self.my_selection_twelve = Label(text=' ', pos=(40, -104))
+        self.ids.my_selection_twelve.text=' '
     if len(upcoming_list) >= 13:
-        self.my_selection_thirteen = Label(text=str(upcoming_list[12]), pos=(40, -123))
+        self.ids.my_selection_thirteen.text=str(upcoming_list[12])
     else:
-        self.my_selection_thirteen = Label(text=' ', pos=(40, -123))
+        self.ids.my_selection_thirteen.text=' '
     if len(upcoming_list) >= 14:
-        self.my_selection_fourteen = Label(text=str(upcoming_list[13]), pos=(40, -142))
+        self.ids.my_selection_fourteen.text=str(upcoming_list[13])
     else:
-        self.my_selection_fourteen = Label(text=' ', pos=(40, -142))
+        self.ids.my_selection_fourteen.text=' '
     if len(upcoming_list) >= 15:
-        self.my_selection_fifteen = Label(text=str(upcoming_list[14]), pos=(40, -161))
+        self.ids.my_selection_fifteen.text=str(upcoming_list[14])
     else:
-        self.my_selection_fifteen = Label(text=' ', pos=(40, -161))
+        self.ids.my_selection_fifteen.text=' '
     if len(upcoming_list) >= 16:
-        self.my_selection_sixteen = Label(text=str(upcoming_list[15]), pos=(40, -180))
+        self.ids.my_selection_sixteen.text=str(upcoming_list[15])
     else:
-        self.my_selection_sixteen = Label(text=" ", pos=(40, -180))
+        self.ids.my_selection_sixteen.text=" "
     if len(upcoming_list) == 17:
-        self.my_selection_seventeen = Label(text=str(upcoming_list[16]), pos=(40, -199))
+        self.ids.my_selection_seventeen.text=str(upcoming_list[16])
     else:
-        self.my_selection_seventeen = Label(text=' ', pos=(40, -199))
+        self.ids.my_selection_seventeen.text=' '
 
 def selections_screen_updater(self):
     if len(upcoming_list) >= 1:
-        self.my_selection_one.text = str(upcoming_list[0])
+        self.ids.my_selection_one.text = str(upcoming_list[0])
     if len(upcoming_list) >= 2:
-        self.my_selection_two.text = str(upcoming_list[1])
+        self.ids.my_selection_two.text = str(upcoming_list[1])
     if len(upcoming_list) >= 3:
-        self.my_selection_three.text = str(upcoming_list[2])
+        self.ids.my_selection_three.text = str(upcoming_list[2])
     if len(upcoming_list) >= 4:
-        self.my_selection_four.text = str(upcoming_list[3])
+        self.ids.my_selection_four.text = str(upcoming_list[3])
     if len(upcoming_list) >= 5:
-        self.my_selection_five.text = str(upcoming_list[4])
+        self.ids.my_selection_five.text = str(upcoming_list[4])
     if len(upcoming_list) >= 6:
-        self.my_selection_six.text = str(upcoming_list[5])
+        self.ids.my_selection_six.text = str(upcoming_list[5])
     if len(upcoming_list) >= 7:
-        self.my_selection_seven.text = str(upcoming_list[6])
+        self.ids.my_selection_seven.text = str(upcoming_list[6])
     if len(upcoming_list) >= 8:
-        self.my_selection_eight.text = str(upcoming_list[7])
+        self.ids.my_selection_eight.text = str(upcoming_list[7])
     if len(upcoming_list) >= 9:
-        self.my_selection_nine.text = str(upcoming_list[8])
+        self.ids.my_selection_nine.text = str(upcoming_list[8])
     if len(upcoming_list) >= 10:
-        self.my_selection_ten.text = str(upcoming_list[9])
+        self.ids.my_selection_ten.text = str(upcoming_list[9])
     if len(upcoming_list) >= 11:
-        self.my_selection_eleven.text = str(upcoming_list[10])
+        self.ids.my_selection_eleven.text = str(upcoming_list[10])
     if len(upcoming_list) >= 12:
-        self.my_selection_twelve.text = str(upcoming_list[11])
+        self.ids.my_selection_twelve.text = str(upcoming_list[11])
     if len(upcoming_list) >= 13:
-        self.my_selection_thirteen.text = str(upcoming_list[12])
+        self.ids.my_selection_thirteen.text = str(upcoming_list[12])
     if len(upcoming_list) >= 14:
-        self.my_selection_fourteen.text = str(upcoming_list[13])
+        self.ids.my_selection_fourteen.text = str(upcoming_list[13])
     if len(upcoming_list) >= 15:
-        self.my_selection_fifteen.text = str(upcoming_list[14])
+        self.ids.my_selection_fifteen.text = str(upcoming_list[14])
     if len(upcoming_list) >= 16:
-        self.my_selection_sixteen.text = str(upcoming_list[15])
+        self.ids.my_selection_sixteen.text = str(upcoming_list[15])
     if len(upcoming_list) == 17:
-        self.my_selection_seventeen.text = str(upcoming_list[16])
+        self.ids.my_selection_seventeen.text = str(upcoming_list[16])
 
 def set_720_resolution():
 
