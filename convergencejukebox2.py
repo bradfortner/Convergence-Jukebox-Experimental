@@ -207,7 +207,7 @@ Builder.load_string('''
             pos: self.pos
             size: self.size
     PongBall:
-        center: self.parent.center
+        
     Button:
         id: song_playing_name
         text: ' '
@@ -529,7 +529,7 @@ class JukeboxScreen(FloatLayout):
     def __init__(self, **kwargs):
         super(JukeboxScreen, self).__init__(**kwargs)
         Clock.schedule_once(self.message_at_start)
-        Clock.schedule_interval(self.file_reader, 10)
+        Clock.schedule_interval(self.file_reader, 5)
         Window.bind(on_key_down=self.key_action)
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
