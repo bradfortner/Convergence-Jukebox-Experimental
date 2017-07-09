@@ -7,11 +7,12 @@ import glob
 from hsaudiotag import auto  # Used to work with MP3 ID3 data https://pypi.python.org/pypi/hsaudiotag
 import keyboard  # Used to simulated keyboard events to call screen update functions http://bit.ly/2qwRrTh
 import kivy
+from kivy.properties import NumericProperty, ReferenceListProperty
+from kivy.vector import Vector
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.clock import Clock
-Clock.max_iteration = 20
 from kivy.factory import Factory
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
@@ -36,7 +37,7 @@ kivy.require("1.9.1")  # used to alert user if this code is run on an earlier ve
 
 
 ###### Variables #####
-Clock.max_iteration = 1500
+Clock.max_iteration = 200
 global title
 global artist
 global album
@@ -192,6 +193,12 @@ Builder.load_string('''
     valign: 'middle'
     text_size: self.size
     size_hint: .255, .0620
+<PongBall>:
+    size: 1, 1
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
 <FloatLayout>:
     id: selection
     canvas.before:
@@ -199,6 +206,8 @@ Builder.load_string('''
             source: 'jukebox.png'
             pos: self.pos
             size: self.size
+    PongBall:
+        center: self.parent.center
     Button:
         id: song_playing_name
         text: ' '
@@ -221,6 +230,16 @@ Builder.load_string('''
         pos: 480, 56
         size_hint: .547, .613
         valign: 'top'
+        background_color: 0,0,0,0
+    Button:
+        id: my_fullscreen_blackout
+        text: ' '
+        pos: 0,0
+        size_hint: None,None
+        halign: 'center'
+        valign: 'top'
+        width: 1280
+        height: 720
         background_color: 0,0,0,0
     Label:
         id: jukebox_name
@@ -508,22 +527,10 @@ Builder.load_string('''
 class JukeboxScreen(FloatLayout):
 
     def __init__(self, **kwargs):
-
         super(JukeboxScreen, self).__init__(**kwargs)
-        Clock.schedule_interval(self.file_reader, 5)
+        Clock.schedule_once(self.message_at_start)
+        Clock.schedule_interval(self.file_reader, 10)
         Window.bind(on_key_down=self.key_action)
-        set_up_user_files_first_time()
-        write_jukebox_startup_to_log()
-        genre_read_and_select_engine()
-        count_number_mp3_songs()
-        #selections_screen_starter(self)
-        #selections_screen_updater(self)
-        '''if start_up != 0:
-            self.my_first_title.background_color = (160, 160, 160, .2)
-            self.ids.my_first_artist.background_color = (160, 160, 160, .2)'''
-        #selection_font_size(self)
-
-        os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox Player
 
     def key_action(self, *args):  # Keyboard Reader Code. https://gist.github.com/tshirtman/31bb4d3e482261191a1f
         global adder
@@ -541,21 +548,22 @@ class JukeboxScreen(FloatLayout):
         global delete_indicator
         global random_list
         print "Key Number Pressed Is: " + str(key_event[1])
-        if str(key_event[1]) == '122':  # test
-            '''popup = Popup(title='Test popup', content=Label(text='Hello world'), size_hint=(None, None),
-                          size=(400, 400))
-            popup.open()'''
+        if str(key_event[1]) == '122':  # z threading test
+            last_pressed = "z"
             threading.Thread(target=threaded_popup).start()  # Test Thread
 
         if str(key_event[1]) == '111':  # Opening Screen
             last_pressed = "o"
+            set_up_user_files_first_time()
+            write_jukebox_startup_to_log()
+            genre_read_and_select_engine()
+            count_number_mp3_songs()
+            self.ids.my_fullscreen_blackout.background_color = (0, 0, 0, 0)
+            self.ids.my_fullscreen_blackout.text = " "
+            self.ids.my_fullscreen_blackout.color = (1, 1, 1, 0)
             screen_message = "Welcome To Convergence Jukebox\nYour Jukebox Is Being Configured\nThis Could Take A Few Minutes\n\n"
             self.ids.opening_message.text = "Welcome To Convergence\n Jukebox Windows Edition"
             self.ids.licence_message.text = str(licence)
-
-            # self.process_button_click()
-            # self.parent.remove_widget(self.my_progress_bar)
-            # self.remove_widget(self.my_progress_bar)
             self.ids.my_first_title.background_color = (160, 160, 160, 0)
             self.ids.my_first_artist.background_color = (160, 160, 160, 0)
             self.ids.my_blackout.background_color = (0, 0, 0, 1)
@@ -883,6 +891,7 @@ class JukeboxScreen(FloatLayout):
                                                   "and then re-run the Convergence Jukebox software"
                 self.ids.my_blackout.background_color = (1, 0, 0, 1)
                 self.ids.my_blackout.text = screen_message_update
+            os.system("RunConvergencePlayer2.exe")  # Launches Convergence Jukebox Player
 
         if str(key_event[1]) == '114':
             global song_status
@@ -999,7 +1008,6 @@ class JukeboxScreen(FloatLayout):
             return
         if str(key_event[1]) == '98':  # b keyboard key updates display on song change
             print upcoming_list
-            # my_old_infinite_loop()
             self.ids.my_blackout.color = (1, 1, 1, 0)
             self.ids.my_credit_amount.text = "CREDITS " + str(credit_amount)
             self.ids.selections_available.text = "Selections Available: " + str(selections_available)
@@ -1626,6 +1634,27 @@ class JukeboxScreen(FloatLayout):
                 upcoming_list = pickle.load(upcoming_list_recover)
                 upcoming_list_recover.close()
                 # selections_screen_updater(self)
+
+    def message_at_start(self, *args):
+        self.ids.my_fullscreen_blackout.background_color = (0, 0, 0, 1)
+        self.ids.my_fullscreen_blackout.text = "This Is My Startup Screen"
+        self.ids.my_fullscreen_blackout.color = (1, 1, 1, 1)
+        self.ids.my_fullscreen_blackout.font_size = 25
+
+    class PongBall(Widget):
+
+        # velocity of the ball on x and y axis
+        velocity_x = NumericProperty(0)
+        velocity_y = NumericProperty(0)
+
+        # referencelist property so we can use ball.velocity as
+        # a shorthand, just like e.g. w.pos for w.x and w.y
+        velocity = ReferenceListProperty(velocity_x, velocity_y)
+
+        # ``move`` function will move the ball one step. This
+        #  will be called in equal intervals to animate the ball
+        def move(self):
+            self.pos = Vector(*self.velocity) + self.pos
 
 class MyFinalApp(App):
 
