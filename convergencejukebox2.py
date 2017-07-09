@@ -1641,9 +1641,9 @@ class JukeboxScreen(FloatLayout):
     def message_at_start(self, *args):
         self.ids.my_fullscreen_blackout.background_color = (0, 0, 0, 1)
         self.ids.my_fullscreen_blackout.text = "This Is My Startup Screen"
-        #self.ids.my_fullscreen_blackout.color = (1, 1, 1, 1)
+        self.ids.my_fullscreen_blackout.color = (1, 1, 1, 1)
         self.ids.my_fullscreen_blackout.font_size = 25
-        self.ids.moving_ball.size = (0,0)
+        $self.ids.moving_ball.size = (0,0)
 
     class PongBall(Widget):
 
