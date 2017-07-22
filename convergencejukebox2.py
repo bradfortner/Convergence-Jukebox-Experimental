@@ -19,6 +19,7 @@ from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from kivy.uix.progressbar import ProgressBar
+from kivy.uix.screenmanager import ScreenManager, Screen  # Imports the Kivy Screen manager and Kivys Screen class
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from operator import itemgetter
@@ -193,14 +194,6 @@ Builder.load_string('''
     valign: 'middle'
     text_size: self.size
     size_hint: .255, .0620
-<PongBall>:
-    size: 1, 1
-    canvas:
-        Color:
-            rgb: 1, 1, 1
-        Ellipse:
-            pos: 600,290
-            size: 70,70       
 <FloatLayout>:
     id: selection
     canvas.before:
@@ -208,7 +201,16 @@ Builder.load_string('''
             source: 'jukebox.png'
             pos: self.pos
             size: self.size
-      
+    Button:
+        id: my_fullscreen_blackout
+        text: ' '
+        pos: 0,0
+        size_hint: None,None
+        halign: 'center'
+        valign: 'top'
+        width: 1280
+        height: 720
+        background_color: 0,0,0,0
     Button:
         id: song_playing_name
         text: ' '
@@ -232,18 +234,6 @@ Builder.load_string('''
         size_hint: .547, .613
         valign: 'top'
         background_color: 0,0,0,0
-    Button:
-        id: my_fullscreen_blackout
-        text: ' '
-        pos: 0,0
-        size_hint: None,None
-        halign: 'center'
-        valign: 'top'
-        width: 1280
-        height: 720
-        background_color: 0,0,0,0
-    PongBall:
-        id: moving_ball
     Label:
         id: jukebox_name
         text: "Convergence Music System 2.0"
@@ -1643,22 +1633,7 @@ class JukeboxScreen(FloatLayout):
         self.ids.my_fullscreen_blackout.text = "This Is My Startup Screen"
         self.ids.my_fullscreen_blackout.color = (1, 1, 1, 1)
         self.ids.my_fullscreen_blackout.font_size = 25
-        $self.ids.moving_ball.size = (0,0)
-
-    class PongBall(Widget):
-
-        # velocity of the ball on x and y axis
-        velocity_x = NumericProperty(0)
-        velocity_y = NumericProperty(0)
-
-        # referencelist property so we can use ball.velocity as
-        # a shorthand, just like e.g. w.pos for w.x and w.y
-        velocity = ReferenceListProperty(velocity_x, velocity_y)
-
-        # ``move`` function will move the ball one step. This
-        #  will be called in equal intervals to animate the ball
-        def move(self):
-            self.pos = Vector(*self.velocity) + self.pos
+        #self.PongBall.remove_widget()
 
 class MyFinalApp(App):
 
@@ -1681,7 +1656,6 @@ def threaded_popup(): # Test Thread
                   size=(400, 400))
 
     popup.open()
-
 
 def basic_random_list_generator():
     global random_list_with_year
